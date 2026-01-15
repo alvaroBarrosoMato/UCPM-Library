@@ -131,12 +131,10 @@
         
      
       
-      email = document.getElementById('email').value.trim();
-
         try {
           // Your requested call:
           OneTrust.webform.preFill({
-              "Email": email,
+              "Email": document.getElementById('email');
               "Personalized Online Advertising" : "Checked" 
           }, CP_ID)
           //OtSdk("consent", "preFill", prefillPayload);

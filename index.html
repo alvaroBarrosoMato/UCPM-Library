@@ -136,7 +136,7 @@
 
         try {
           // Your requested call:
-          OneTrust("consent", "preFill", prefillPayload, CP_ID);
+          window.OtSdk("consent", "preFill", prefillPayload, CP_ID);
           console.log('[OT] OtSdk preFill applied:', prefillPayload);
         } catch (e) {
           console.error('[OT] OtSdk preFill failed:', e);

@@ -89,6 +89,9 @@
 
   <!-- Instrumented flow: InstallCP -> preFill -> init + events -->
   <script>
+    
+// ---- BIND THE NEXT BUTTON ----
+  document.getElementById("nextBtn").addEventListener("click", () => {
     /**** CONFIG ****/
     const EMAIL_LABEL = "Email"; // If Spanish default language, set to "Correo electrónico"
     const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
@@ -104,6 +107,9 @@
     console.log('Prefilled', event.detail);
     OneTrust.webform.init();
     console.log('Initiated', event.detail);
+  });
+
+    
   </script>
 </body>
 </html>

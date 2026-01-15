@@ -3,52 +3,26 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Two‑Step Consent Flow</title>
-  <meta name="description" content="Two-step consent flow with OneTrust email prefill before mount."/>
 
-  <!-- Minimal, modern styling -->
   <style>
-    :root {
-      --bg: #f4f6f8;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --border: #e5e7eb;
-      --input-bg: #f9fafb;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; padding: 40px 16px; background: var(--bg); color: var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      display: flex; justify-content: center; align-items: flex-start;
-    }
-    .card {
-      width: 100%; max-width: 560px; background: var(--card);
-      border-radius: 16px; padding: 28px; box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-      animation: fadeIn .24s ease;
-    }
-    h2 { margin: 0 0 8px; font-weight: 700; }
-    p.sub { margin: 0 0 20px; color: var(--muted); }
-    label { display: block; margin: 14px 0 6px; font-weight: 600; }
-    input, select {
-      width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border);
-      background: var(--input-bg); font-size: 1rem; transition: border-color .2s, background .2s;
-    }
-    input:focus, select:focus { outline: none; border-color: var(--primary); background: #fff; }
-    .actions { margin-top: 18px; display: flex; gap: 12px; }
-    button {
-      flex: 1; padding: 14px; border: none; border-radius: 10px; cursor: pointer;
-      font-weight: 700; font-size: 1rem;
-    }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:hover { background: var(--primary-hover); }
-    .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
-    .hidden { display: none; }
-    #ot-container { margin-top: 16px; min-height: 64px; }
-    @keyframes fadeIn { from {opacity:0; transform: translateY(8px);} to {opacity:1; transform: translateY(0);} }
+    :root { --bg:#f4f6f8; --card:#fff; --text:#111; --muted:#666; --primary:#2563eb; --border:#e5e7eb; }
+    body { margin:0; padding:40px 16px; background:var(--bg); color:var(--text);
+           font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; display:flex; justify-content:center; }
+    .card { width:100%; max-width:560px; background:var(--card); padding:28px;
+            border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.08); }
+    h2 { margin:0 0 8px; font-weight:700; }
+    p.sub { margin:0 0 20px; color:var(--muted); }
+    label { display:block; margin:14px 0 6px; font-weight:600; }
+    input, select { width:100%; padding:12px; border-radius:10px; border:1px solid var(--border); }
+    input:focus, select:focus { outline:none; border-color:var(--primary); background:#fff; }
+    .actions { margin-top:20px; display:flex; gap:12px; }
+    button { flex:1; padding:14px; border:0; border-radius:10px; cursor:pointer; font-weight:700; }
+    .btn-primary { background:var(--primary); color:#fff; }
+    .btn-ghost { background:#fff; border:1px solid var(--border); }
+    .hidden { display:none; }
+    #ot-container { margin-top:16px; min-height:80px; }
   </style>
 </head>
 <body>
@@ -58,30 +32,24 @@
     <h2>Your Details</h2>
     <p class="sub">Tell us who you are. On the next step, you’ll manage your consent preferences.</p>
 
-    <div>
-      <label for="firstName">First name</label>
-      <input id="firstName" type="text" placeholder="e.g. Álvaro"/>
-    </div>
+    <label for="email">Email *</label>
+    <input id="email" type="email" placeholder="you@example.com" required/>
 
-    <div>
-      <label for="email">Email *</label>
-      <input id="email" type="email" placeholder="alvaro@example.com" required/>
-    </div>
+    <label for="firstName">First name</label>
+    <input id="firstName" type="text"/>
 
-    <div>
-      <label for="country">Country/Region</label>
-      <select id="country">
-        <option value="">Select…</option>
-        <option value="ES">Spain</option>
-        <option value="PT">Portugal</option>
-        <option value="FR">France</option>
-        <option value="DE">Germany</option>
-        <option value="UK">United Kingdom</option>
-        <option value="US">United States</option>
-        <option value="MX">Mexico</option>
-        <option value="BR">Brazil</option>
-      </select>
-    </div>
+    <label for="country">Country/Region</label>
+    <select id="country">
+      <option value="">Select…</option>
+      <option value="ES">Spain</option>
+      <option value="PT">Portugal</option>
+      <option value="FR">France</option>
+      <option value="DE">Germany</option>
+      <option value="UK">United Kingdom</option>
+      <option value="US">United States</option>
+      <option value="MX">Mexico</option>
+      <option value="BR">Brazil</option>
+    </select>
 
     <div class="actions">
       <button id="nextBtn" class="btn-primary" type="button">Next</button>
@@ -101,64 +69,73 @@
     </div>
   </section>
 
-  <!-- OneTrust Form Stub (TRIAL). If using PROD, change both host and worker accordingly. -->
+  <!-- OneTrust Stub (TRIAL portal + correct worker host) -->
   <script
   src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
   data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
   worker="https://consent-api.onetrust.com"
 ></script>
 
-  <!-- Unified, simplified logic: prefill FIRST, then mount -->
+  <!-- Unified logic: InstallCP -> preFill -> init -->
   <script>
-    // ---- Configure these two constants if needed ----
+    // EDIT these if needed
     const EMAIL_LABEL = "Email"; // If your default-language label is Spanish, set to "Correo electrónico"
-    const COLLECTION_POINT_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+    const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
 
-    // Ensure the command queue exists
-    function ensureStubQueue() {
+    // Ensure the OneTrust command queue exists
+    function queue() {
       window.OtConsentStub = window.OtConsentStub || [];
       return window.OtConsentStub;
     }
 
-    // Wire UI
+    // Small helper: run a function once the webform API surface exists
+    function whenWebformApiReady(cb) {
+      const ok = () => (window.OneTrust && OneTrust.webform &&
+        (typeof OneTrust.webform.InstallCP === 'function'));
+      if (ok()) return cb();
+      const t = setInterval(() => {
+        if (ok()) { clearInterval(t); cb(); }
+      }, 100);
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      const step1   = document.getElementById('step1');
-      const step2   = document.getElementById('step2');
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
       const nextBtn = document.getElementById('nextBtn');
       const backBtn = document.getElementById('backBtn');
 
-      backBtn?.addEventListener('click', () => {
+      backBtn.addEventListener('click', () => {
         step2.classList.add('hidden');
         step1.classList.remove('hidden');
       });
 
-      nextBtn?.addEventListener('click', () => {
-        const email = document.getElementById('email')?.value?.trim();
+      nextBtn.addEventListener('click', () => {
+        const email = document.getElementById('email').value.trim();
         if (!email) { alert('Please enter your email to continue.'); return; }
 
-        // Show Step 2 screen (container is visible, but not mounted yet)
+        // Show Step 2 (container visible, not mounted yet)
         step1.classList.add('hidden');
         step2.classList.remove('hidden');
 
-        // Queue: PREFILL first, then MOUNT the component
-        const queue = ensureStubQueue();
-        queue.push(function(api) {
-          // 1) Pre-fill before mount (preferred path)
-          if (window.OneTrust?.webform?.preFill) {
-            const payload = {}; payload[EMAIL_LABEL] = email;
-            OneTrust.webform.preFill(payload, COLLECTION_POINT_ID);
-          } else if (window.OneTrust?.webform?.prefill) {
-            // Some tenants expose lower-case 'prefill'
-            const payload = {}; payload[EMAIL_LABEL] = email;
-            OneTrust.webform.prefill(payload, COLLECTION_POINT_ID);
-          } else if (typeof window.OtSdk === 'function') {
-            // Fallback if preFill surface isn't exposed yet in this environment
-            const payload = {}; payload[EMAIL_LABEL] = email;
-            OtSdk("consent", "preFill", payload, COLLECTION_POINT_ID);
-          }
+        // Queue everything to run after the stub is ready
+        queue().push(function(api) {
+          // Wait until the Webform API exposes InstallCP
+          whenWebformApiReady(() => {
+            // 1) Install the Collection Point (ensures CP is loaded and ready)
+            OneTrust.webform.InstallCP(CP_ID, function() {
+              // 2) Pre-fill BEFORE mount (must match default-language field label)
+              const data = {}; data[EMAIL_LABEL] = email;
 
-          // 2) Mount into #ot-container (the component loads with the prefill value)
-          api.init({ container: "ot-container" });
+              if (OneTrust.webform.preFill) {
+                OneTrust.webform.preFill(data, CP_ID);
+              } else if (OneTrust.webform.prefill) {
+                OneTrust.webform.prefill(data, CP_ID);
+              } // (If your tenant requires OtSdk, you could fallback here)
+
+              // 3) Mount the embedded form into #ot-container
+              api.init({ container: "ot-container" });
+            });
+          });
         });
       });
     });

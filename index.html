@@ -2,6 +2,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+  // Initialize the Command Queue
+  window.OtSdk=window.OtSdk||function(){(OtSdk.q=OtSdk.q||[]).push(arguments)};
+  </script>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Two‑Step Consent Flow (Instrumented)</title>
@@ -132,7 +136,7 @@
 
         try {
           // Your requested call:
-          OtSdk("consent", "preFill", prefillPayload, CP_ID);
+          OneTrust("consent", "preFill", prefillPayload, CP_ID);
           console.log('[OT] OtSdk preFill applied:', prefillPayload);
         } catch (e) {
           console.error('[OT] OtSdk preFill failed:', e);

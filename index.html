@@ -101,8 +101,9 @@
       // This function will be called after the collection point is installed
     });
     console.log('Installed', event.detail);
-    OneTrust.webform.prefill(({
+    OneTrust.webform.prefill({
     "Email": "example@email.com",
+    "Personalized Online Advertising": "Checked"
     }, CP_ID);
     console.log('Prefilled', event.detail);
     OneTrust.webform.init();

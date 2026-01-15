@@ -105,9 +105,10 @@
         step2.classList.remove('hidden');
 
         OneTrust.webform.prefill({
-    "Email": "example@email.com",
-    "Personalized Online Advertising": "Checked"
-    }, CP_ID);
+        "Email": "example@email.com",
+        "Personalized Online Advertising": "Checked"
+        }, CP_ID);
+        console.log('Prefilled: ', CP_ID);
         
         // 2) Install Collection Point
         try {

@@ -175,5 +175,180 @@
       }
     });
   </script>
+  
+<script>
+  // ===== Logging helper =====
+  const L = (...args) => console.log('[OT-Flow]', ...args);
+
+  // ===== Wait utility with logs =====
+  function waitFor(checkFn, { interval = 150, timeout = 12000, label = 'condition' } = {}) {
+    return new Promise((resolve, reject) => {
+      const start = Date.now();
+      const t = setInterval(() => {
+        try {
+          if (checkFn()) {
+            clearInterval(t);
+            L('READY ->', label);
+            resolve(true);
+          } else if (Date.now() - start > timeout) {
+            clearInterval(t);
+            const err = new Error(`waitFor timed out: ${label}`);
+            console.error(err);
+            reject(err);
+          }
+        } catch (e) {
+          clearInterval(t);
+          console.error(`waitFor aborted: ${label}`, e);
+          reject(e);
+        }
+      }, interval);
+    });
+  }
+
+  // ===== Read CP ID from the stub script to avoid mismatches =====
+  function getCollectionPointId() {
+    const s = document.querySelector('script[src*="OtFormStub.js"][data-id]');
+    return s ? s.getAttribute('data-id') : null;
+  }
+
+  // ===== Mount + Prefill with robust logs =====
+  async function mountOneTrustAndPrefill(emailValue) {
+    L('mountOneTrustAndPrefill() called with', emailValue);
+
+    // 1) Ensure the stub queue exists
+    await waitFor(() => typeof window.OtConsentStub !== 'undefined', { label: 'OtConsentStub' });
+
+    const cpId = getCollectionPointId();
+    if (!cpId) {
+      console.error('No Collection Point ID found on the OneTrust stub <script data-id="...">');
+      return;
+    }
+    L('Using Collection Point ID:', cpId);
+
+    window.OtConsentStub = window.OtConsentStub || [];
+    window.OtConsentStub.push(async function(api) {
+      L('OtConsentStub callback executing');
+
+      // 2) Mount the embedded form
+      try {
+        api.init({ container: 'ot-container' });
+        L('api.init({ container: "ot-container" }) called');
+      } catch (e) {
+        console.error('api.init error:', e);
+        return;
+      }
+
+      // 3) Wait for the OneTrust webform API and DOM to be present
+      await waitFor(() => window.OneTrust && OneTrust.webform, { label: 'OneTrust.webform' });
+      await waitFor(
+        () => !!document.querySelector('#ot-container form, #ot-container [data-ot-form]'),
+        { label: 'Embedded form DOM' }
+      );
+
+      // 4) Prefill: try exact default-language label(s) and multiple API surfaces
+      const labels = ["Email", "Correo electrónico"]; // <-- EDIT to match your default-language label if different
+      let didPrefill = false;
+
+      for (const label of labels) {
+        // Build the payload for this iteration
+        const payload = {};
+        payload[label] = emailValue;
+
+        try {
+          if (OneTrust.webform.preFill) {
+            L('Attempt preFill via OneTrust.webform.preFill with label:', label);
+            OneTrust.webform.preFill(payload, cpId);
+            didPrefill = true;
+            L('SUCCESS preFill (camel F) with', label);
+            break;
+          }
+        } catch (e) {
+          console.warn('preFill (camel F) failed with label:', label, e);
+        }
+
+        try {
+          if (OneTrust.webform.prefill) {
+            L('Attempt prefill via OneTrust.webform.prefill with label:', label);
+            OneTrust.webform.prefill(payload, cpId);
+            didPrefill = true;
+            L('SUCCESS prefill (lower f) with', label);
+            break;
+          }
+        } catch (e) {
+          console.warn('prefill (lower f) failed with label:', label, e);
+        }
+
+        try {
+          if (typeof window.OtSdk === 'function') {
+            L('Attempt preFill via OtSdk with label:', label);
+            OtSdk('consent', 'preFill', payload, cpId);
+            didPrefill = true;
+            L('SUCCESS OtSdk preFill with', label);
+            break;
+          }
+        } catch (e) {
+          console.warn('OtSdk preFill failed with label:', label, e);
+        }
+      }
+
+      if (!didPrefill) {
+        console.error('Prefill did not execute on any surface. Check label & environment.');
+      } else {
+        // Optional reinforcement in case the form re-renders shortly after mount
+        setTimeout(() => {
+          try {
+            const label = labels[0];
+            const payload = {};
+            payload[label] = emailValue;
+            if (OneTrust.webform.preFill) {
+              OneTrust.webform.preFill(payload, cpId);
+              L('Reinforcement preFill fired:', label);
+            } else if (OneTrust.webform.prefill) {
+              OneTrust.webform.prefill(payload, cpId);
+              L('Reinforcement prefill fired:', label);
+            } else if (typeof window.OtSdk === 'function') {
+              OtSdk('consent', 'preFill', payload, cpId);
+              L('Reinforcement OtSdk preFill fired:', label);
+            }
+          } catch (e) {/* ignore */}
+        }, 700);
+      }
+    });
+  }
+
+  // ===== Wire the "Next" button with visible logs =====
+  window.addEventListener('DOMContentLoaded', () => {
+    L('DOMContentLoaded');
+
+    const nextBtn = document.getElementById('nextBtn');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+
+    if (!nextBtn) {
+      console.error('No #nextBtn found. Check the button id.');
+      return;
+    }
+
+    nextBtn.addEventListener('click', () => {
+      L('Next clicked');
+      const email = document.getElementById('email')?.value?.trim();
+      if (!email) {
+        alert('Please enter your email to continue.');
+        return;
+      }
+
+      // Show step 2 UI
+      if (step1 && step2) {
+        step1.classList.add('hidden');
+        step2.classList.remove('hidden');
+        L('Switched to Step 2');
+      }
+
+      // Mount and prefill
+      mountOneTrustAndPrefill(email);
+    });
+  });
+</script>
+
 </body>
 </html>

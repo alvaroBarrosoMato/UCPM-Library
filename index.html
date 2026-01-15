@@ -2,6 +2,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script
+  id="ot-stub"
+  src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+  data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
+  worker="https://consent-api.onetrust.com"
+></script>
+  
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Two‑Step Consent Flow (Instrumented)</title>
@@ -73,12 +80,12 @@
 
   <!-- OneTrust Stub (TRIAL portal + correct worker host).
        IMPORTANT: Include data-id and worker explicitly on the tag. -->
-  <script
-  id="ot-stub"
-  src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
-  data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
-  worker="https://consent-api.onetrust.com"
-></script>
+  <script>
+    window.addEventListener('OnetrustFormLoaded', (event) => {
+        // value can be accessed here
+        console.log('OnetrustFormLoaded event triggered', event.detail);
+     });
+  </script>
 
   <!-- Instrumented flow: InstallCP -> preFill -> init + events -->
   <script>
@@ -86,148 +93,12 @@
     const EMAIL_LABEL = "Email"; // If Spanish default language, set to "Correo electrónico"
     const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
 
-    /**** LOGGING HELPERS (console + on-page panel) ****/
-    const $log = document.getElementById("debug-log");
-    function logLine(level, ...args) {
-      const ts = new Date().toISOString().split("T")[1].replace("Z","");
-      const msg = args.map(a => (typeof a === "string" ? a : JSON.stringify(a))).join(" ");
-      if ($log) $log.textContent += `\n${ts} [${level}] ${msg}`;
-      const c = (level === 'ERR') ? console.error : (level === 'WRN' ? console.warn : console.log);
-      c("[OT]", ...args);
-    }
-    const L = (...a) => logLine("LOG", ...a);
-    const W = (...a) => logLine("WRN", ...a);
-    const E = (...a) => logLine("ERR", ...a);
-
-    // Show runtime errors in both places
-    window.addEventListener("error", (e) => E("window.error:", e.message || e));
-    window.addEventListener("unhandledrejection", (e) => E("unhandledrejection:", e.reason || e));
-
-    // Mark DOM ready
-    document.addEventListener("DOMContentLoaded", () => L("DOMContentLoaded"));
-
-    // Confirm the stub tag is present and loads
-    const stub = document.getElementById("ot-stub");
-    if (stub) {
-      L("Stub present → src:", stub.src, "data-id:", stub.getAttribute("data-id"), "worker:", stub.getAttribute("worker"));
-      stub.addEventListener("load",  () => L("OtFormStub.js loaded"));
-      stub.addEventListener("error", () => E("OtFormStub.js FAILED to load"));
-    } else {
-      E("OtFormStub <script> NOT found in DOM");
-    }
-
-    // OneTrust form lifecycle event: payload includes CP load statuses
-    window.addEventListener("OnetrustFormLoaded", (event) => {
-      L("OnetrustFormLoaded event fired; detail:", event?.detail || "(no detail)");
-      if (event?.detail?.collectionPoints) {
-        L("CollectionPoint statuses:", event.detail.collectionPoints);
-      }
-    });
-
-    // Small waiter
-    function waitFor(checkFn, label, { interval=150, timeout=15000 } = {}) {
-      return new Promise((resolve, reject) => {
-        const start = Date.now();
-        const t = setInterval(() => {
-          try {
-            if (checkFn()) { clearInterval(t); L("READY →", label); resolve(true); }
-            else if (Date.now() - start > timeout) { clearInterval(t); const err = new Error("Timeout waiting for: " + label); E(err.message); reject(err); }
-          } catch (e) { clearInterval(t); reject(e); }
-        }, interval);
-      });
-    }
-
-    // Ensure the OneTrust command queue exists immediately
-    window.OtConsentStub = window.OtConsentStub || [];
-
-    // FINAL FLOW: InstallCP → preFill → init   (in that exact order)
-    function installPrefillInit(email) {
-      L("installPrefillInit() start with email:", email);
-
-      // Run inside OneTrust queue so it executes after the stub is parsed
-      window.OtConsentStub.push(function(api) {
-        L("OtConsentStub callback entered");
-
-        (async () => {
-          try {
-            // 1) Ensure webform API surface is present
-            await waitFor(() => window.OneTrust && OneTrust.webform, "OneTrust.webform API");
-            L("webform methods:", Object.keys(OneTrust.webform || {}));
-
-            // 2) Install CP (REQUIRED in your tenant flow)
-            if (typeof OneTrust.webform.InstallCP === "function") {
-              L("Calling InstallCP with CP_ID:", CP_ID);
-              await new Promise((resolve, reject) => {
-                try {
-                  OneTrust.webform.InstallCP(CP_ID, () => { L("InstallCP callback fired"); resolve(true); });
-                } catch (e) { reject(e); }
-              });
-            } else {
-              W("InstallCP not present; skipping");
-            }
-
-            // 3) Prefill BEFORE mount (label MUST match default-language label)
-            const data = {}; data[EMAIL_LABEL] = email;
-            if (typeof OneTrust.webform.preFill === "function") {
-              L("Using webform.preFill with:", data);
-              OneTrust.webform.preFill(data, CP_ID);
-            } else if (typeof OneTrust.webform.prefill === "function") {
-              L("Using webform.prefill (lowercase) with:", data);
-              OneTrust.webform.prefill(data, CP_ID);
-            } else if (typeof window.OtSdk === "function") {
-              L('Using OtSdk("consent","preFill") with:', data);
-              OtSdk("consent","preFill", data, CP_ID);
-            } else {
-              W("No prefill surface available (preFill/prefill/OtSdk) — continuing to init");
-            }
-
-            // 4) Mount the embedded form into the container
-            L('Calling api.init({ container: "ot-container" })');
-            api.init({ container: "ot-container" });
-
-            // 5) Confirm something rendered inside the container
-            await waitFor(
-              () => !!document.querySelector('#ot-container form, #ot-container [data-ot-form], #ot-container iframe'),
-              "Embedded form DOM present in #ot-container"
-            );
-            L("Embedded form detected in #ot-container");
-
-          } catch (err) {
-            E("installPrefillInit flow error:", err && (err.stack || err.message) || err);
-          }
-        })();
-      });
-    }
-
-    // Wire UI
-    window.addEventListener("DOMContentLoaded", () => {
-      const step1  = document.getElementById("step1");
-      const step2  = document.getElementById("step2");
-      const nextBtn = document.getElementById("nextBtn");
-      const backBtn = document.getElementById("backBtn");
-
-      nextBtn.addEventListener("click", () => {
-        const email = document.getElementById("email").value.trim();
-        if (!email) { alert("Please enter your email to continue."); return; }
-        L("Next clicked; email:", email);
-
-        // Show Step 2 (container visible, not mounted yet)
-        step1.classList.add("hidden");
-        step2.classList.remove("hidden");
-
-        // Log stub attributes for sanity
-        L("Stub → src:", stub?.src, "data-id:", stub?.getAttribute("data-id"), "worker:", stub?.getAttribute("worker"));
-
-        // RUN: InstallCP → preFill → init
-        installPrefillInit(email);
-      });
-
-      backBtn.addEventListener("click", () => {
-        L("Back clicked");
-        step2.classList.add("hidden");
-        step1.classList.remove("hidden");
-      });
-    });
+    OneTrust.webform.InstallCP(CP_ID,
+    const data = {}; data[EMAIL_LABEL] = email;
+    OneTrust.webform.prefill(({
+    "Email": "example@email.com"
+    }, CP_ID);
+    OneTrust.webform.init();
   </script>
 </body>
 </html>

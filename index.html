@@ -92,14 +92,18 @@
     /**** CONFIG ****/
     const EMAIL_LABEL = "Email"; // If Spanish default language, set to "Correo electrónico"
     const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+    
     OneTrust.webform.InstallCP(CP_ID, function() {
       // Callback function code goes here
       // This function will be called after the collection point is installed
     });
+    console.log('Installed', event.detail);
     OneTrust.webform.prefill(({
     "Email": "example@email.com"
     }, CP_ID);
+    console.log('Prefilled', event.detail);
     OneTrust.webform.init();
+    console.log('Initiated', event.detail);
   </script>
 </body>
 </html>

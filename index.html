@@ -19,206 +19,88 @@
   </script>
 
 
+
 <style>
-  /* ==============================
-     Site Design Tokens
-  =============================== */
-  :root {
-    --bg:#f4f6f8;
-    --card:#fff;
-    --text:#111;
-    --muted:#666;
-    --primary:#2563eb;
-    --border:#e5e7eb;
-
-    /* OT theming tokens (you can adjust for a square/flat look) */
-    --ot-surface: transparent;          /* or #fff to show a local card around the OT form */
-    --ot-border-color: transparent;     /* or var(--border) for a visible 1px frame */
-    --ot-radius: 0;                     /* 0 for square; 10px if you want rounded like site fields */
-    --ot-focus-ring: 0 0 0 2px rgba(37,99,235,0.15);
-    --ot-label: var(--text);
-    --ot-muted: var(--muted);
-    --ot-input-bg: #fff;
-    --ot-input-border: var(--border);
-    --ot-btn-primary-bg: var(--primary);
-    --ot-btn-primary-fg: #fff;
-    --ot-btn-secondary-bg: #fff;
-    --ot-btn-secondary-fg: var(--text);
-    --ot-btn-secondary-border: var(--border);
+  :root { 
+    --bg:#f4f6f8; 
+    --card:#fff; 
+    --text:#111; 
+    --muted:#666; 
+    --primary:#2563eb; 
+    --border:#e5e7eb; 
   }
 
-  /* ==============================
-     App Shell
-  =============================== */
-  body {
-    margin:0; padding:40px 16px;
-    background:var(--bg); color:var(--text);
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-    display:flex; justify-content:center;
+  body { 
+    margin:0; 
+    padding:40px 16px; 
+    background:var(--bg); 
+    color:var(--text);
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; 
+    display:flex; 
+    justify-content:center; 
   }
-  .card {
-    width:100%; max-width:560px; background:var(--card); padding:28px;
-    border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.08);
+
+  .card { 
+    width:100%; 
+    max-width:560px; 
+    background:var(--card); 
+    padding:28px;
+    border-radius:16px; 
+    box-shadow:0 8px 24px rgba(0,0,0,.08); 
   }
+
   h2 { margin:0 0 8px; font-weight:700; }
   p.sub { margin:0 0 20px; color:var(--muted); }
-  label { display:block; margin:14px 0 6px; font-weight:600; }
-  input, select {
-    width:100%; padding:12px; border-radius:10px; border:1px solid var(--border);
-    background:#fff; color:inherit; font:inherit;
+
+  label { 
+    display:block; 
+    margin:14px 0 6px; 
+    font-weight:600; 
   }
-  input:focus, select:focus {
-    outline:none; border-color:var(--primary); background:#fff; box-shadow: var(--ot-focus-ring);
+
+  input, select { 
+    width:100%; 
+    padding:12px; 
+    border-radius:10px; 
+    border:1px solid var(--border); 
   }
-  .actions { margin-top:20px; display:flex; gap:12px; }
-  button { flex:1; padding:14px; border:0; border-radius:10px; cursor:pointer; font-weight:700; }
+
+  input:focus, select:focus { 
+    outline:none; 
+    border-color:var(--primary); 
+    background:#fff; 
+  }
+
+  .actions { 
+    margin-top:20px; 
+    display:flex; 
+    gap:12px; 
+  }
+
+  button { 
+    flex:1; 
+    padding:14px; 
+    border:0; 
+    border-radius:10px; 
+    cursor:pointer; 
+    font-weight:700; 
+  }
+
   .btn-primary { background:var(--primary); color:#fff; }
-  .btn-ghost { background:#fff; border:1px solid var(--border); color:inherit; }
+  .btn-ghost { background:#fff; border:1px solid var(--border); }
   .hidden { display:none; }
 
-  /* OT container: remove debug frame and padding so OT content aligns with our layout */
-  #ot-container {
-    margin-top:16px; min-height:120px;
-    border:none; border-radius:0; padding:0; background:transparent;
+  /* ✔️ CLEAN OT CONTAINER — no borders, no radius */
+  #ot-container { 
+    margin-top:16px; 
+    min-height:120px; 
+    border:none !important; 
+    border-radius:0 !important; 
+    padding:0 !important; 
+    background:transparent !important; 
   }
+
   .hint { font-size:.9rem; color:#888; }
-
-  /* ==========================================
-     OneTrust Embedded Form — Visual Unification
-     Works when OT renders in the same DOM.
-     If your CP renders in an iFrame, place an
-     equivalent of this inside OT Branding CSS.
-  =========================================== */
-
-  /* Inherit typography globally inside OT blocks */
-  #ot-container, #ot-container :where(*) {
-    font-family:inherit !important;
-    color:inherit;
-    letter-spacing:normal;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    box-sizing:border-box;
-  }
-
-  /* Outer shells OT might inject — make them flat & consistent */
-  #ot-container :where(.ot-form, .ot-sdk-form, .ot-card, .ot-wrapper, .ot-panel, .ot-section, form) {
-    background: var(--ot-surface) !important;
-    border: 1px solid var(--ot-border-color) !important;
-    border-radius: var(--ot-radius) !important;
-    box-shadow: none !important;
-    padding: 0 !important;          /* Let our page spacing control outer rhythm */
-    margin: 0 !important;
-  }
-
-  /* Remove any decorative borders/frames */
-  #ot-container :where(.ot-border, .ot-outline) {
-    border:none !important; outline:none !important;
-  }
-
-  /* Headings & text */
-  #ot-container :where(h1,h2,h3,h4,.ot-form-title) {
-    margin: 0 0 8px !important;
-    font-weight: 700 !important;
-    color: var(--text) !important;
-    background: transparent !important;
-    border: 0 !important;
-  }
-  #ot-container :where(p,.ot-description,.ot-help) {
-    color: var(--ot-muted) !important;
-    margin: 0 0 16px !important;
-  }
-
-  /* Labels */
-  #ot-container :where(label, legend, .ot-sdk-label) {
-    display:block !important;
-    margin:14px 0 6px !important;
-    font-weight:600 !important;
-    color: var(--ot-label) !important;
-  }
-
-  /* Field containers & rows */
-  #ot-container :where(.ot-field, .ot-fieldset, .ot-group, .ot-form-row, .ot-sdk-row, fieldset) {
-    border:0 !important;
-    border-radius:0 !important;
-    box-shadow:none !important;
-    background:transparent !important;
-    padding:0 !important;
-    margin:0 0 12px !important;
-  }
-
-  /* Inputs / selects / textareas */
-  #ot-container :where(input, select, textarea) {
-    width:100% !important;
-    padding:12px !important;
-    border:1px solid var(--ot-input-border) !important;
-    border-radius: var(--ot-radius) !important;      /* unify with site by toggling --ot-radius */
-    background: var(--ot-input-bg) !important;
-    color: var(--text) !important;
-    font-size:1rem !important;
-    box-shadow:none !important;
-  }
-  #ot-container :where(input:focus, select:focus, textarea:focus) {
-    outline:none !important;
-    border-color: var(--primary) !important;
-    box-shadow: var(--ot-focus-ring) !important;
-  }
-
-  /* Checkboxes & radios */
-  #ot-container :where(input[type="checkbox"], input[type="radio"]) {
-    width:16px; height:16px;
-    margin-right:8px !important;
-    border-radius: calc(var(--ot-radius) / 4) !important; /* tiny rounding when radius > 0 */
-    transform:none !important;                             /* avoid layout shifts */
-  }
-
-  /* Choice/group spacing */
-  #ot-container :where(.ot-choice, .ot-sdk-choice) {
-    margin: 12px 0 !important;
-  }
-
-  /* Action bars */
-  #ot-container :where(.ot-actions, .ot-buttonbar, .ot-form-actions) {
-    margin-top:16px !important; gap:12px !important;
-    background:transparent !important; border:0 !important;
-    padding:0 !important;
-  }
-
-  /* Primary buttons */
-  #ot-container :where(button, .ot-sdk-btn, .ot-button, [type="submit"]) {
-    width:100% !important;
-    padding:12px 14px !important;
-    font-weight:700 !important;
-    font-size:1rem !important;
-    cursor:pointer !important;
-    border-radius: var(--ot-radius) !important;
-    border:0 !important;
-    box-shadow:none !important;
-  }
-  #ot-container :where(.ot-sdk-btn-primary, .ot-button--primary, button[type="submit"]) {
-    background: var(--ot-btn-primary-bg) !important;
-    color: var(--ot-btn-primary-fg) !important;
-  }
-
-  /* Secondary buttons */
-  #ot-container :where(.ot-sdk-btn-secondary, .ot-button--secondary) {
-    background: var(--ot-btn-secondary-bg) !important;
-    color: var(--ot-btn-secondary-fg) !important;
-    border: 1px solid var(--ot-btn-secondary-border) !important;
-  }
-
-  /* Errors / validation */
-  #ot-container :where(.ot-error, .ot-error-text, .ot-validation) {
-    color:#d9534f !important;
-    font-size:.875rem !important;
-    margin-top:4px !important;
-    background:transparent !important;
-    border:0 !important;
-  }
-
-  /* Respect reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-  }
 </style>
 
 </head>

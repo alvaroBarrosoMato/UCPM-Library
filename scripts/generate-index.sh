@@ -324,9 +324,9 @@ cat > "$OUTPUT" <<HTML
     }
 
     /* Column sizing: Banner | Description (wide) | Open */
-    th:nth-child(1), td:nth-child(1){ width: 22%; min-width: 180px; }
-    th:nth-child(2), td:nth-child(2){ width: 66%; }
-    th:nth-child(3), td:nth-child(3){ width: 12%; }
+    th:nth-child(1), td:nth-child(1){ width: 30%; min-width: 180px; }
+    th:nth-child(2), td:nth-child(2){ width: 55%; }
+    th:nth-child(3), td:nth-child(3){ width: 15%; }
 
     .name{
       font-weight: 650;

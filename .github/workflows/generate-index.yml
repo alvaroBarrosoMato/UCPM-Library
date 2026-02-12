@@ -1,32 +1,48 @@
-name: Generate HTML index
+name: Auto-generate HTML index
 
 on:
   push:
     branches: [ main ]
+    # Only run when HTML files or the generator change
+    paths:
+      - "**/*.html"
+      - "scripts/generate-index.sh"
+      - ".github/workflows/generate-index.yml"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build:
+  build-index:
+    # Prevent infinite loops when the workflow commits index.html
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Generate index.html
         run: |
           chmod +x scripts/generate-index.sh
           ./scripts/generate-index.sh
 
-      - name: Commit changes
+      - name: Show changes (debug)
+        run: |
+          git status
+          git diff --stat || true
+
+      - name: Commit updated index.html (if changed)
         run: |
           if git diff --quiet; then
-            echo "No changes"
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add index.html
-            git commit -m "Auto-generate HTML index"
-            git push
+            echo "No changes to commit."
+            exit 0
           fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Auto-generate HTML index"
+          git push

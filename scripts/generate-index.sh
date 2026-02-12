@@ -141,7 +141,7 @@ cat > "$OUTPUT" <<HTML
     a{ color:inherit; text-decoration:none; }
     a:hover{ text-decoration:none; }
 
-    .wrap{ max-width: 1120px; margin: 0 auto; padding: 28px 18px 64px; }
+    .wrap{ max-width: 1900px; margin: 0 auto; padding: 28px 18px 64px; }
 
     /* Header (no shaded overlay) */
     .top{

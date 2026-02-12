@@ -45,10 +45,21 @@ extract_description() {
   desc="${line#*Description:}"
   desc="${desc%-->*}"
   desc="$(printf '%s' "$desc" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-
   [[ -z "$desc" ]] && desc="—"
   printf '%s' "$desc"
 }
+
+# Determine "Last Update" from git history (last commit on current branch)
+# Date: ISO 8601, Author: commit author name
+LAST_UPDATE_DATETIME="$(git log -1 --format=%aI 2>/dev/null || true)"
+LAST_UPDATE_USER="$(git log -1 --format=%an 2>/dev/null || true)"
+if [[ -z "${LAST_UPDATE_DATETIME}" ]]; then
+  # fallback if not a git repo (rare)
+  LAST_UPDATE_DATETIME="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+fi
+if [[ -z "${LAST_UPDATE_USER}" ]]; then
+  LAST_UPDATE_USER="unknown"
+fi
 
 # Collect html files (exclude index.html itself + excluded paths)
 FIND_CMD=(find . -type f -name "*.html" ! -path "./index.html")
@@ -59,7 +70,6 @@ done
 mapfile -t FILES < <("${FIND_CMD[@]}" | sort | sed 's|^\./||')
 
 COUNT="${#FILES[@]}"
-GENERATED_AT="$(date -u +"%Y-%m-%d %H:%M:%S UTC")"
 
 # Group by directory
 declare -A FILE_GROUPS
@@ -135,7 +145,7 @@ cat > "$OUTPUT" <<HTML
 
     /* Header (no shaded overlay) */
     .top{
-      position: static; /* remove sticky shading effect */
+      position: static;
       padding: 6px 0 14px;
       background: none;
       backdrop-filter: none;
@@ -175,7 +185,7 @@ cat > "$OUTPUT" <<HTML
       border-radius: 999px;
       border: 1px solid var(--border);
       background: var(--panel);
-      box-shadow: none; /* remove shading */
+      box-shadow: none;
     }
     .dot{
       width:10px;height:10px;border-radius:50%;
@@ -219,7 +229,7 @@ cat > "$OUTPUT" <<HTML
       border-radius: 999px;
       padding: 10px 12px;
       cursor:pointer;
-      box-shadow: none; /* less shading */
+      box-shadow: none;
       transition: transform .08s ease, background .15s ease;
       user-select:none;
       white-space: nowrap;
@@ -284,7 +294,8 @@ cat > "$OUTPUT" <<HTML
       width:100%;
       border-collapse: separate;
       border-spacing: 0;
-      min-width: 760px;
+      min-width: 640px;
+      table-layout: fixed;
     }
     thead th{
       text-align:left;
@@ -312,27 +323,29 @@ cat > "$OUTPUT" <<HTML
       tbody tr:hover td{ background: rgba(15,23,42,.03); }
     }
 
+    /* Column sizing: Banner | Description (wide) | Open */
+    th:nth-child(1), td:nth-child(1){ width: 22%; min-width: 180px; }
+    th:nth-child(2), td:nth-child(2){ width: 66%; }
+    th:nth-child(3), td:nth-child(3){ width: 12%; }
+
     .name{
       font-weight: 650;
       letter-spacing: -.01em;
       white-space: nowrap;
-    }
-    .path{
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow:hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 44ch;
-      display:block;
-      margin-top: 4px;
+      display: inline-block;
+      max-width: 100%;
+      vertical-align: bottom;
     }
     .desc{
       color: var(--text);
-      opacity: .92;
-      max-width: 70ch;
-      line-height: 1.35;
+      opacity: .95;
+      line-height: 1.5;
+      font-size: 14px;
+      white-space: normal;
+      word-break: break-word;
+      max-width: 110ch;
     }
     .badge{
       display:inline-block;
@@ -352,6 +365,7 @@ cat > "$OUTPUT" <<HTML
     .open a{
       display:inline-flex;
       align-items:center;
+      justify-content:center;
       gap:8px;
       padding: 8px 10px;
       border-radius: 999px;
@@ -409,14 +423,12 @@ cat > "$OUTPUT" <<HTML
       transform: translateX(-50%) translateY(-2px);
     }
 
-    /* ✅ Responsive: turn table into stacked cards on small screens */
+    /* ✅ Responsive: table becomes stacked cards */
     @media (max-width: 820px){
       table{ min-width: 0; }
       thead{ display:none; }
       table, tbody, tr, td{ display:block; width:100%; }
-      tbody tr{
-        border-bottom: 10px solid transparent;
-      }
+      tbody tr{ border-bottom: 10px solid transparent; }
       tbody td{
         border-bottom: 1px solid var(--border);
         display:flex;
@@ -429,17 +441,16 @@ cat > "$OUTPUT" <<HTML
         content: attr(data-label);
         font-weight: 650;
         color: var(--muted);
-        flex: 0 0 120px;
-        max-width: 120px;
+        flex: 0 0 110px;
+        max-width: 110px;
       }
-      .path{ max-width: 100%; }
+      .desc{ max-width: 100%; font-size: 15px; }
+      .open a{ width: fit-content; }
     }
 
-    /* Header responsiveness */
     @media (max-width: 560px){
       .controls{ width:100%; justify-content:flex-start; }
       .search{ max-width: 100%; }
-      .btn{ width:auto; }
     }
   </style>
 </head>
@@ -452,7 +463,7 @@ cat > "$OUTPUT" <<HTML
           <h1>UCPM Banners Library</h1>
           <div class="sub">
             <span class="pill"><span class="dot"></span><strong>${COUNT}</strong> file(s)</span>
-            <span class="pill">Generated: <span class="mono">${GENERATED_AT}</span></span>
+            <span class="pill">Last Update: <span class="mono">${LAST_UPDATE_DATETIME}</span> <span class="mono">(${LAST_UPDATE_USER})</span></span>
           </div>
         </div>
 
@@ -478,7 +489,6 @@ HTML
 else
   for group in "${ORDERED_GROUPS[@]}"; do
     group_count="$(printf "%s" "${FILE_GROUPS[$group]}" | grep -c $'\t' || true)"
-
     esc_group="$(html_escape "$group")"
 
     cat >> "$OUTPUT" <<HTML
@@ -497,7 +507,6 @@ else
             <tr>
               <th>Banner</th>
               <th>Description</th>
-              <th>Path</th>
               <th>Open</th>
             </tr>
           </thead>
@@ -520,11 +529,8 @@ HTML
               <td data-label="Description">
                 <div class="desc">${esc_desc}</div>
               </td>
-              <td data-label="Path">
-                <span class="path">${esc_full}</span>
-              </td>
               <td class="open" data-label="Open">
-                <a href="${esc_full}" title="Open file">Open ↗</a>
+                <a href="${esc_full}" title="Open">Open ↗</a>
               </td>
             </tr>
 HTML
@@ -570,7 +576,6 @@ cat >> "$OUTPUT" <<'HTML'
         tr.style.display = visible ? '' : 'none';
       });
 
-      // Hide whole sections if none of their rows are visible
       sections.forEach(sec => {
         const visibleRows = Array.from(sec.querySelectorAll('tbody tr'))
           .some(tr => tr.style.display !== 'none');
@@ -581,7 +586,6 @@ cat >> "$OUTPUT" <<'HTML'
     q?.addEventListener('input', applyFilter);
     applyFilter();
 
-    // Expand/Collapse: show/hide tables within sections
     expand?.addEventListener('click', () => {
       document.querySelectorAll('.table-wrap').forEach(w => w.style.display = '');
     });
@@ -589,7 +593,7 @@ cat >> "$OUTPUT" <<'HTML'
       document.querySelectorAll('.table-wrap').forEach(w => w.style.display = 'none');
     });
 
-    // Ctrl/Cmd-click Open button copies the href instead of navigating
+    // Ctrl/Cmd-click on Open copies the href instead of navigating
     document.addEventListener('click', async (e) => {
       const a = e.target.closest('a[href]');
       if(!a) return;

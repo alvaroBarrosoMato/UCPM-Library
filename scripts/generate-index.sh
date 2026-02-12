@@ -25,7 +25,7 @@ COUNT="${#FILES[@]}"
 GENERATED_AT="$(date -u +"%Y-%m-%d %H:%M:%S UTC")"
 
 # Group by directory
-declare -A GROUPS
+declare -A FILE_GROUPS
 declare -a ORDERED_GROUPS
 
 for f in "${FILES[@]}"; do
@@ -33,13 +33,13 @@ for f in "${FILES[@]}"; do
   base="$(basename "$f")"
   [[ "$dir" == "." ]] && dir="(root)"
 
-  if [[ -z "${GROUPS[$dir]+x}" ]]; then
-    GROUPS[$dir]=""
+  if [[ -z "${FILE_GROUPS[$dir]+x}" ]]; then
+    FILE_GROUPS[$dir]=""
     ORDERED_GROUPS+=("$dir")
   fi
 
   # store: fullpath<TAB>basename
-  GROUPS[$dir]+="${f}"$'\t'"${base}"$'\n'
+  FILE_GROUPS[$dir]+="${f}"$'\t'"${base}"$'\n'
 done
 
 # --- Write HTML ---
@@ -402,7 +402,7 @@ else
   echo '    <div class="grid" id="grid">' >> "$OUTPUT"
 
   for group in "${ORDERED_GROUPS[@]}"; do
-    group_count="$(printf "%s" "${GROUPS[$group]}" | grep -c $'\t' || true)"
+    group_count="$(printf "%s" "${FILE_GROUPS[$group]}" | grep -c $'\t' || true)"
 
     cat >> "$OUTPUT" <<HTML
       <div class="card" data-folder="${group}">
@@ -435,7 +435,7 @@ HTML
             </a>
           </li>
 HTML
-    done < <(printf "%s" "${GROUPS[$group]}")
+    done < <(printf "%s" "${FILE_GROUPS[$group]}")
 
     cat >> "$OUTPUT" <<'HTML'
         </ul>

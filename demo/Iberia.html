@@ -1,10 +1,10 @@
-<!-- Description: Single-file demo page that shows a simulated Iberia/Stripe-style checkout on top and embeds a OneTrust UCPM Embedded Web Form Collection Point underneath (auto/instant load, no prefills). -->
+<!-- Description: Single-file demo page that shows a simulated Iberia/Stripe-style checkout on top and MANUALLY loads a OneTrust UCPM Embedded Web Form Collection Point underneath (no OneTrust prefills). -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Iberia-branded demo with simulated payment UI + OneTrust UCPM Embedded Web Form Collection Point (Embedded Web Form)." />
+  <meta name="description" content="Iberia-branded demo with simulated payment UI + OneTrust UCPM Embedded Web Form Collection Point (manual load)." />
   <meta name="theme-color" content="#D71920" />
   <title>Iberia | Simulated Checkout + Consent (OneTrust UCPM)</title>
 
@@ -17,7 +17,6 @@
 
   <style>
     :root{
-      /* Iberia-inspired palette */
       --ib-red:#D71920;
       --ib-red-2:#B5141A;
       --ib-yellow:#FFC72C;
@@ -49,13 +48,8 @@
     a{ color: var(--ib-red); text-decoration: none; }
     a:hover{ text-decoration: underline; }
 
-    .wrap{
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 28px 16px 34px;
-    }
+    .wrap{ max-width: 1120px; margin: 0 auto; padding: 28px 16px 34px; }
 
-    /* Header */
     header{
       display:flex;
       align-items:center;
@@ -64,19 +58,13 @@
       padding: 10px 4px 18px;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 240px;
-    }
+    .brand{ display:flex; align-items:center; gap:12px; min-width: 240px; }
 
     .logoMark{
       width: 46px;
       height: 46px;
       border-radius: 14px;
-      background:
-        conic-gradient(from 240deg, var(--ib-red), var(--ib-red), var(--ib-yellow), var(--ib-yellow), var(--ib-red));
+      background: conic-gradient(from 240deg, var(--ib-red), var(--ib-red), var(--ib-yellow), var(--ib-yellow), var(--ib-red));
       box-shadow: 0 10px 24px rgba(215,25,32,.25);
       position:relative;
       isolation:isolate;
@@ -92,22 +80,9 @@
       mix-blend-mode: overlay;
     }
 
-    .brandText{
-      display:flex;
-      flex-direction:column;
-      line-height:1.1;
-    }
-    .brandText .title{
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-    .brandText .subtitle{
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
+    .brandText{ display:flex; flex-direction:column; line-height:1.1; }
+    .brandText .title{ font-size: 18px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    .brandText .subtitle{ font-size: 12px; color: var(--muted); margin-top: 4px; }
 
     .pill{
       display:inline-flex;
@@ -124,18 +99,10 @@
       color: var(--muted);
       white-space: nowrap;
     }
-    .dot{
-      width:9px;height:9px;border-radius:99px;
-      background: var(--ib-red);
-      box-shadow: 0 0 0 4px rgba(215,25,32,.15);
-    }
 
-    /* Layout */
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
+    .dot{ width:9px;height:9px;border-radius:99px; background: var(--ib-red); box-shadow: 0 0 0 4px rgba(215,25,32,.15); }
+
+    .grid{ display:grid; grid-template-columns: 1fr; gap: 18px; }
 
     .card{
       background: var(--card);
@@ -144,6 +111,7 @@
       box-shadow: var(--shadow);
       overflow:hidden;
     }
+
     .cardHeader{
       padding: 18px 18px 12px;
       display:flex;
@@ -151,42 +119,25 @@
       justify-content:space-between;
       gap:12px;
       border-bottom: 1px solid rgba(228,231,236,.8);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.85) 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.85) 100%);
     }
-    .cardTitle{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
-    .cardTitle h2{
-      margin:0;
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: .2px;
-    }
-    .cardTitle p{
-      margin:0;
-      font-size: 12px;
-      color: var(--muted);
-    }
+
+    .cardTitle{ display:flex; flex-direction:column; gap:4px; }
+    .cardTitle h2{ margin:0; font-size: 16px; font-weight: 800; letter-spacing: .2px; }
+    .cardTitle p{ margin:0; font-size: 12px; color: var(--muted); }
 
     .cardBody{ padding: 18px; }
 
-    /* Simulated Stripe-like payment UI */
-    .checkoutRow{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 18px;
-      align-items:start;
-    }
+    .checkoutRow{ display:grid; grid-template-columns: 1.15fr .85fr; gap: 18px; align-items:start; }
     .checkoutLeft{ display:flex; flex-direction:column; gap:14px; }
+
     .checkoutRight{
       background: linear-gradient(180deg, rgba(16,24,40,.02) 0%, rgba(16,24,40,.00) 100%);
       border: 1px dashed rgba(71,84,103,.25);
       border-radius: var(--radius-sm);
       padding: 14px;
     }
+
     .orderLine{
       display:flex;
       align-items:center;
@@ -199,11 +150,8 @@
     }
     .orderLine:last-child{ border-bottom:none; }
     .orderLine strong{ color: var(--ink); }
-    .amount{
-      font-weight: 900;
-      color: var(--ink);
-      letter-spacing:.2px;
-    }
+
+    .amount{ font-weight: 900; color: var(--ink); letter-spacing:.2px; }
 
     .stripeShell{
       border-radius: var(--radius-sm);
@@ -212,49 +160,28 @@
       overflow:hidden;
       background: #fff;
     }
+
     .stripeTop{
       padding: 14px 14px 12px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      background:
-        linear-gradient(135deg, rgba(215,25,32,.10) 0%, rgba(255,199,44,.18) 55%, rgba(255,255,255,1) 100%);
+      background: linear-gradient(135deg, rgba(215,25,32,.10) 0%, rgba(255,199,44,.18) 55%, rgba(255,255,255,1) 100%);
       border-bottom: 1px solid rgba(228,231,236,.9);
     }
-    .stripeBadge{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight: 800;
-      font-size: 12px;
-      color: var(--ink);
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
+
+    .stripeBadge{ display:flex; align-items:center; gap:10px; font-weight: 800; font-size: 12px; color: var(--ink); letter-spacing: .06em; text-transform: uppercase; }
     .stripeBadge .mini{
       width:28px;height:28px;border-radius:10px;
       background: linear-gradient(135deg, #635BFF 0%, #4F46E5 65%, #1D4ED8 100%);
       position:relative;
       box-shadow: 0 12px 24px rgba(79,70,229,.25);
     }
-    .stripeBadge .mini:after{
-      content:"";
-      position:absolute;
-      inset:7px;
-      border-radius:7px;
-      background: rgba(255,255,255,.18);
-      transform: rotate(8deg);
-      mix-blend-mode: overlay;
-    }
-    .secureHint{
-      font-size: 12px;
-      color: var(--muted);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-    }
+    .stripeBadge .mini:after{ content:""; position:absolute; inset:7px; border-radius:7px; background: rgba(255,255,255,.18); transform: rotate(8deg); mix-blend-mode: overlay; }
+
+    .secureHint{ font-size: 12px; color: var(--muted); display:flex; align-items:center; gap:8px; white-space:nowrap; }
+
     .lock{
       width: 16px; height:16px;
       display:inline-block;
@@ -263,33 +190,15 @@
       mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2Zm-7-2a2 2 0 0 1 4 0v2h-4V6Zm7 14H7V10h10v10Z"/></svg>') center/contain no-repeat;
     }
 
-    .stripeForm{
-      padding: 14px;
-      display:grid;
-      gap: 12px;
-    }
-    .fieldGrid{
-      display:grid;
-      grid-template-columns: 1fr 140px 120px;
-      gap: 10px;
-    }
-    .labelRow{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom: 4px;
-    }
-    label{
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing:.2px;
-    }
-    .hint{
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .stripeForm{ padding: 14px; display:grid; gap: 12px; }
+
+    .fieldGrid{ display:grid; grid-template-columns: 1fr 140px 120px; gap: 10px; }
+
+    .labelRow{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom: 4px; }
+
+    label{ font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing:.2px; }
+    .hint{ font-size: 12px; color: var(--muted); }
+
     input{
       width:100%;
       padding: 12px 12px;
@@ -298,21 +207,12 @@
       outline:none;
       font-size: 14px;
       background: #fff;
-      transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+      transition: border-color .15s ease, box-shadow .15s ease;
     }
-    input:focus{
-      border-color: rgba(99,91,255,.55);
-      box-shadow: 0 0 0 4px rgba(99,91,255,.14);
-    }
+    input:focus{ border-color: rgba(99,91,255,.55); box-shadow: 0 0 0 4px rgba(99,91,255,.14); }
     input::placeholder{ color: rgba(71,84,103,.55); }
 
-    .payRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      margin-top: 2px;
-    }
+    .payRow{ display:flex; align-items:center; justify-content:space-between; gap: 12px; margin-top: 2px; flex-wrap: wrap; }
 
     .btn{
       appearance:none;
@@ -329,22 +229,25 @@
       user-select:none;
     }
     .btn:active{ transform: translateY(1px); }
+
     .btnPrimary{
       background: linear-gradient(135deg, var(--ib-red) 0%, #F04438 45%, var(--ib-yellow) 110%);
       color:#fff;
       box-shadow: 0 16px 34px rgba(215,25,32,.22);
     }
     .btnPrimary:hover{ box-shadow: 0 18px 40px rgba(215,25,32,.28); }
-    .btnGhost{
-      background: rgba(16,24,40,.04);
-      color: var(--ink);
-    }
+
+    .btnGhost{ background: rgba(16,24,40,.04); color: var(--ink); }
     .btnGhost:hover{ background: rgba(16,24,40,.06); }
-    .btn[disabled]{
-      opacity:.55;
-      cursor:not-allowed;
-      transform:none;
+
+    .btnStripe{
+      background: linear-gradient(135deg, #635BFF 0%, #4F46E5 60%, #1D4ED8 110%);
+      color: #fff;
+      box-shadow: 0 16px 34px rgba(79,70,229,.22);
     }
+    .btnStripe:hover{ box-shadow: 0 18px 40px rgba(79,70,229,.28); }
+
+    .btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none; }
 
     .msg{
       border-radius: 14px;
@@ -357,132 +260,54 @@
       gap:10px;
       align-items:flex-start;
     }
+
     .msg strong{ color: var(--ink); }
-    .msg.ok{
-      border-color: rgba(5,150,105,.25);
-      background: rgba(5,150,105,.08);
-      color: #065F46;
-    }
-    .msg.err{
-      border-color: rgba(240,68,56,.28);
-      background: rgba(240,68,56,.08);
-      color: #7A271A;
-    }
-    .icon{
-      width:18px;height:18px;border-radius: 6px;
-      background: rgba(71,84,103,.12);
-      flex: 0 0 auto;
-      position:relative;
-    }
-    .icon:after{
-      content:"";
-      position:absolute;
-      inset:4px;
-      border-radius:5px;
-      background: rgba(71,84,103,.24);
-    }
+
+    .msg.ok{ border-color: rgba(5,150,105,.25); background: rgba(5,150,105,.08); color: #065F46; }
+    .msg.err{ border-color: rgba(240,68,56,.28); background: rgba(240,68,56,.08); color: #7A271A; }
+
+    .icon{ width:18px;height:18px;border-radius: 6px; background: rgba(71,84,103,.12); flex: 0 0 auto; position:relative; }
+    .icon:after{ content:""; position:absolute; inset:4px; border-radius:5px; background: rgba(71,84,103,.24); }
     .icon.ok{ background: rgba(5,150,105,.18); }
     .icon.ok:after{ background: rgba(5,150,105,.45); }
     .icon.err{ background: rgba(240,68,56,.18); }
     .icon.err:after{ background: rgba(240,68,56,.45); }
 
-    /* OneTrust container styling: keep it clean; avoid assuming OT internal selectors */
-    .otShell{
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(228,231,236,.95);
-      background: #fff;
-      box-shadow: var(--shadow-soft);
-      overflow:hidden;
-    }
+    .otShell{ border-radius: var(--radius-sm); border: 1px solid rgba(228,231,236,.95); background: #fff; box-shadow: var(--shadow-soft); overflow:hidden; }
+
     .otTop{
       padding: 14px;
       border-bottom: 1px solid rgba(228,231,236,.9);
-      background:
-        linear-gradient(135deg, rgba(255,199,44,.22) 0%, rgba(255,255,255,1) 55%, rgba(215,25,32,.08) 100%);
+      background: linear-gradient(135deg, rgba(255,199,44,.22) 0%, rgba(255,255,255,1) 55%, rgba(215,25,32,.08) 100%);
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 12px;
-    }
-    .otTop .left{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-    .otTop .left .kicker{
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--ib-red-2);
-    }
-    .otTop .left .desc{
-      font-size: 12px;
-      color: var(--muted);
+      flex-wrap: wrap;
     }
 
-    /* Debug / Status */
-    .statusGrid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
-    .statusBox{
-      border-radius: 14px;
-      border: 1px solid rgba(228,231,236,.95);
-      background: rgba(255,255,255,.8);
-      padding: 12px;
-    }
-    .statusHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .statusHead .label{
-      font-weight: 900;
-      font-size: 12px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .statusHead .chip{
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(228,231,236,.95);
-      background: rgba(16,24,40,.02);
-      color: var(--muted);
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-    }
-    .chip .tinyDot{
-      width:8px;height:8px;border-radius:99px;background: rgba(71,84,103,.55);
-    }
+    .otTop .left{ display:flex; flex-direction:column; gap:2px; }
+    .otTop .left .kicker{ font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--ib-red-2); }
+    .otTop .left .desc{ font-size: 12px; color: var(--muted); }
+
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; color: rgba(16,24,40,.78); line-height: 1.45; word-break: break-word; white-space: pre-wrap; }
+
+    .statusGrid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
+
+    .statusBox{ border-radius: 14px; border: 1px solid rgba(228,231,236,.95); background: rgba(255,255,255,.8); padding: 12px; }
+
+    .statusHead{ display:flex; align-items:center; justify-content:space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+
+    .statusHead .label{ font-weight: 900; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+    .statusHead .chip{ font-size: 12px; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(228,231,236,.95); background: rgba(16,24,40,.02); color: var(--muted); display:inline-flex; align-items:center; gap:8px; white-space:nowrap; }
+
+    .chip .tinyDot{ width:8px;height:8px;border-radius:99px;background: rgba(71,84,103,.55); }
     .chip.ok .tinyDot{ background: rgba(5,150,105,.85); }
     .chip.err .tinyDot{ background: rgba(240,68,56,.9); }
-    .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 12px;
-      color: rgba(16,24,40,.78);
-      line-height: 1.45;
-      word-break: break-word;
-      white-space: pre-wrap;
-    }
 
-    footer{
-      margin-top: 20px;
-      padding: 18px 0 10px;
-      text-align:center;
-      color: var(--muted);
-      font-size: 12px;
-    }
+    footer{ margin-top: 20px; padding: 18px 0 10px; text-align:center; color: var(--muted); font-size: 12px; }
 
-    /* Mobile / responsive */
     @media (max-width: 920px){
       .checkoutRow{ grid-template-columns: 1fr; }
       .fieldGrid{ grid-template-columns: 1fr; }
@@ -503,12 +328,12 @@
         <div class="logoMark" aria-hidden="true"></div>
         <div class="brandText">
           <div class="title">IBERIA</div>
-          <div class="subtitle">Checkout + Consent demo · Load Method: <strong id="loadMethodLabel">Instant</strong></div>
+          <div class="subtitle">Checkout + Consent demo · Load Method: <strong id="loadMethodLabel">Manual</strong></div>
         </div>
       </div>
       <div class="pill" role="status" aria-live="polite">
         <span class="dot" aria-hidden="true"></span>
-        <span id="headerStatusText">Ready — waiting for OneTrust form events…</span>
+        <span id="headerStatusText">Ready — consent form will load when you click “Continue to consent”.</span>
       </div>
     </header>
 
@@ -518,7 +343,7 @@
         <div class="cardHeader">
           <div class="cardTitle">
             <h2>1) Payment (simulated)</h2>
-            <p>Stripe-like UI for demo purposes only — no real payment processing.</p>
+            <p>Stripe-like UI for demo purposes only — no real payment processing. Fields are preloaded with valid demo values.</p>
           </div>
           <div class="pill" aria-label="Simulation mode pill">
             <span class="dot" style="background:#635BFF; box-shadow: 0 0 0 4px rgba(99,91,255,.14)" aria-hidden="true"></span>
@@ -547,7 +372,7 @@
                       <label for="cardholder">Cardholder name</label>
                       <span class="hint">As printed on card</span>
                     </div>
-                    <input id="cardholder" name="cardholder" type="text" inputmode="text" placeholder="e.g., Alvaro Barroso" autocomplete="off" />
+                    <input id="cardholder" name="cardholder" type="text" inputmode="text" placeholder="e.g., Alvaro Barroso" autocomplete="off" value="Alvaro Barroso" />
                   </div>
 
                   <div>
@@ -555,7 +380,7 @@
                       <label for="cardnumber">Card number</label>
                       <span class="hint">Demo accepts test numbers</span>
                     </div>
-                    <input id="cardnumber" name="cardnumber" type="text" inputmode="numeric" placeholder="4242 4242 4242 4242" autocomplete="off" maxlength="19" />
+                    <input id="cardnumber" name="cardnumber" type="text" inputmode="numeric" placeholder="4242 4242 4242 4242" autocomplete="off" maxlength="19" value="4242 4242 4242 4242" />
                   </div>
 
                   <div class="fieldGrid">
@@ -564,21 +389,21 @@
                         <label for="email">Email receipt</label>
                         <span class="hint">Optional</span>
                       </div>
-                      <input id="email" name="email" type="email" inputmode="email" placeholder="name@domain.com" autocomplete="off" />
+                      <input id="email" name="email" type="email" inputmode="email" placeholder="name@domain.com" autocomplete="off" value="alvaro@example.com" />
                     </div>
                     <div>
                       <div class="labelRow">
                         <label for="exp">Expiry</label>
                         <span class="hint">MM/YY</span>
                       </div>
-                      <input id="exp" name="exp" type="text" inputmode="numeric" placeholder="12/34" autocomplete="off" maxlength="5" />
+                      <input id="exp" name="exp" type="text" inputmode="numeric" placeholder="12/34" autocomplete="off" maxlength="5" value="12/34" />
                     </div>
                     <div>
                       <div class="labelRow">
                         <label for="cvc">CVC</label>
                         <span class="hint">3–4 digits</span>
                       </div>
-                      <input id="cvc" name="cvc" type="password" inputmode="numeric" placeholder="123" autocomplete="off" maxlength="4" />
+                      <input id="cvc" name="cvc" type="password" inputmode="numeric" placeholder="123" autocomplete="off" maxlength="4" value="123" />
                     </div>
                   </div>
 
@@ -588,12 +413,16 @@
                       <span aria-hidden="true">✈️</span>
                       <span>Pay €199.00</span>
                     </button>
+                    <button class="btn btnStripe" type="button" id="continueBtn" aria-label="Continue to consent">
+                      <span aria-hidden="true">✅</span>
+                      <span>Continue to consent</span>
+                    </button>
                   </div>
 
                   <div id="paymentMsg" class="msg" role="status" aria-live="polite">
                     <span class="icon" aria-hidden="true"></span>
                     <div>
-                      <strong>Demo tip:</strong> Use <span class="mono">4242 4242 4242 4242</span>, any future <span class="mono">MM/YY</span>, any 3–4 digit <span class="mono">CVC</span>.
+                      <strong>Demo defaults preloaded.</strong> Click <span class="mono">Pay</span> to simulate success, then <span class="mono">Continue to consent</span> to manually load the OneTrust form.
                       <div class="hint" style="margin-top:4px;">Nothing is stored; this only simulates success/failure states.</div>
                     </div>
                   </div>
@@ -619,7 +448,7 @@
                 <span class="amount">€199.00</span>
               </div>
               <div class="hint" style="margin-top:10px;">
-                Next step: review and submit the consent form below. (Form loads automatically — Instant.)
+                Consent loads <strong>manually</strong> via InstallCP after you click <span class="mono">Continue to consent</span>.
               </div>
             </aside>
           </div>
@@ -631,7 +460,7 @@
         <div class="cardHeader">
           <div class="cardTitle">
             <h2>2) Consent &amp; Preferences</h2>
-            <p>Embedded OneTrust UCPM Web Form Collection Point rendered below.</p>
+            <p>OneTrust UCPM Embedded Web Form Collection Point will be installed into the container below when you trigger manual load.</p>
           </div>
           <div class="pill" aria-label="OneTrust events pill">
             <span class="dot" style="background:var(--ib-yellow); box-shadow: 0 0 0 4px rgba(255,199,44,.22)" aria-hidden="true"></span>
@@ -650,6 +479,10 @@
                 <span class="lock" aria-hidden="true"></span>
                 <span>Consent capture</span>
               </div>
+              <button class="btn btnGhost" type="button" id="loadOtBtn" aria-label="Load OneTrust consent form">
+                <span aria-hidden="true">⬇️</span>
+                <span>Load consent form</span>
+              </button>
             </div>
 
             <!-- TARGET_CONTAINER_ID: required DOM element where the OneTrust web form should render -->
@@ -663,7 +496,7 @@
                 <div class="label">Debug / Status</div>
                 <div class="chip" id="statusChip">
                   <span class="tinyDot" aria-hidden="true"></span>
-                  <span id="statusChipText">Initializing</span>
+                  <span id="statusChipText">Ready</span>
                 </div>
               </div>
               <div class="mono" id="statusLog">Booting…</div>
@@ -679,7 +512,7 @@
               </div>
               <div class="mono" id="prefillLog">
 Prefill is disabled for this demo.
-If you ever enable prefilling, OneTrust supports passing query parameters where each key matches the “Form Field Label” configured in OneTrust.
+If you enable prefilling in OneTrust, pass query parameters where each key matches the “Form Field Label” configured in OneTrust.
 Example: ?Email=name%40domain.com&amp;Country=Spain
 Note: values must be URL-encoded (e.g. “+” → “%2B”) and fields separated by “&amp;”.
               </div>
@@ -695,17 +528,12 @@ Note: values must be URL-encoded (e.g. “+” → “%2B”) and fields separat
   <script>
     "use strict";
 
-    /**
-     * Single configuration object (required).
-     * Instant: do not call InstallCP manually (assume it appears on page load).
-     * Manual: call InstallCP when desired.
-     */
     const CONFIG = {
       collectionPointId: "c9322d35-cb63-4974-b65a-5d415f818a05",
-      loadMethod: "Instant",              // "Instant" | "Manual"
-      containerId: "ot-container",        // TARGET_CONTAINER_ID
+      loadMethod: "Manual",               // Manual requested
+      containerId: "ot-container",
       optionalRedirectUrl: "",            // none
-      prefillMode: "None"                 // "None" | "QueryParameters"
+      prefillMode: "None"                 // no OneTrust prefills
     };
 
     // ---------- UI helpers ----------
@@ -720,15 +548,14 @@ Note: values must be URL-encoded (e.g. “+” → “%2B”) and fields separat
       statusLog: el("statusLog"),
       prefillChip: el("prefillChip"),
       prefillChipText: el("prefillChipText"),
-      prefillLog: el("prefillLog")
+      prefillLog: el("prefillLog"),
+      loadOtBtn: el("loadOtBtn"),
+      continueBtn: el("continueBtn")
     };
 
     function safeStringify(obj) {
-      try {
-        return JSON.stringify(obj, (k, v) => (typeof v === "bigint" ? v.toString() : v), 2);
-      } catch (e) {
-        return String(obj);
-      }
+      try { return JSON.stringify(obj, (k, v) => (typeof v === "bigint" ? v.toString() : v), 2); }
+      catch (e) { return String(obj); }
     }
 
     function setChip(state /* ok|err|neutral */, text) {
@@ -764,11 +591,15 @@ Note: values must be URL-encoded (e.g. “+” → “%2B”) and fields separat
       }
     }
 
-    // ---------- OneTrust load control (Manual only) ----------
+    // ---------- OneTrust manual loading (InstallCP) ----------
     let installAttempted = false;
 
-    function canUseOneTrustInstall() {
+    function canUseOneTrustWebformInstall() {
       return Boolean(window.OneTrust && window.OneTrust.webform && typeof window.OneTrust.webform.InstallCP === "function");
+    }
+
+    function canUseOtSdkQueue() {
+      return typeof window.OtSdk === "function";
     }
 
     function installCollectionPointManual(triggerSource) {
@@ -777,29 +608,65 @@ Note: values must be URL-encoded (e.g. “+” → “%2B”) and fields separat
         logStatus(`InstallCP skipped (already attempted). Trigger: ${triggerSource}`);
         return;
       }
-      installAttempted = true;
 
-      if (!canUseOneTrustInstall()) {
-        const msg = "OneTrust SDK not available yet — cannot call InstallCP. Check integration script in <head>.";
+      // fail-safe: ensure container exists
+      const container = document.getElementById(CONFIG.containerId);
+      if (!container) {
+        const msg = `TARGET_CONTAINER_ID not found in DOM: #${CONFIG.containerId}`;
         console.error(msg);
-        setChip("err", "SDK missing");
+        setChip("err", "Container missing");
         logStatus(msg);
-        updateHeaderStatus("OneTrust SDK not detected — cannot force-load (Manual).", "warn");
+        updateHeaderStatus("Container missing — form cannot render.", "warn");
         return;
       }
 
+      installAttempted = true;
+      setChip("neutral", "Installing…");
+      updateHeaderStatus("Installing consent form…", "warn");
+      logStatus(`Manual load triggered (${triggerSource}). Attempting InstallCP for CP_ID=${CONFIG.collectionPointId}`);
+
       try {
-        setChip("neutral", "Installing…");
-        logStatus(`Calling OneTrust.webform.InstallCP(\"${CONFIG.collectionPointId}\") (Manual).`);
-        window.OneTrust.webform.InstallCP(CONFIG.collectionPointId, function (result) {
-          console.log("InstallCP callback result:", result);
-          logStatus("InstallCP callback returned:", result);
-          setChip(result ? "ok" : "err", result ? "InstallCP ok" : "InstallCP failed");
-        });
+        if (canUseOneTrustWebformInstall()) {
+          window.OneTrust.webform.InstallCP(CONFIG.collectionPointId, function (result) {
+            console.log("InstallCP callback result:", result);
+            logStatus("InstallCP callback returned:", result);
+            if (result === true) {
+              setChip("ok", "InstallCP ok");
+              updateHeaderStatus("Consent form loaded.", "ok");
+            } else {
+              setChip("err", "InstallCP failed");
+              updateHeaderStatus("InstallCP failed — check CP config / script.", "warn");
+            }
+          });
+          return;
+        }
+
+        if (canUseOtSdkQueue()) {
+          // Alternative supported pattern (command queue)
+          window.OtSdk('consent', 'InstallCP', CONFIG.collectionPointId, function (result) {
+            console.log("OtSdk InstallCP callback result:", result);
+            logStatus("OtSdk InstallCP callback returned:", result);
+            if (result === true) {
+              setChip("ok", "InstallCP ok");
+              updateHeaderStatus("Consent form loaded.", "ok");
+            } else {
+              setChip("err", "InstallCP failed");
+              updateHeaderStatus("InstallCP failed — check CP config / script.", "warn");
+            }
+          });
+          return;
+        }
+
+        const msg = "OneTrust SDK not available yet — cannot call InstallCP. Verify the integration script in <head>.";
+        console.error(msg);
+        setChip("err", "SDK missing");
+        logStatus(msg);
+        updateHeaderStatus("OneTrust SDK not detected — cannot load form.", "warn");
       } catch (e) {
         console.error("InstallCP error:", e);
         setChip("err", "InstallCP error");
         logStatus("InstallCP threw an error:", { message: e.message, stack: e.stack });
+        updateHeaderStatus("InstallCP error — see console.", "warn");
       }
     }
 
@@ -816,13 +683,7 @@ Note: values must be URL-encoded (e.g. “+” → “%2B”) and fields separat
       setChip("ok", "Form submitted");
       updateHeaderStatus("Consent form submitted (payload logged to console).", "ok");
       logStatus("OneTrustWebFormSubmitted received. Consent receipt payload (event.detail):", event.detail);
-      showConsentSuccess();
     });
-
-    function showConsentSuccess() {
-      const stamp = new Date().toLocaleString();
-      logStatus(`✅ Consent submission acknowledged locally at ${stamp}. (No redirect configured)`);
-    }
 
     // ---------- Prefill helper (query params) ----------
     function readQueryParameters() {
@@ -838,24 +699,14 @@ Note: values must be URL-encoded (e.g. “+” → “%2B”) and fields separat
 
       if (CONFIG.prefillMode !== "QueryParameters") {
         ui.prefillChip.classList.add("ok");
-        ui.prefillLog.textContent =
-`Prefill is disabled for this demo.
-If you ever enable prefilling, OneTrust supports passing query parameters where each key matches the “Form Field Label” configured in OneTrust.
-Example: ?Email=name%40domain.com&Country=Spain
-Note: values must be URL-encoded (e.g. “+” → “%2B”) and fields separated by “&”.`;
         return;
       }
 
       const qp = readQueryParameters();
       if (!qp.length) {
         ui.prefillChip.classList.add("err");
-        ui.prefillLog.textContent =
-`Prefill mode is enabled, but no query parameters were found.
-Add parameters using OneTrust “Form Field Label” keys, e.g.:
-?Email=name%40domain.com&Country=Spain`;
         return;
       }
-
       ui.prefillChip.classList.add("ok");
       ui.prefillLog.textContent =
 `Query parameters detected (these would be used by OneTrust prefilling if enabled/configured):\n\n` +
@@ -891,7 +742,6 @@ qp.map(([k, v]) => `- ${k} = ${v}`).join("\n") +
       icon.classList.remove("ok", "err");
       if (type === "ok") { payment.msg.classList.add("ok"); icon.classList.add("ok"); }
       if (type === "err") { payment.msg.classList.add("err"); icon.classList.add("err"); }
-
       payment.msg.querySelector("div").innerHTML =
         `<strong>${escapeHtml(title)}</strong><div class="hint" style="margin-top:4px;">${escapeHtml(body)}</div>`;
     }
@@ -959,40 +809,49 @@ qp.map(([k, v]) => `- ${k} = ${v}`).join("\n") +
         return false;
       }
 
-      setPaymentMessage("ok", "Payment authorized (simulated)", "Success! Now complete the consent form below.");
+      setPaymentMessage("ok", "Payment authorized (simulated)", "Success! Now click “Continue to consent” to load the OneTrust form manually.");
       return true;
     }
 
     // Input formatting hooks
-    payment.cardnumber.addEventListener("input", (e) => {
-      e.target.value = formatCardNumber(e.target.value);
-    });
-
-    payment.exp.addEventListener("input", (e) => {
-      e.target.value = normalizeExp(e.target.value);
-    });
-
-    payment.cvc.addEventListener("input", (e) => {
-      e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4);
-    });
+    payment.cardnumber.addEventListener("input", (e) => { e.target.value = formatCardNumber(e.target.value); });
+    payment.exp.addEventListener("input", (e) => { e.target.value = normalizeExp(e.target.value); });
+    payment.cvc.addEventListener("input", (e) => { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4); });
 
     payment.resetBtn.addEventListener("click", () => {
       payment.form.reset();
-      setPaymentMessage("neutral", "Demo tip:", "Use 4242 4242 4242 4242, any future MM/YY, any 3–4 digit CVC.");
+      // restore demo defaults
+      payment.cardholder.value = "Alvaro Barroso";
+      payment.cardnumber.value = "4242 4242 4242 4242";
+      payment.email.value = "alvaro@example.com";
+      payment.exp.value = "12/34";
+      payment.cvc.value = "123";
+      setPaymentMessage("neutral", "Demo defaults restored", "You can now simulate payment and continue to consent.");
     });
 
     payment.form.addEventListener("submit", (e) => {
       e.preventDefault();
-      // Prevents browser default GET submission (and URL query params)
       simulatePayment();
+    });
+
+    // Manual load triggers
+    ui.loadOtBtn.addEventListener("click", () => {
+      installCollectionPointManual("Load consent form button");
+    });
+
+    ui.continueBtn.addEventListener("click", () => {
+      // optional: auto-install when user continues
+      installCollectionPointManual("Continue to consent button");
+      document.getElementById("ot-container").scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
     // ---------- Boot ----------
     (function boot() {
       ui.loadMethodLabel.textContent = CONFIG.loadMethod;
       ui.cpLabel.textContent = CONFIG.collectionPointId;
+      ui.prefillChipText.textContent = `Prefill mode: ${CONFIG.prefillMode}`;
 
-      setChip("neutral", "Waiting…");
+      setChip("neutral", "Ready");
       ui.statusLog.textContent = "";
       logStatus("Demo initialized.");
       logStatus("Config:", CONFIG);
@@ -1009,16 +868,10 @@ qp.map(([k, v]) => `- ${k} = ${v}`).join("\n") +
         return;
       }
 
-      if (CONFIG.loadMethod === "Instant") {
-        // Do NOT call InstallCP manually.
-        updateHeaderStatus("Instant load configured — waiting for OneTrust to render the form…", "warn");
-        logStatus("Load method is Instant — not calling InstallCP.");
-      } else {
-        updateHeaderStatus("Manual load configured — attempting InstallCP…", "warn");
-        installCollectionPointManual("auto on page load");
-      }
+      // Manual mode: do not auto-install here.
+      updateHeaderStatus("Manual mode — click “Continue to consent” to load OneTrust form.", "warn");
 
-      // Watchdog: if OneTrust isn't detected after a short delay, show a helpful status.
+      // Watchdog: show whether SDK is visible
       window.setTimeout(() => {
         const hasSdk = Boolean(window.OneTrust || window.OtSdk);
         if (!hasSdk) {
@@ -1028,10 +881,11 @@ qp.map(([k, v]) => `- ${k} = ${v}`).join("\n") +
           logStatus(msg);
           updateHeaderStatus("OneTrust SDK not detected — check Integration Script / publish state.", "warn");
         } else {
-          logStatus("OneTrust global detected (good). Waiting for OnetrustFormLoaded…", {
+          logStatus("OneTrust global detected (good). You can now trigger InstallCP.", {
             OneTrust: Boolean(window.OneTrust),
             OtSdk: Boolean(window.OtSdk)
           });
+          setChip("ok", "SDK detected");
         }
       }, 1800);
     })();

@@ -19,7 +19,7 @@
 
   <style>
     /* =====================================================
-       BRAND TOKENS — LIGHT / INVERTED
+       LIGHT BRAND TOKENS (site UI)
     ===================================================== */
     :root{
       --bg:#f6f7f9;
@@ -27,13 +27,17 @@
       --card-soft:#f1f3f6;
       --text:#0b0c0f;
       --muted:#6b7280;
-      --accent:#00c97f; /* LIV green vibe */
+      --accent:#00c97f;
+      --accent-2:#38e8a7;
       --border:#e5e7eb;
       --danger:#d92d20;
 
       --radius:14px;
       --radius-lg:18px;
       --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+
+      --shadow: 0 12px 32px rgba(0,0,0,.08);
+      --focus: rgba(0,201,127,.25);
     }
 
     *{ box-sizing:border-box; }
@@ -48,48 +52,46 @@
       padding:40px 16px;
     }
 
-    .app{
-      width:100%;
-      max-width:560px;
-    }
+    .app{ width:100%; max-width:560px; }
 
-    /* =====================================================
-       HEADER / LOGOS
-    ===================================================== */
+    /* Header / logos */
     header{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      margin-bottom:24px;
+      gap:14px;
+      margin-bottom:18px;
     }
 
-    header img{
-      height:32px;
-    }
+    .brandLeft{ display:flex; align-items:center; gap:10px; }
+    .brandLeft img{ height:30px; object-fit:contain; display:block; }
 
     header h1{
       margin:0;
-      font-size:22px;
+      font-size:20px;
       font-weight:900;
       letter-spacing:.02em;
     }
 
-    /* =====================================================
-       CARD
-    ===================================================== */
+    .sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+
     .card{
       background:var(--card);
       border-radius:var(--radius-lg);
       padding:20px;
-      box-shadow:0 12px 32px rgba(0,0,0,.08);
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
     }
 
     .step{ display:none; }
     .step.active{ display:block; }
 
-    /* =====================================================
-       TICKETS
-    ===================================================== */
+    /* Tickets (simplified) */
     .ticket{
       padding:14px;
       border-radius:var(--radius);
@@ -101,18 +103,27 @@
     .ticket h3{
       margin:0;
       font-size:15px;
-      font-weight:700;
+      font-weight:750;
+    }
+
+    .ticket .meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      margin-top:6px;
     }
 
     .ticket .info{
-      margin-top:4px;
       font-size:13px;
       color:var(--accent);
+      font-weight:700;
     }
 
     .ticket .price{
-      margin-top:6px;
-      font-weight:800;
+      font-weight:900;
+      font-size:15px;
+      white-space:nowrap;
     }
 
     .qty{
@@ -128,8 +139,16 @@
       border-radius:50%;
       border:1px solid var(--border);
       background:#fff;
-      font-weight:700;
+      font-weight:800;
       cursor:pointer;
+      color:var(--text);
+    }
+
+    .qty span{
+      min-width:18px;
+      text-align:center;
+      font-weight:800;
+      color:var(--text);
     }
 
     .total{
@@ -138,7 +157,7 @@
       margin-top:16px;
       padding-top:12px;
       border-top:1px solid var(--border);
-      font-weight:800;
+      font-weight:900;
     }
 
     .cta{
@@ -147,109 +166,269 @@
       padding:16px;
       border-radius:var(--radius);
       border:0;
-      background:linear-gradient(135deg,var(--accent),#38e8a7);
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
       color:#003b26;
-      font-weight:900;
+      font-weight:950;
       cursor:pointer;
       font-size:15px;
     }
 
-    /* =====================================================
-       PAYMENT WALL
-    ===================================================== */
-    label{
+    /* Step 2 (fake payment) */
+    .sectionTitle{
+      margin:0 0 12px;
+      font-size:18px;
+      font-weight:950;
+    }
+
+    label.ui{
       display:block;
       margin-bottom:6px;
       font-size:13px;
-      font-weight:600;
+      font-weight:700;
       color:var(--muted);
     }
 
-    input{
+    input.ui{
       width:100%;
       padding:12px;
       border-radius:var(--radius);
       border:1px solid var(--border);
       margin-bottom:14px;
       font-size:14px;
+      background:#fff;
+      color:var(--text);
+    }
+
+    input.ui:focus{
+      outline:none;
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px var(--focus);
     }
 
     .note{
       font-size:13px;
       color:var(--muted);
-      margin-bottom:16px;
+      margin-bottom:12px;
+      line-height:1.5;
     }
+
+    /* Footer Fever logo on dark pill (so white logo is readable) */
+    .footer{
+      display:flex;
+      justify-content:center;
+      margin-top:14px;
+    }
+    .feverPill{
+      background:#0b0c0f;
+      border-radius:999px;
+      padding:10px 14px;
+      border:1px solid #1f2937;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .feverPill img{ height:18px; display:block; }
 
     /* =====================================================
-       ONETRUST — BLACK CONTAINER, MATCHING TYPOGRAPHY
+       ✅ FULL ONETRUST WHITE‑LABEL (matches your markup)
+       Scope everything to #ot-container to avoid side effects.
     ===================================================== */
+
+    /* Outer mount point */
     #ot-container{
-      margin-top:20px;
-      padding:16px;
+      margin-top:14px;
+      padding:14px;
       border-radius:var(--radius);
-      background:#0b0c0f;
-      border:1px solid #1f2937;
+      background:var(--card-soft);
+      border:1px solid var(--border);
     }
 
+    /* Remove OT internal container chrome */
+    #ot-container .ot-consent-inline,
+    #ot-container .otwf-content,
+    #ot-container .otwf-close-cntr,
+    #ot-container .ot-form,
+    #ot-container .ot-form-content{
+      background:transparent !important;
+      border:none !important;
+      box-shadow:none !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+
+    /* Hide close container completely (embedded page doesn’t need it) */
+    #ot-container .otwf-close-cntr{ display:none !important; }
+
+    /* Make OT typography match site */
     #ot-container,
     #ot-container *{
       font-family:var(--font) !important;
-      color:#e5e7eb !important;
-      font-size:14px !important;
-      line-height:1.5 !important;
+      color:var(--text) !important;
     }
 
-    #ot-container .otwf-chkbox{
+    /* Section group spacing */
+    #ot-container .ot-form-content{ display:block; }
+    #ot-container .ot-el{ margin:0 0 12px !important; }
+
+    /* Email field label */
+    #ot-container .ot-email .ot-label,
+    #ot-container label.ot-label,
+    #ot-container .ot-label{
+      display:block !important;
+      font-size:13px !important;
+      font-weight:700 !important;
+      color:var(--muted) !important;
+      margin:0 0 6px !important;
+      line-height:1.4 !important;
+    }
+
+    /* Email input + any OT input */
+    #ot-container input[type="email"],
+    #ot-container input[type="text"],
+    #ot-container select{
+      width:100% !important;
+      padding:12px !important;
+      border-radius:var(--radius) !important;
+      border:1px solid var(--border) !important;
+      background:#fff !important;
+      color:var(--text) !important;
+      font-size:14px !important;
+    }
+
+    #ot-container input[type="email"]:focus,
+    #ot-container input[type="text"]:focus,
+    #ot-container select:focus{
+      outline:none !important;
+      border-color:var(--accent) !important;
+      box-shadow:0 0 0 3px var(--focus) !important;
+    }
+
+    /* Required asterisk */
+    #ot-container .ot-asterisk{
+      color:var(--danger) !important;
+      margin-left:4px !important;
+      font-weight:900 !important;
+    }
+
+    /* Optional description blocks (often empty) */
+    #ot-container .ot-desc{
+      margin:6px 0 0 !important;
+      font-size:12px !important;
+      color:var(--muted) !important;
+      line-height:1.45 !important;
+    }
+    #ot-container .ot-desc:empty{ display:none !important; }
+
+    /* Error messaging */
+    #ot-container .ot-error{
+      display:block !important;
+      margin-top:6px !important;
+      font-size:12px !important;
+      color:var(--danger) !important;
+      line-height:1.35 !important;
+    }
+
+    /* Fieldset group styling (Interest / Channel / Content Type) */
+    #ot-container fieldset.ot-chkboxgrp{
+      border:1px solid var(--border) !important;
+      border-radius:var(--radius) !important;
+      padding:12px !important;
+      background:#fff !important;
       margin:12px 0 !important;
     }
 
-    /* Circular checkboxes */
-    #ot-container input[type="checkbox"]{
+    #ot-container fieldset.ot-chkboxgrp legend.ot-label{
+      padding:0 8px !important;
+      font-size:12px !important;
+      font-weight:900 !important;
+      color:var(--muted) !important;
+      letter-spacing:.02em !important;
+    }
+
+    /* Checkbox row container */
+    #ot-container .otwf-chkbox{
+      display:block !important;
+      margin:10px 0 !important;
+      padding:0 !important;
+      background:transparent !important;
+      border:none !important;
+    }
+
+    /* ✅ Circular checkbox implementation (matches your markup: input then label) */
+    #ot-container .otwf-chkbox input[type="checkbox"]{
       position:absolute !important;
       opacity:0 !important;
+      width:1px !important;
+      height:1px !important;
+      overflow:hidden !important;
     }
 
     #ot-container .otwf-chkbox label{
-      display:flex;
-      gap:10px;
-      cursor:pointer;
+      display:flex !important;
+      align-items:flex-start !important;
+      gap:10px !important;
+      cursor:pointer !important;
+      user-select:none !important;
+      margin:0 !important;
+      color:var(--text) !important;
+      font-size:14px !important;
+      line-height:1.45 !important;
+      font-weight:600 !important;
     }
 
     #ot-container .otwf-chkbox label::before{
-      content:"";
-      width:18px;
-      height:18px;
-      border-radius:50%;
-      border:2px solid #4b5563;
-      margin-top:2px;
+      content:"" !important;
+      width:18px !important;
+      height:18px !important;
+      min-width:18px !important;
+      border-radius:999px !important;            /* circle */
+      border:2px solid #cfd6de !important;
+      background:#fff !important;
+      margin-top:2px !important;
+      transition: all .14s ease !important;
     }
 
-    #ot-container input[type="checkbox"]:checked + label::before{
-      border-color:var(--accent);
-      background:radial-gradient(circle,var(--accent) 45%, transparent 48%);
+    #ot-container .otwf-chkbox input[type="checkbox"]:checked + label::before{
+      border-color:var(--accent) !important;
+      background:
+        radial-gradient(circle at center,
+          var(--accent) 46%,
+          transparent 48%) !important;
     }
 
-    .ot-submit{
-      width:100% !important;
-      margin-top:16px !important;
-      padding:14px !important;
-      border-radius:var(--radius) !important;
-      border:1px solid #374151 !important;
+    /* focus ring */
+    #ot-container .otwf-chkbox input[type="checkbox"]:focus + label::before{
+      box-shadow:0 0 0 3px var(--focus) !important;
+    }
+
+    /* Buttons container */
+    #ot-container .ot-btns{
+      margin-top:14px !important;
+      padding:0 !important;
       background:transparent !important;
-      color:var(--accent) !important;
-      font-weight:800 !important;
+      border:none !important;
     }
 
-    /* =====================================================
-       FOOTER
-    ===================================================== */
-    .footer{
-      text-align:center;
-      margin-top:14px;
+    /* Submit button: matches CTA style (but inside OT) */
+    #ot-container .ot-submit{
+      width:100% !important;
+      padding:14px 16px !important;
+      border-radius:var(--radius) !important;
+      border:0 !important;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2)) !important;
+      color:#003b26 !important;
+      font-weight:950 !important;
+      letter-spacing:.01em !important;
+      cursor:pointer !important;
+      box-shadow:0 10px 20px rgba(0,0,0,.10) !important;
     }
 
-    .footer img{
-      height:22px;
+    /* Disabled submit button (your HTML shows disabled="") */
+    #ot-container .ot-submit:disabled{
+      background:#e9edf1 !important;
+      color:#9aa0ad !important;
+      box-shadow:none !important;
+      cursor:not-allowed !important;
     }
   </style>
 </head>
@@ -258,24 +437,33 @@
   <div class="app">
 
     <header>
-      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/27/LIV_golf_logo.svg/960px-LIV_golf_logo.svg.png?20220723195156" alt="LIV Golf"/>
-      <h1>Selecciona tipo de entrada</h1>
+      <div class="brandLeft">
+        <img alt="LIV Golf" src="https://upload.wikimedia.org/wikipedia/en/thumb/2/27/LIV_golf_logo.svg/960px-LIV_golf_logo.svg.png?20220723195156">
+      </div>
+      <div>
+        <h1>Selecciona tipo de entrada</h1>
+        <div class="sub">LIV Golf · Ticket flow demo (OT white‑label)</div>
+      </div>
     </header>
 
     <!-- STEP 1 -->
     <section class="card step active" id="step1">
       <div class="ticket">
         <h3>Pase de 4 días (4‑7 de junio)</h3>
-        <div class="info">Más info</div>
-        <div class="price">108,57 €</div>
-        <div class="qty"><button>-</button><span>1</span><button>+</button></div>
+        <div class="meta">
+          <div class="info">Más info</div>
+          <div class="price">108,57 €</div>
+        </div>
+        <div class="qty"><button type="button">-</button><span>1</span><button type="button">+</button></div>
       </div>
 
       <div class="ticket">
         <h3>Viernes (5 de junio)</h3>
-        <div class="info">Más info</div>
-        <div class="price">29,52 €</div>
-        <div class="qty"><button>-</button><span>0</span><button>+</button></div>
+        <div class="meta">
+          <div class="info">Más info</div>
+          <div class="price">29,52 €</div>
+        </div>
+        <div class="qty"><button type="button">-</button><span>0</span><button type="button">+</button></div>
       </div>
 
       <div class="total">
@@ -288,48 +476,81 @@
 
     <!-- STEP 2 -->
     <section class="card step" id="step2">
-      <h1>Pago</h1>
+      <h2 class="sectionTitle">Pago (simulación)</h2>
 
-      <label>Email</label>
-      <input id="email" placeholder="tu@email.com"/>
+      <label class="ui">Email</label>
+      <input class="ui" id="email" placeholder="tu@email.com"/>
 
-      <label>Tarjeta</label>
-      <input placeholder="1234 1234 1234 1234"/>
+      <label class="ui">Tarjeta</label>
+      <input class="ui" placeholder="1234 1234 1234 1234"/>
 
-      <label>Fecha / CVC</label>
-      <input placeholder="MM/AA · CVC"/>
+      <label class="ui">Fecha / CVC</label>
+      <input class="ui" placeholder="MM/AA · CVC"/>
 
-      <div class="note">Pago seguro · Simulación visual</div>
+      <div class="note">Pago seguro · Pantalla de prueba (sin validación). Debajo se carga el Collection Point embebido.</div>
 
-      <!-- OneTrust -->
+      <!-- ✅ OneTrust mounts here -->
       <div id="ot-container"></div>
     </section>
 
     <div class="footer">
-      <img src="https://d21buns5ku92am.cloudfront.net/70118/images/560270-Fever%20Logo%20Neg%20CMYK%208680b9%20%206322c5%20Original-8f26b7-original-1730291643.png" alt="Fever"/>
+      <div class="feverPill" aria-label="Powered by Fever">
+        <img alt="Fever" src="https://d21buns5ku92am.cloudfront.net/70118/images/560270-Fever%20Logo%20Neg%20CMYK%208680b9%20%206322c5%20Original-8f26b7-original-1730291643.png">
+      </div>
     </div>
 
   </div>
 
   <script>
+    /**
+     * Manual load: InstallCP + events as per OneTrust embedded web forms docs. [1](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
+     */
     const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+
     const step1 = document.getElementById("step1");
     const step2 = document.getElementById("step2");
     const nextBtn = document.getElementById("nextBtn");
     const emailInput = document.getElementById("email");
 
+    let installed = false;
+
+    function whenOTReady(cb) {
+      const t = setInterval(() => {
+        if (window.OneTrust?.webform?.InstallCP) {
+          clearInterval(t);
+          cb();
+        }
+      }, 80);
+    }
+
     nextBtn.addEventListener("click", () => {
       step1.classList.remove("active");
       step2.classList.add("active");
-      setTimeout(() => {
-        OneTrust.webform.InstallCP(CP_ID, { target:"#ot-container" });
-      }, 100);
+
+      if (installed) return;
+      installed = true;
+
+      whenOTReady(() => {
+        try {
+          // Install CP into container (target pattern used in your internal integration notes). [2](https://m365.cloud.microsoft/chat/pages/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS94OEZOTy14dHNrdUNSWDJfZk1USExiYjVST3VHRlBGQm5GSjNmN2pqWVBFP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5Um5nNFJrNVBKVEpFZUhSemEzVkRVbGd5SlRWR1prMVVTRXhpWWpWU1QzVkhSbEJHUW01R1NqTm1OMnBxV1ZCRkptUTlZaVV5TVNVMVJqTnRPR2w1TkZGVlZWTmhOVE5JSlRWR1JHNVZhbHB2YjJwSWFXeFpVMDUwUjNOaGEwaE9KVEpFWjAxaVJYTWxNa1J0UzNac1RVMUNOVkUwU1VNd1dHOHdNMUpyYlNabVBUQXhSVTFXU3pSVk5GZzNWRlkwVFVkRVZVRmFRVXMyUlZOVlVVVlhSVTlDU1ZjbVl6MGxNa1kifQ?auth=2)[1](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
+          window.OneTrust.webform.InstallCP(CP_ID, { target:"#ot-container" });
+        } catch (e) {
+          console.error("[OT] InstallCP failed", e);
+        }
+      });
     });
 
     window.addEventListener("OnetrustFormLoaded", () => {
-      if (emailInput.value) {
-        OneTrust.webform.preFill({ Email: emailInput.value }, CP_ID);
+      try {
+        const email = (emailInput.value || "").trim();
+        if (email) window.OneTrust.webform.preFill({ "Email": email }, CP_ID);
+      } catch (e) {
+        console.error("[OT] preFill failed", e);
       }
+    });
+
+    window.addEventListener("OneTrustWebFormSubmitted", (evt) => {
+      console.log("[OT] Form submitted", evt?.detail);
     });
   </script>
 </body>

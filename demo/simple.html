@@ -1,18 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Iberia/Stripe-style checkout demo + OneTrust UCPM Embedded Web Form (Manual InstallCP + preFill)." />
-  <meta name="theme-color" content="#D71920" />
-  <title>Iberia | Checkout + Consent (OneTrust UCPM)</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>OneTrust CSS Sandbox</title>
 
-  <!-- ✅ REQUIRED: initialize OtSdk command queue (matches your reference implementation) -->
+  <!-- ✅ OneTrust command queue (required, same as reference) -->
   <script>
     window.OtSdk = window.OtSdk || function(){ (OtSdk.q = OtSdk.q || []).push(arguments); };
   </script>
 
-  <!-- ✅ REQUIRED: OneTrust Embedded Web Form SDK (must be in <head>) -->
+  <!-- ✅ OneTrust Embedded Web Form Stub -->
   <script
     src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
     data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
@@ -20,810 +18,228 @@
   </script>
 
   <style>
-    :root{
-      --ib-red:#D71920;
-      --ib-red-2:#B5141A;
-      --ib-yellow:#FFC72C;
-
-      --ink:#101828;
-      --muted:#475467;
-
-      --bg:#FFF7EB;
-      --card:#FFFFFF;
-      --line:#E4E7EC;
-
-      --shadow: 0 18px 45px rgba(16,24,40,.10);
-      --shadow-soft: 0 10px 30px rgba(16,24,40,.08);
-
-      --radius: 18px;
-      --radius-sm: 12px;
-      --field-radius: 12px;
-
-      --stripe:#635BFF;
-      --stripe-2:#4F46E5;
-      --stripe-3:#1D4ED8;
-
-      --focus: rgba(99,91,255,.55);
-      --focus-ring: 0 0 0 4px rgba(99,91,255,.14);
-
-      --danger:#D92D20;
-
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    /* ======================================
+       DESIGN TOKENS — tweak these freely
+    ====================================== */
+    :root {
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --primary:#2563eb;
+      --border:#e5e7eb;
+      --danger:#d9534f;
+      --radius:12px;
+      --font: system-ui,-apple-system,Segoe UI,Roboto,Arial;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
+    * { box-sizing:border-box; }
+
+    body {
       margin:0;
-      font-family: var(--font);
-      color: var(--ink);
-      background:
-        radial-gradient(1200px 500px at 10% 0%, rgba(255,199,44,.55) 0%, rgba(255,199,44,0) 65%),
-        radial-gradient(1000px 600px at 90% 20%, rgba(215,25,32,.25) 0%, rgba(215,25,32,0) 70%),
-        linear-gradient(180deg, #FFF2DE 0%, var(--bg) 40%, #FFFFFF 100%);
-      overflow-x:hidden;
+      padding:40px 16px;
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--font);
+      display:flex;
+      justify-content:center;
     }
 
-    .wrap{ max-width:1120px; margin:0 auto; padding:28px 16px 34px; }
-
-    header{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px; padding:10px 4px 18px;
-    }
-
-    .brand{ display:flex; align-items:center; gap:12px; min-width:240px; }
-    .logoMark{
-      width:46px;height:46px;border-radius:14px;
-      background: conic-gradient(from 240deg, var(--ib-red), var(--ib-red), var(--ib-yellow), var(--ib-yellow), var(--ib-red));
-      box-shadow: 0 10px 24px rgba(215,25,32,.25);
-      position:relative; isolation:isolate;
-    }
-    .logoMark:after{
-      content:""; position:absolute; inset:10px; border-radius:10px;
-      background: rgba(255,255,255,.18);
-      transform: rotate(12deg); mix-blend-mode: overlay;
-    }
-
-    .brandText{ display:flex; flex-direction:column; line-height:1.1; }
-    .brandText .title{ font-size:18px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
-    .brandText .subtitle{ font-size:12px; color:var(--muted); margin-top:4px; }
-
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px; border-radius:999px;
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(228,231,236,.9);
-      box-shadow: 0 8px 22px rgba(16,24,40,.06);
-      backdrop-filter: blur(10px);
-      font-size:12px; color:var(--muted);
-      white-space: nowrap;
-    }
-    .dot{ width:9px;height:9px;border-radius:99px; background: var(--ib-red); box-shadow:0 0 0 4px rgba(215,25,32,.15); }
-
-    .card{
-      background: var(--card);
-      border: 1px solid rgba(228,231,236,.95);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .cardHeader{
-      padding:18px 18px 12px;
-      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
-      border-bottom:1px solid rgba(228,231,236,.8);
-      background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.85) 100%);
-    }
-    .cardTitle h2{ margin:0; font-size:16px; font-weight:800; letter-spacing:.2px; }
-    .cardTitle p{ margin:6px 0 0; font-size:12px; color:var(--muted); }
-    .cardBody{ padding:18px; }
-
-    /* Intro / instructions */
-    .intro{
-      padding:14px;
-      border-radius: var(--radius-sm);
-      border:1px solid rgba(228,231,236,.95);
-      background: rgba(255,255,255,.85);
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 14px;
-    }
-    .intro strong{ color: var(--ink); }
-    .intro .hint{ margin-top:6px; font-size:12px; color: var(--muted); }
-
-    /* Unified form baseline */
-    label{
-      font-size:12px;
-      font-weight:700;
-      color: var(--ink);
-      letter-spacing:.2px;
-    }
-    .hint{ font-size:12px; color: var(--muted); }
-
-    input, select, textarea{
+    .card {
       width:100%;
-      padding:12px 12px;
-      border-radius: var(--field-radius);
-      border: 1px solid rgba(228,231,236,.95);
-      outline:none;
+      max-width:520px;
+      background:var(--card);
+      padding:24px;
+      border-radius:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.08);
+    }
+
+    h1 {
+      margin:0 0 6px;
+      font-size:20px;
+      font-weight:800;
+    }
+
+    p.sub {
+      margin:0 0 20px;
+      color:var(--muted);
       font-size:14px;
-      background:#fff;
-      transition: border-color .15s ease, box-shadow .15s ease;
-      font-family: var(--font);
-      color: var(--ink);
     }
-    input:focus, select:focus, textarea:focus{
-      border-color: var(--focus);
-      box-shadow: var(--focus-ring);
-    }
-    input::placeholder{ color: rgba(71,84,103,.55); }
 
-    /* Two-column layout */
-    .checkoutGrid{ display:grid; grid-template-columns: 1.15fr .85fr; gap:18px; align-items:start; }
+    label {
+      display:block;
+      margin:14px 0 6px;
+      font-weight:600;
+      font-size:14px;
+    }
 
-    /* Left: Stripe-like */
-    .stripeShell{
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(228,231,236,.95);
-      box-shadow: var(--shadow-soft);
-      overflow:hidden;
-      background:#fff;
+    input {
+      width:100%;
+      padding:12px;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      font:inherit;
     }
-    .stripeTop{
-      padding:14px 14px 12px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      background: linear-gradient(135deg, rgba(215,25,32,.10) 0%, rgba(255,199,44,.18) 55%, rgba(255,255,255,1) 100%);
-      border-bottom: 1px solid rgba(228,231,236,.9);
-    }
-    .stripeBadge{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800; font-size:12px; color:var(--ink);
-      letter-spacing:.06em; text-transform:uppercase;
-    }
-    .stripeBadge .mini{
-      width:28px;height:28px;border-radius:10px;
-      background: linear-gradient(135deg, var(--stripe) 0%, var(--stripe-2) 65%, var(--stripe-3) 100%);
-      box-shadow: 0 12px 24px rgba(79,70,229,.25);
-      position:relative;
-    }
-    .stripeBadge .mini:after{
-      content:""; position:absolute; inset:7px; border-radius:7px;
-      background: rgba(255,255,255,.18);
-      transform: rotate(8deg); mix-blend-mode: overlay;
-    }
-    .stripeForm{ padding:14px; display:grid; gap:12px; }
-    .fieldGrid{ display:grid; grid-template-columns: 1fr 140px 120px; gap:10px; }
-    .labelRow{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:4px; }
 
-    .btn{
-      appearance:none; border:none; cursor:pointer;
-      border-radius:999px; padding:12px 16px;
-      font-weight:900; letter-spacing:.2px;
-      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-      display:inline-flex; align-items:center; gap:10px; user-select:none;
-      font-family: var(--font);
+    input:focus {
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 0 0 2px rgba(37,99,235,.15);
     }
-    .btn:active{ transform: translateY(1px); }
-    .btnPrimary{
-      background: linear-gradient(135deg, var(--ib-red) 0%, #F04438 45%, var(--ib-yellow) 110%);
-      color:#fff; box-shadow: 0 16px 34px rgba(215,25,32,.22);
-    }
-    .btnPrimary:hover{ box-shadow: 0 18px 40px rgba(215,25,32,.28); }
-    .btnGhost{ background: rgba(16,24,40,.04); color: var(--ink); }
-    .btnGhost:hover{ background: rgba(16,24,40,.06); }
 
-    .msg{
-      border-radius:14px; padding:12px;
-      font-size:12px;
-      border:1px solid rgba(228,231,236,.95);
-      background: rgba(16,24,40,.02);
-      color: var(--muted);
-      display:flex; gap:10px; align-items:flex-start;
-    }
-    .msg strong{ color: var(--ink); }
-
-    /* Right: Summary + Consent */
-    .sidePanel{
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(228,231,236,.95);
-      background: rgba(255,255,255,.92);
-      box-shadow: var(--shadow-soft);
-      overflow:hidden;
-    }
-    .panelHead{
+    button {
+      margin-top:16px;
+      width:100%;
       padding:14px;
-      border-bottom: 1px solid rgba(228,231,236,.9);
-      background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.85) 100%);
-      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
-    }
-    .panelHead .k{
-      font-weight:900; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
-      color: rgba(16,24,40,.76);
-    }
-    .panelBody{ padding:14px; }
-
-    .orderLine{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px; padding:10px 0;
-      border-bottom:1px solid rgba(228,231,236,.8);
-      font-size:13px; color: var(--muted);
-    }
-    .orderLine:last-child{ border-bottom:none; }
-    .orderLine strong{ color: var(--ink); }
-    .divider{ height:1px; background: rgba(228,231,236,.9); margin: 12px 0; }
-
-    .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:12px; color: rgba(16,24,40,.78);
-      line-height:1.45;
-      word-break: break-word;
-      white-space: pre-wrap;
+      border-radius:var(--radius);
+      border:0;
+      background:var(--primary);
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
     }
 
-    /* Consent container (hidden until "Load") */
-    .hidden{ display:none !important; }
-
-    .otContainerWrap{
-      border-radius:14px;
-      border: 1px solid rgba(228,231,236,.95);
-      overflow:hidden;
-      background:#fff;
-      margin-top: 12px;
-    }
-    .otContainerHeader{
-      padding:12px;
-      border-bottom: 1px solid rgba(228,231,236,.9);
-      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
-      background: linear-gradient(135deg, rgba(255,199,44,.22) 0%, rgba(255,255,255,1) 55%, rgba(215,25,32,.08) 100%);
-    }
-    .otContainerHeader .kicker{
-      font-size:12px; font-weight:900; letter-spacing:.14em; text-transform:uppercase;
-      color: var(--ib-red-2);
-    }
-    .otContainerHeader .desc{ font-size:12px; color: var(--muted); }
-
-    #ot-container{
-      min-height: 120px;
-      padding: 12px;
-      background: transparent;
+    .hint {
+      margin-top:10px;
+      font-size:13px;
+      color:var(--muted);
     }
 
-    /* OneTrust visual unification (scoped to container to avoid breaking page) */
-    #ot-container, #ot-container *{
-      font-family: var(--font) !important;
-      color: var(--ink);
-    }
-    #ot-container .ot-consent-inline,
-    #ot-container .otwf-content,
-    #ot-container .ot-form,
-    #ot-container .ot-form-content{
-      background: transparent !important;
-      border: 0 !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-    }
-    #ot-container .otwf-chkbox{
-      margin: 12px 0 !important;
-      padding: 0 !important;
-    }
-    #ot-container input[type="checkbox"]{
-      width: 18px !important;
-      height: 18px !important;
-      margin-right: 10px !important;
-      border-radius: 4px !important;
-      accent-color: var(--stripe);
-    }
-    #ot-container .ot-error{
-      color: var(--danger) !important;
-      font-size: 12px !important;
-      margin-top: 4px !important;
-    }
-    #ot-container .ot-submit{
-      width: 100% !important;
-      margin-top: 12px !important;
-      background: rgba(16,24,40,.04) !important;
-      color: var(--ink) !important;
-      border: 0 !important;
-      border-radius: 999px !important;
-      padding: 12px 16px !important;
-      font-weight: 900 !important;
-      letter-spacing: .2px !important;
-      cursor: pointer !important;
-      box-shadow: none !important;
-    }
-    #ot-container .ot-submit:hover{
-      background: rgba(16,24,40,.06) !important;
+    /* ======================================
+       ONETRUST VISUAL UNIFICATION
+       (this is what you will tweak most)
+    ====================================== */
+
+    #ot-container {
+      margin-top:24px;
+      padding:0;
+      background:transparent;
     }
 
-    /* Status */
-    .statusBox{
-      margin-top:12px;
-      border-radius:14px;
-      border: 1px solid rgba(228,231,236,.95);
-      background: rgba(255,255,255,.8);
-      padding:12px;
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .otwf-chkbox,
+    .ot-el {
+      background:transparent !important;
+      border:none !important;
+      box-shadow:none !important;
+      padding:0 !important;
+      font-family:inherit !important;
+      color:inherit !important;
     }
-    .statusHead{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom:8px; flex-wrap:wrap;
-    }
-    .statusHead .label{
-      font-weight:900; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color: var(--muted);
-    }
-    .chip{
-      font-size:12px; padding:6px 10px; border-radius:999px;
-      border: 1px solid rgba(228,231,236,.95);
-      background: rgba(16,24,40,.02);
-      color: var(--muted);
-      display:inline-flex; align-items:center; gap:8px;
-      white-space:nowrap;
-    }
-    .tinyDot{ width:8px;height:8px;border-radius:99px;background: rgba(71,84,103,.55); }
-    .chip.ok .tinyDot{ background: rgba(5,150,105,.85); }
-    .chip.err .tinyDot{ background: rgba(240,68,56,.9); }
 
-    footer{ margin-top:20px; padding:18px 0 10px; text-align:center; color: var(--muted); font-size:12px; }
+    .otwf-chkbox {
+      margin:12px 0 !important;
+    }
 
-    @media (max-width: 920px){
-      .checkoutGrid{ grid-template-columns: 1fr; }
-      .fieldGrid{ grid-template-columns: 1fr; }
-      header{ flex-direction:column; align-items:flex-start; }
-      .pill{ align-self:flex-start; }
+    .ot-email input {
+      width:100% !important;
+      padding:12px !important;
+      border-radius:var(--radius) !important;
+      border:1px solid var(--border) !important;
+    }
+
+    .ot-error {
+      color:var(--danger) !important;
+      font-size:13px !important;
+      margin-top:4px !important;
+    }
+
+    .ot-submit {
+      width:100% !important;
+      margin-top:16px !important;
+      padding:14px !important;
+      border-radius:var(--radius) !important;
+      border:1px solid var(--border) !important;
+      background:#fff !important;
+      color:var(--text) !important;
+      font-weight:700 !important;
+      cursor:pointer !important;
+    }
+
+    .ot-submit:hover {
+      background:#f9f9f9 !important;
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
+  <section class="card">
+    <h1>Consent preferences</h1>
+    <p class="sub">
+      Minimal sandbox to test CSS on the OneTrust embedded form.
+    </p>
 
-    <header>
-      <div class="brand" aria-label="Iberia demo header">
-        <div class="logoMark" aria-hidden="true"></div>
-        <div class="brandText">
-          <div class="title">IBERIA</div>
-          <div class="subtitle">One page · Manual InstallCP · Prefill Email</div>
-        </div>
-      </div>
-      <div class="pill" role="status" aria-live="polite">
-        <span class="dot" aria-hidden="true"></span>
-        <span id="headerStatusText">Ready — click “Load consent form”.</span>
-      </div>
-    </header>
+    <label for="email">Email *</label>
+    <input id="email" type="email" placeholder="you@example.com" required />
 
-    <div class="intro" aria-label="Introduction">
-      <strong>What this page tests:</strong> a unified visual style across your checkout UI and the embedded OneTrust consent form.
-      <div class="hint">
-        Flow: enter / keep the email → click <strong>Load consent form</strong> → we reveal the container → call <span class="mono">InstallCP</span> → on <span class="mono">OnetrustFormLoaded</span> we call <span class="mono">preFill</span>.
-        (Manual method requires <span class="mono">InstallCP</span> and events are available for loaded/submitted.) 
-      </div>
+    <button id="loadBtn" type="button">Load consent form</button>
+
+    <div class="hint">
+      The OneTrust form will appear below using <strong>Manual InstallCP</strong>.
     </div>
 
-    <section class="card" aria-label="Checkout and consent">
-      <div class="cardHeader">
-        <div class="cardTitle">
-          <h2>Checkout (simulated) + Consent (OneTrust UCPM)</h2>
-          <p>Payment left, summary + embedded consent right. Consent is installed manually into <span class="mono">#ot-container</span>.</p>
-        </div>
-        <div class="pill" aria-label="Manual load pill">
-          <span class="dot" style="background:var(--stripe); box-shadow: 0 0 0 4px rgba(99,91,255,.14)" aria-hidden="true"></span>
-          Manual InstallCP
-        </div>
-      </div>
-
-      <div class="cardBody">
-        <div class="checkoutGrid">
-
-          <!-- Left: simulated payment -->
-          <div class="stripeShell" aria-label="Simulated Stripe card form">
-            <div class="stripeTop">
-              <div class="stripeBadge">
-                <span class="mini" aria-hidden="true"></span>
-                <span>Card payment</span>
-              </div>
-              <div class="hint">Email will be used for OneTrust prefill.</div>
-            </div>
-
-            <form class="stripeForm" id="fakePaymentForm" autocomplete="off" novalidate>
-              <div>
-                <div class="labelRow">
-                  <label for="cardholder">Cardholder name</label>
-                  <span class="hint">As printed on card</span>
-                </div>
-                <input id="cardholder" name="cardholder" type="text" value="Alvaro Barroso" />
-              </div>
-
-              <div>
-                <div class="labelRow">
-                  <label for="cardnumber">Card number</label>
-                  <span class="hint">Test number</span>
-                </div>
-                <input id="cardnumber" name="cardnumber" type="text" inputmode="numeric" maxlength="19" value="4242 4242 4242 4242" />
-              </div>
-
-              <div class="fieldGrid">
-                <div>
-                  <div class="labelRow">
-                    <label for="email">Email receipt *</label>
-                    <span class="hint">Used to prefill OneTrust</span>
-                  </div>
-                  <input id="email" name="email" type="email" value="alvaro@example.com" required />
-                </div>
-                <div>
-                  <div class="labelRow">
-                    <label for="exp">Expiry</label>
-                    <span class="hint">MM/YY</span>
-                  </div>
-                  <input id="exp" name="exp" type="text" inputmode="numeric" maxlength="5" value="12/34" />
-                </div>
-                <div>
-                  <div class="labelRow">
-                    <label for="cvc">CVC</label>
-                    <span class="hint">3 digits</span>
-                  </div>
-                  <input id="cvc" name="cvc" type="password" inputmode="numeric" maxlength="4" value="123" />
-                </div>
-              </div>
-
-              <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-top:2px;">
-                <button class="btn btnGhost" type="button" id="resetPaymentBtn">Reset</button>
-                <button class="btn btnPrimary" type="submit" id="payBtn">
-                  <span aria-hidden="true">✈️</span>
-                  <span>Pay €199.00</span>
-                </button>
-              </div>
-
-              <div id="paymentMsg" class="msg" role="status" aria-live="polite">
-                <div>
-                  <strong>Tip:</strong> You can click “Load consent form” anytime; it will use the current email value.
-                  <div class="hint" style="margin-top:4px;">This is only a UI sandbox; no data is stored.</div>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <!-- Right: summary + consent -->
-          <aside class="sidePanel" aria-label="Summary and consent">
-            <div class="panelHead">
-              <div>
-                <div class="k">Summary + Consent</div>
-                <div class="hint">CP: <span class="mono" id="cpLabel"></span> · Container: <span class="mono">#ot-container</span></div>
-              </div>
-              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                <button class="btn btnGhost" type="button" id="loadOtBtn">
-                  <span aria-hidden="true">⬇️</span><span>Load consent form</span>
-                </button>
-                <button class="btn btnGhost" type="button" id="clearOtBtn">
-                  <span aria-hidden="true">🧹</span><span>Clear</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="panelBody">
-              <div class="orderLine"><span>Flight</span><strong>MAD → BCN</strong></div>
-              <div class="orderLine"><span>Fare</span><span>€179.00</span></div>
-              <div class="orderLine"><span>Taxes</span><span>€20.00</span></div>
-              <div class="orderLine"><span><strong>Total</strong></span><span>€199.00</span></div>
-
-              <div class="divider"></div>
-
-              <!-- The consent container is present, but we keep the wrap hidden until user loads -->
-              <div class="otContainerWrap hidden" id="otWrap" aria-label="OneTrust container under breakdown">
-                <div class="otContainerHeader">
-                  <div>
-                    <div class="kicker">OneTrust Embedded Web Form</div>
-                    <div class="desc">Manual install via <span class="mono">InstallCP</span>.</div>
-                  </div>
-                </div>
-
-                <!-- ✅ TARGET_CONTAINER_ID (must match config.containerId) -->
-                <div id="ot-container" aria-label="OneTrust web form container"></div>
-              </div>
-
-              <div class="statusBox" aria-label="Debug and status">
-                <div class="statusHead">
-                  <div class="label">Debug / Status</div>
-                  <div class="chip" id="statusChip">
-                    <span class="tinyDot" aria-hidden="true"></span>
-                    <span id="statusChipText">Ready</span>
-                  </div>
-                </div>
-                <div class="mono" id="statusLog">Booting…</div>
-              </div>
-            </div>
-          </aside>
-
-        </div>
-      </div>
-    </section>
-
-    <footer>Unified CSS sandbox. See OneTrust docs for Manual <span class="mono">InstallCP</span> + events.</footer>
-  </div>
+    <!-- ✅ OneTrust mounts here -->
+    <div id="ot-container" aria-label="OneTrust web form container"></div>
+  </section>
 
   <script>
-    "use strict";
+    const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+    const emailInput = document.getElementById("email");
+    const loadBtn = document.getElementById("loadBtn");
+    const container = document.getElementById("ot-container");
 
-    /**
-     * Manual method requires calling InstallCP to load the embedded web form,
-     * and the OnetrustFormLoaded / OneTrustWebFormSubmitted events are available.
-     * See: OneTrust embedded web forms methods and events. [1](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
-     *
-     * This file follows the approach documented in your internal implementation notes:
-     * - show container / step
-     * - InstallCP(target)
-     * - whenOTReady
-     * - preFill with Email
-     * [2](https://m365.cloud.microsoft/chat/pages/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS94OEZOTy14dHNrdUNSWDJfZk1USExiYjVST3VHRlBGQm5GSjNmN2pqWVBFP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5Um5nNFJrNVBKVEpFZUhSemEzVkRVbGd5SlRWR1prMVVTRXhpWWpWU1QzVkhSbEJHUW01R1NqTm1OMnBxV1ZCRkptUTlZaVV5TVNVMVJqTnRPR2w1TkZGVlZWTmhOVE5JSlRWR1JHNVZhbHB2YjJwSWFXeFpVMDUwUjNOaGEwaE9KVEpFWjAxaVJYTWxNa1J0UzNac1RVMUNOVkUwU1VNd1dHOHdNMUpyYlNabVBUQXhSVTFXU3pSVk5GZzNWRlkwVFVkRVZVRmFRVXMyUlZOVlVVVlhSVTlDU1ZjbVl6MGxNa1kifQ?auth=2)
-     */
+    let installed = false;
 
-    const CONFIG = {
-      CP_ID: "c9322d35-cb63-4974-b65a-5d415f818a05",
-      containerId: "ot-container"
-    };
-
-    const el = (id) => document.getElementById(id);
-
-    const ui = {
-      headerStatusText: el("headerStatusText"),
-      cpLabel: el("cpLabel"),
-      loadOtBtn: el("loadOtBtn"),
-      clearOtBtn: el("clearOtBtn"),
-      otWrap: el("otWrap"),
-      statusChip: el("statusChip"),
-      statusChipText: el("statusChipText"),
-      statusLog: el("statusLog"),
-      email: el("email")
-    };
-
-    function safeStringify(obj) {
-      try { return JSON.stringify(obj, null, 2); }
-      catch (e) { return String(obj); }
-    }
-
-    function logStatus(message, data) {
-      const stamp = new Date().toLocaleTimeString();
-      const line = `[${stamp}] ${message}`;
-      const payload = (data !== undefined) ? `\n${safeStringify(data)}` : "";
-      ui.statusLog.textContent = (ui.statusLog.textContent ? (ui.statusLog.textContent + "\n") : "") + line + payload;
-      const lines = ui.statusLog.textContent.split("\n");
-      if (lines.length > 140) ui.statusLog.textContent = lines.slice(lines.length - 140).join("\n");
-    }
-
-    function setChip(state /* ok|err|neutral */, text) {
-      ui.statusChip.classList.remove("ok", "err");
-      if (state === "ok") ui.statusChip.classList.add("ok");
-      if (state === "err") ui.statusChip.classList.add("err");
-      ui.statusChipText.textContent = text;
-    }
-
-    function updateHeaderStatus(text, tone /* ok|warn|neutral */) {
-      ui.headerStatusText.textContent = text;
-      const dot = document.querySelector("header .pill .dot");
-      if (!dot) return;
-      if (tone === "ok") {
-        dot.style.background = "rgba(5,150,105,.95)";
-        dot.style.boxShadow = "0 0 0 4px rgba(5,150,105,.18)";
-      } else if (tone === "warn") {
-        dot.style.background = "rgba(255,199,44,.95)";
-        dot.style.boxShadow = "0 0 0 4px rgba(255,199,44,.22)";
-      } else {
-        dot.style.background = "var(--ib-red)";
-        dot.style.boxShadow = "0 0 0 4px rgba(215,25,32,.15)";
-      }
-    }
-
-    // ✅ Wait helper recommended in your internal notes to avoid "SDK not defined" issues [2](https://m365.cloud.microsoft/chat/pages/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS94OEZOTy14dHNrdUNSWDJfZk1USExiYjVST3VHRlBGQm5GSjNmN2pqWVBFP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5Um5nNFJrNVBKVEpFZUhSemEzVkRVbGd5SlRWR1prMVVTRXhpWWpWU1QzVkhSbEJHUW01R1NqTm1OMnBxV1ZCRkptUTlZaVV5TVNVMVJqTnRPR2w1TkZGVlZWTmhOVE5JSlRWR1JHNVZhbHB2YjJwSWFXeFpVMDUwUjNOaGEwaE9KVEpFWjAxaVJYTWxNa1J0UzNac1RVMUNOVkUwU1VNd1dHOHdNMUpyYlNabVBUQXhSVTFXU3pSVk5GZzNWRlkwVFVkRVZVRmFRVXMyUlZOVlVVVlhSVTlDU1ZjbVl6MGxNa1kifQ?auth=2)
-    function whenOTReady(timeoutMs = 6000) {
-      const start = Date.now();
-      return new Promise((resolve, reject) => {
-        (function tick(){
-          const ok = (window.OneTrust && window.OneTrust.webform && typeof window.OneTrust.webform.InstallCP === "function")
-                 || (typeof window.OtSdk === "function");
-          if (ok) return resolve(true);
-          if (Date.now() - start > timeoutMs) return reject(new Error("OneTrust SDK not ready"));
-          setTimeout(tick, 80);
-        })();
-      });
-    }
-
-    function getEmailOrThrow() {
-      const email = (ui.email?.value || "").trim();
-      if (!email) throw new Error("Email is required to test preFill");
-      return email;
-    }
-
-    let installAttempted = false;
-
-    // ✅ Manual InstallCP implementation (tries "target" signature first, fallback to callback)
-    function installCP(triggerSource) {
-      const container = el(CONFIG.containerId);
-      if (!container) {
-        setChip("err", "Container missing");
-        updateHeaderStatus("Container missing — cannot render form.", "warn");
-        logStatus("[OT] Container not found", { containerId: CONFIG.containerId });
-        return;
-      }
-
-      if (installAttempted) {
-        logStatus(`[OT] InstallCP skipped (already attempted). Trigger: ${triggerSource}`);
-        return;
-      }
-
-      installAttempted = true;
-      setChip("neutral", "Installing…");
-      updateHeaderStatus("Installing consent form…", "warn");
-      logStatus(`[OT] Installing CP (trigger: ${triggerSource})`, { CP_ID: CONFIG.CP_ID });
-
-      try {
-        // Option A: OneTrust.webform.InstallCP (documented) [1](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
+    function whenOTReady(cb) {
+      const t = setInterval(() => {
         if (window.OneTrust?.webform?.InstallCP) {
-          // Try "target" pattern referenced in internal notes [2](https://m365.cloud.microsoft/chat/pages/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS94OEZOTy14dHNrdUNSWDJfZk1USExiYjVST3VHRlBGQm5GSjNmN2pqWVBFP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5Um5nNFJrNVBKVEpFZUhSemEzVkRVbGd5SlRWR1prMVVTRXhpWWpWU1QzVkhSbEJHUW01R1NqTm1OMnBxV1ZCRkptUTlZaVV5TVNVMVJqTnRPR2w1TkZGVlZWTmhOVE5JSlRWR1JHNVZhbHB2YjJwSWFXeFpVMDUwUjNOaGEwaE9KVEpFWjAxaVJYTWxNa1J0UzNac1RVMUNOVkUwU1VNd1dHOHdNMUpyYlNabVBUQXhSVTFXU3pSVk5GZzNWRlkwVFVkRVZVRmFRVXMyUlZOVlVVVlhSVTlDU1ZjbVl6MGxNa1kifQ?auth=2)
-          try {
-            window.OneTrust.webform.InstallCP(CONFIG.CP_ID, { target: "#ot-container" });
-            logStatus("[OT] InstallCP called with target option", { CP_ID: CONFIG.CP_ID, target: "#ot-container" });
-            return;
-          } catch (eTarget) {
-            // Fallback to callback signature from docs [1](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
-            window.OneTrust.webform.InstallCP(CONFIG.CP_ID, function(result){
-              logStatus("[OT] InstallCP callback returned", result);
-              if (result === true) {
-                setChip("ok", "InstallCP ok");
-                updateHeaderStatus("Consent form loaded.", "ok");
-              } else {
-                setChip("err", "InstallCP failed");
-                updateHeaderStatus("InstallCP failed — check CP/script.", "warn");
-              }
-            });
-            logStatus("[OT] InstallCP called with callback fallback", { CP_ID: CONFIG.CP_ID });
-            return;
-          }
+          clearInterval(t);
+          cb();
         }
-
-        // Option B: OtSdk command queue (documented) [1](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
-        if (typeof window.OtSdk === "function") {
-          window.OtSdk("consent", "InstallCP", CONFIG.CP_ID, function(result){
-            logStatus("[OT] OtSdk InstallCP callback returned", result);
-            if (result === true) {
-              setChip("ok", "InstallCP ok");
-              updateHeaderStatus("Consent form loaded.", "ok");
-            } else {
-              setChip("err", "InstallCP failed");
-              updateHeaderStatus("InstallCP failed — check CP/script.", "warn");
-            }
-          });
-          logStatus("[OT] OtSdk InstallCP queued", { CP_ID: CONFIG.CP_ID });
-          return;
-        }
-
-        throw new Error("No OneTrust InstallCP API detected");
-      } catch (e) {
-        setChip("err", "InstallCP error");
-        updateHeaderStatus("InstallCP error — see logs.", "warn");
-        logStatus("[OT] InstallCP error", { message: e.message, stack: e.stack });
-      }
+      }, 80);
     }
 
-    // ✅ Prefill after OnetrustFormLoaded (event documented) [1](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
-    function prefillAfterLoad(email) {
+    loadBtn.addEventListener("click", () => {
+      const email = emailInput.value.trim();
+      if (!email) {
+        alert("Please enter an email first.");
+        return;
+      }
+
+      if (installed) return;
+      installed = true;
+
+      whenOTReady(() => {
+        try {
+          // ✅ Same InstallCP logic as your reference
+          OneTrust.webform.InstallCP(CP_ID, { target: "#ot-container" });
+          window.__EMAIL__ = email;
+          console.log("[OT] InstallCP called");
+        } catch (e) {
+          console.error("[OT] InstallCP failed", e);
+        }
+      });
+    });
+
+    // ✅ Prefill once form is rendered
+    window.addEventListener("OnetrustFormLoaded", () => {
       try {
-        if (window.OneTrust?.webform?.preFill) {
-          window.OneTrust.webform.preFill(
-            { "Email": email },
-            CONFIG.CP_ID
-          );
-          logStatus("[OT] preFill applied via OneTrust.webform.preFill", { Email: email, CP_ID: CONFIG.CP_ID });
-          return;
-        }
-
-        // If you prefer OtSdk queue-based prefill, keep this pattern available
-        if (typeof window.OtSdk === "function") {
-          const payload = { "Email": email };
-          window.OtSdk("consent", "preFill", payload);
-          logStatus("[OT] preFill queued via OtSdk(consent, preFill)", payload);
-          return;
-        }
-
-        logStatus("[OT] preFill not available (API missing)", { OneTrust: !!window.OneTrust, OtSdk: typeof window.OtSdk });
+        OneTrust.webform.preFill(
+          { "Email": window.__EMAIL__ },
+          CP_ID
+        );
+        console.log("[OT] preFill applied:", window.__EMAIL__);
       } catch (e) {
-        logStatus("[OT] preFill failed", { message: e.message, stack: e.stack });
-      }
-    }
-
-    // ---- UI actions ----
-    ui.loadOtBtn.addEventListener("click", async () => {
-      try {
-        const email = getEmailOrThrow();
-
-        // 1) Show the consent block (like your Step2 reveal)
-        ui.otWrap.classList.remove("hidden");
-        updateHeaderStatus("Consent area revealed — preparing install…", "warn");
-
-        // 2) Wait for OneTrust SDK readiness (prevents race conditions) [2](https://m365.cloud.microsoft/chat/pages/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS94OEZOTy14dHNrdUNSWDJfZk1USExiYjVST3VHRlBGQm5GSjNmN2pqWVBFP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5Um5nNFJrNVBKVEpFZUhSemEzVkRVbGd5SlRWR1prMVVTRXhpWWpWU1QzVkhSbEJHUW01R1NqTm1OMnBxV1ZCRkptUTlZaVV5TVNVMVJqTnRPR2w1TkZGVlZWTmhOVE5JSlRWR1JHNVZhbHB2YjJwSWFXeFpVMDUwUjNOaGEwaE9KVEpFWjAxaVJYTWxNa1J0UzNac1RVMUNOVkUwU1VNd1dHOHdNMUpyYlNabVBUQXhSVTFXU3pSVk5GZzNWRlkwVFVkRVZVRmFRVXMyUlZOVlVVVlhSVTlDU1ZjbVl6MGxNa1kifQ?auth=2)
-        await whenOTReady();
-
-        // 3) Install CP into container (manual)
-        installCP("Load button");
-
-        // 4) Store email for use when form loaded
-        window.__PREFILL_EMAIL__ = email;
-        logStatus("[OT] Stored email for prefill on load", { email });
-      } catch (e) {
-        setChip("err", "Cannot load");
-        updateHeaderStatus(e.message, "warn");
-        logStatus("[UI] Load blocked", { message: e.message });
-        alert(e.message);
+        console.error("[OT] preFill failed", e);
       }
     });
 
-    ui.clearOtBtn.addEventListener("click", () => {
-      const container = el(CONFIG.containerId);
-      if (container) container.innerHTML = "";
-      installAttempted = false;
-      ui.otWrap.classList.add("hidden");
-      setChip("neutral", "Cleared");
-      updateHeaderStatus("Cleared — ready to load again.", "warn");
-      logStatus("[UI] Cleared container + reset installAttempted");
+    window.addEventListener("OneTrustWebFormSubmitted", (evt) => {
+      console.log("[OT] Form submitted:", evt.detail);
     });
-
-    // ---- OneTrust events (documented) [1](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
-    window.addEventListener("OnetrustFormLoaded", (event) => {
-      setChip("ok", "Form loaded");
-      updateHeaderStatus("OneTrust form loaded successfully.", "ok");
-      logStatus("[OT] OnetrustFormLoaded", event?.detail);
-
-      // Prefill once loaded (using current email)
-      const email = (window.__PREFILL_EMAIL__ || ui.email.value || "").trim();
-      if (email) prefillAfterLoad(email);
-    });
-
-    window.addEventListener("OneTrustWebFormSubmitted", (event) => {
-      setChip("ok", "Submitted");
-      updateHeaderStatus("Consent submitted (see status log / console).", "ok");
-      logStatus("[OT] OneTrustWebFormSubmitted", event?.detail);
-    });
-
-    // ---- Payment simulation (kept lightweight) ----
-    const paymentForm = el("fakePaymentForm");
-    const cardnumber = el("cardnumber");
-    const exp = el("exp");
-    const cvc = el("cvc");
-    const resetBtn = el("resetPaymentBtn");
-
-    function normalizeCardNumber(value) { return value.replace(/\D/g, "").slice(0, 19); }
-    function formatCardNumber(value) { const digits = normalizeCardNumber(value); return digits.replace(/(.{4})/g, "$1 ").trim(); }
-    function normalizeExp(value) {
-      const digits = value.replace(/\D/g, "").slice(0, 4);
-      if (digits.length <= 2) return digits;
-      return digits.slice(0,2) + "/" + digits.slice(2,4);
-    }
-
-    cardnumber.addEventListener("input", (e) => { e.target.value = formatCardNumber(e.target.value); });
-    exp.addEventListener("input", (e) => { e.target.value = normalizeExp(e.target.value); });
-    cvc.addEventListener("input", (e) => { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4); });
-
-    resetBtn.addEventListener("click", () => {
-      paymentForm.reset();
-      el("cardholder").value = "Alvaro Barroso";
-      cardnumber.value = "4242 4242 4242 4242";
-      ui.email.value = "alvaro@example.com";
-      exp.value = "12/34";
-      cvc.value = "123";
-      logStatus("[UI] Payment demo defaults restored");
-    });
-
-    paymentForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      updateHeaderStatus("Payment simulated — you can now load consent form.", "warn");
-      logStatus("[UI] Pay clicked (simulated). Load consent whenever you want.");
-    });
-
-    // ---- Boot ----
-    (function boot(){
-      ui.cpLabel.textContent = CONFIG.CP_ID;
-      ui.statusLog.textContent = "";
-      setChip("neutral", "Ready");
-      updateHeaderStatus("Ready — click “Load consent form”.", "warn");
-      logStatus("Boot complete.", CONFIG);
-      logStatus("Reference: Manual InstallCP + events (loaded/submitted).");
-    })();
   </script>
 </body>
 </html>

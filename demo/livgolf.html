@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>LIV Golf · Entradas</title>
+
+  <!-- OneTrust command queue -->
+  <script>
+    window.OtSdk = window.OtSdk || function(){ (OtSdk.q = OtSdk.q || []).push(arguments); };
+  </script>
+
+  <!-- OneTrust Embedded Web Form Stub -->
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
+    worker="https://consent-api.onetrust.com">
+  </script>
+
+  <style>
+    /* =====================================================
+       BRAND TOKENS (LIV / FEVER‑INSPIRED)
+    ===================================================== */
+    :root{
+      --bg:#0b0c0f;
+      --card:#12141a;
+      --card-2:#181b24;
+      --text:#ffffff;
+      --muted:#9aa0ad;
+      --accent:#00ff9c;
+      --accent-2:#1affb0;
+      --border:#262a36;
+      --danger:#ff5c5c;
+
+      --radius:14px;
+      --radius-lg:18px;
+      --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      background:radial-gradient(1200px 600px at 50% -20%, #162032 0%, var(--bg) 60%);
+      color:var(--text);
+      font-family:var(--font);
+      display:flex;
+      justify-content:center;
+      padding:40px 16px;
+    }
+
+    .app{
+      width:100%;
+      max-width:560px;
+    }
+
+    header{
+      margin-bottom:20px;
+    }
+
+    header h1{
+      margin:0;
+      font-size:24px;
+      font-weight:900;
+      letter-spacing:.04em;
+    }
+
+    header .sub{
+      color:var(--muted);
+      margin-top:6px;
+      font-size:14px;
+    }
+
+    /* =====================================================
+       CARD
+    ===================================================== */
+    .card{
+      background:linear-gradient(180deg,var(--card) 0%, var(--card-2) 100%);
+      border-radius:var(--radius-lg);
+      padding:20px;
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
+    }
+
+    /* =====================================================
+       STEP HANDLING
+    ===================================================== */
+    .step{ display:none; }
+    .step.active{ display:block; }
+
+    /* =====================================================
+       TICKET LIST
+    ===================================================== */
+    .ticket{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      padding:14px;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      margin-bottom:12px;
+      background:rgba(255,255,255,.02);
+    }
+
+    .ticket h3{
+      margin:0;
+      font-size:15px;
+      font-weight:700;
+    }
+
+    .ticket .info{
+      font-size:13px;
+      color:var(--accent);
+      margin-top:4px;
+      cursor:pointer;
+    }
+
+    .price{
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .qty{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-top:8px;
+    }
+
+    .qty button{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      border:1px solid var(--border);
+      background:transparent;
+      color:var(--text);
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .qty span{
+      min-width:16px;
+      text-align:center;
+      font-weight:700;
+    }
+
+    .total{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:18px;
+      padding-top:14px;
+      border-top:1px solid var(--border);
+    }
+
+    .total strong{
+      font-size:16px;
+    }
+
+    .cta{
+      width:100%;
+      margin-top:16px;
+      padding:16px;
+      border-radius:var(--radius);
+      border:0;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:#000;
+      font-weight:900;
+      cursor:pointer;
+      font-size:15px;
+    }
+
+    .powered{
+      text-align:center;
+      margin-top:12px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* =====================================================
+       PAYMENT WALL
+    ===================================================== */
+    .field{
+      margin-bottom:14px;
+    }
+
+    label{
+      font-size:13px;
+      font-weight:600;
+      display:block;
+      margin-bottom:6px;
+      color:var(--muted);
+    }
+
+    input{
+      width:100%;
+      padding:12px;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      background:#0f1117;
+      color:var(--text);
+      font-size:14px;
+    }
+
+    input::placeholder{ color:#555; }
+
+    .pay-note{
+      font-size:13px;
+      color:var(--muted);
+      margin:10px 0 18px;
+    }
+
+    /* =====================================================
+       ONETRUST — VISUALLY INTEGRATED
+    ===================================================== */
+    #ot-container{
+      margin-top:20px;
+      padding:16px;
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--border);
+    }
+
+    #ot-container,
+    #ot-container *{
+      font-family:var(--font) !important;
+      color:var(--muted) !important;
+    }
+
+    #ot-container .otwf-chkbox{
+      margin:12px 0 !important;
+    }
+
+    /* Circular checkboxes */
+    #ot-container input[type="checkbox"]{
+      position:absolute !important;
+      opacity:0 !important;
+    }
+
+    #ot-container .otwf-chkbox label{
+      display:flex;
+      gap:10px;
+      cursor:pointer;
+    }
+
+    #ot-container .otwf-chkbox label::before{
+      content:"";
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      border:2px solid var(--border);
+      margin-top:2px;
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before{
+      border-color:var(--accent);
+      background:radial-gradient(circle,var(--accent) 45%, transparent 48%);
+    }
+
+    .ot-submit{
+      margin-top:16px !important;
+      width:100% !important;
+      padding:14px !important;
+      border-radius:var(--radius) !important;
+      border:1px solid var(--border) !important;
+      background:transparent !important;
+      color:var(--accent) !important;
+      font-weight:800 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <header>
+      <h1>Selecciona tipo de entrada</h1>
+      <div class="sub">LIV Golf · Madrid</div>
+    </header>
+
+    <!-- STEP 1 -->
+    <section class="card step active" id="step1">
+
+      <div class="ticket">
+        <div>
+          <h3>Pase de 4 días (4‑7 de junio)</h3>
+          <div class="info">Más info</div>
+          <div class="price">108,57 €</div>
+          <div class="qty">
+            <button>-</button><span>1</span><button>+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket">
+        <div>
+          <h3>Jueves (4 de junio)</h3>
+          <div class="info">Más info</div>
+          <div class="price">22,86 €</div>
+          <div class="qty">
+            <button>-</button><span>0</span><button>+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="total">
+        <strong>108,57 €</strong>
+        <span>—</span>
+      </div>
+
+      <button class="cta" id="nextBtn">Comprar ahora</button>
+
+      <div class="powered">Powered by Fever</div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="card step" id="step2">
+      <h1>Pago</h1>
+
+      <div class="field">
+        <label>Email</label>
+        <input id="email" type="email" placeholder="tu@email.com"/>
+      </div>
+
+      <div class="field">
+        <label>Número de tarjeta</label>
+        <input placeholder="1234 1234 1234 1234"/>
+      </div>
+
+      <div class="field">
+        <label>Fecha / CVC</label>
+        <input placeholder="MM/AA · CVC"/>
+      </div>
+
+      <div class="pay-note">
+        Pago seguro · Simulación visual
+      </div>
+
+      <!-- OneTrust -->
+      <div id="ot-container"></div>
+    </section>
+
+  </div>
+
+  <script>
+    const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+    const step1 = document.getElementById("step1");
+    const step2 = document.getElementById("step2");
+    const nextBtn = document.getElementById("nextBtn");
+    const emailInput = document.getElementById("email");
+
+    nextBtn.addEventListener("click", () => {
+      step1.classList.remove("active");
+      step2.classList.add("active");
+
+      setTimeout(() => {
+        OneTrust.webform.InstallCP(CP_ID, { target:"#ot-container" });
+      }, 100);
+    });
+
+    window.addEventListener("OnetrustFormLoaded", () => {
+      if (emailInput.value) {
+        OneTrust.webform.preFill({ Email: emailInput.value }, CP_ID);
+      }
+    });
+  </script>
+</body>
+</html>
+``

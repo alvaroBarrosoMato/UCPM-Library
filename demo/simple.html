@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>OneTrust CSS Sandbox</title>
 
-  <!-- ✅ OneTrust command queue (required, same as reference) -->
+  <!-- OneTrust command queue -->
   <script>
     window.OtSdk = window.OtSdk || function(){ (OtSdk.q = OtSdk.q || []).push(arguments); };
   </script>
 
-  <!-- ✅ OneTrust Embedded Web Form Stub -->
+  <!-- OneTrust Embedded Web Form Stub -->
   <script
     src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
     data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
@@ -18,9 +18,9 @@
   </script>
 
   <style>
-    /* ======================================
-       DESIGN TOKENS — tweak these freely
-    ====================================== */
+    /* =========================
+       DESIGN TOKENS
+    ========================= */
     :root {
       --bg:#f4f6f8;
       --card:#ffffff;
@@ -60,10 +60,13 @@
       font-weight:800;
     }
 
+    /* ✅ REFERENCE TEXT STYLE */
     p.sub {
       margin:0 0 20px;
       color:var(--muted);
       font-size:14px;
+      line-height:1.5;
+      font-weight:400;
     }
 
     label {
@@ -73,7 +76,7 @@
       font-size:14px;
     }
 
-    input {
+    input[type="email"] {
       width:100%;
       padding:12px;
       border-radius:var(--radius);
@@ -105,22 +108,17 @@
       color:var(--muted);
     }
 
-    /* ======================================
-       ONETRUST VISUAL UNIFICATION
-       (this is what you will tweak most)
-    ====================================== */
-
+    /* =========================
+       ONETRUST BASE RESET
+    ========================= */
     #ot-container {
       margin-top:24px;
-      padding:0;
-      background:transparent;
     }
 
     .ot-consent-inline,
     .otwf-content,
     .ot-form,
     .ot-form-content,
-    .otwf-chkbox,
     .ot-el {
       background:transparent !important;
       border:none !important;
@@ -130,23 +128,72 @@
       color:inherit !important;
     }
 
-    .otwf-chkbox {
-      margin:12px 0 !important;
+    /* ✅ MATCH TEXT STYLE EXACTLY */
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size:14px !important;
+      line-height:1.5 !important;
+      font-weight:400 !important;
+      color:var(--muted) !important;
     }
 
-    .ot-email input {
-      width:100% !important;
-      padding:12px !important;
-      border-radius:var(--radius) !important;
-      border:1px solid var(--border) !important;
+    /* =========================
+       ✅ CIRCULAR CHECKBOXES
+       (safe, reliable method)
+    ========================= */
+
+    /* Hide native checkbox */
+    #ot-container input[type="checkbox"] {
+      position:absolute !important;
+      opacity:0 !important;
+      pointer-events:none !important;
     }
 
+    /* Checkbox row */
+    #ot-container .otwf-chkbox label {
+      display:flex !important;
+      align-items:flex-start;
+      gap:10px;
+      cursor:pointer;
+      position:relative;
+    }
+
+    /* Circle */
+    #ot-container .otwf-chkbox label::before {
+      content:"";
+      width:18px;
+      height:18px;
+      min-width:18px;
+      border-radius:50%;
+      border:2px solid var(--border);
+      margin-top:2px;
+      transition:all .15s ease;
+      background:#fff;
+    }
+
+    /* Checked state */
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color:var(--primary);
+      background:
+        radial-gradient(circle at center,
+          var(--primary) 45%,
+          transparent 47%);
+    }
+
+    /* Focus state (keyboard) */
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow:0 0 0 3px rgba(37,99,235,.2);
+    }
+
+    /* Error text */
     .ot-error {
       color:var(--danger) !important;
       font-size:13px !important;
       margin-top:4px !important;
     }
 
+    /* Submit button */
     .ot-submit {
       width:100% !important;
       margin-top:16px !important;
@@ -181,15 +228,14 @@
       The OneTrust form will appear below using <strong>Manual InstallCP</strong>.
     </div>
 
-    <!-- ✅ OneTrust mounts here -->
-    <div id="ot-container" aria-label="OneTrust web form container"></div>
+    <!-- OneTrust mounts here -->
+    <div id="ot-container"></div>
   </section>
 
   <script>
     const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
     const emailInput = document.getElementById("email");
     const loadBtn = document.getElementById("loadBtn");
-    const container = document.getElementById("ot-container");
 
     let installed = false;
 
@@ -213,33 +259,15 @@
       installed = true;
 
       whenOTReady(() => {
-        try {
-          // ✅ Same InstallCP logic as your reference
-          OneTrust.webform.InstallCP(CP_ID, { target: "#ot-container" });
-          window.__EMAIL__ = email;
-          console.log("[OT] InstallCP called");
-        } catch (e) {
-          console.error("[OT] InstallCP failed", e);
-        }
+        OneTrust.webform.InstallCP(CP_ID, { target: "#ot-container" });
+        window.__EMAIL__ = email;
       });
     });
 
-    // ✅ Prefill once form is rendered
     window.addEventListener("OnetrustFormLoaded", () => {
-      try {
-        OneTrust.webform.preFill(
-          { "Email": window.__EMAIL__ },
-          CP_ID
-        );
-        console.log("[OT] preFill applied:", window.__EMAIL__);
-      } catch (e) {
-        console.error("[OT] preFill failed", e);
-      }
-    });
-
-    window.addEventListener("OneTrustWebFormSubmitted", (evt) => {
-      console.log("[OT] Form submitted:", evt.detail);
+      OneTrust.webform.preFill({ "Email": window.__EMAIL__ }, CP_ID);
     });
   </script>
 </body>
 </html>
+``

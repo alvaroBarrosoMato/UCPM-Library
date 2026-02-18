@@ -19,18 +19,17 @@
 
   <style>
     /* =====================================================
-       BRAND TOKENS (LIV / FEVER‑INSPIRED)
+       BRAND TOKENS — LIGHT / INVERTED
     ===================================================== */
     :root{
-      --bg:#0b0c0f;
-      --card:#12141a;
-      --card-2:#181b24;
-      --text:#ffffff;
-      --muted:#9aa0ad;
-      --accent:#00ff9c;
-      --accent-2:#1affb0;
-      --border:#262a36;
-      --danger:#ff5c5c;
+      --bg:#f6f7f9;
+      --card:#ffffff;
+      --card-soft:#f1f3f6;
+      --text:#0b0c0f;
+      --muted:#6b7280;
+      --accent:#00c97f; /* LIV green vibe */
+      --border:#e5e7eb;
+      --danger:#d92d20;
 
       --radius:14px;
       --radius-lg:18px;
@@ -38,9 +37,10 @@
     }
 
     *{ box-sizing:border-box; }
+
     body{
       margin:0;
-      background:radial-gradient(1200px 600px at 50% -20%, #162032 0%, var(--bg) 60%);
+      background:linear-gradient(180deg,#ffffff 0%, var(--bg) 100%);
       color:var(--text);
       font-family:var(--font);
       display:flex;
@@ -53,51 +53,49 @@
       max-width:560px;
     }
 
+    /* =====================================================
+       HEADER / LOGOS
+    ===================================================== */
     header{
-      margin-bottom:20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:24px;
+    }
+
+    header img{
+      height:32px;
     }
 
     header h1{
       margin:0;
-      font-size:24px;
+      font-size:22px;
       font-weight:900;
-      letter-spacing:.04em;
-    }
-
-    header .sub{
-      color:var(--muted);
-      margin-top:6px;
-      font-size:14px;
+      letter-spacing:.02em;
     }
 
     /* =====================================================
        CARD
     ===================================================== */
     .card{
-      background:linear-gradient(180deg,var(--card) 0%, var(--card-2) 100%);
+      background:var(--card);
       border-radius:var(--radius-lg);
       padding:20px;
-      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      box-shadow:0 12px 32px rgba(0,0,0,.08);
     }
 
-    /* =====================================================
-       STEP HANDLING
-    ===================================================== */
     .step{ display:none; }
     .step.active{ display:block; }
 
     /* =====================================================
-       TICKET LIST
+       TICKETS
     ===================================================== */
     .ticket{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:12px;
       padding:14px;
       border-radius:var(--radius);
       border:1px solid var(--border);
       margin-bottom:12px;
-      background:rgba(255,255,255,.02);
+      background:var(--card-soft);
     }
 
     .ticket h3{
@@ -107,14 +105,13 @@
     }
 
     .ticket .info{
+      margin-top:4px;
       font-size:13px;
       color:var(--accent);
-      margin-top:4px;
-      cursor:pointer;
     }
 
-    .price{
-      font-size:15px;
+    .ticket .price{
+      margin-top:6px;
       font-weight:800;
     }
 
@@ -122,7 +119,7 @@
       display:flex;
       align-items:center;
       gap:10px;
-      margin-top:8px;
+      margin-top:10px;
     }
 
     .qty button{
@@ -130,29 +127,18 @@
       height:28px;
       border-radius:50%;
       border:1px solid var(--border);
-      background:transparent;
-      color:var(--text);
-      font-size:16px;
-      cursor:pointer;
-    }
-
-    .qty span{
-      min-width:16px;
-      text-align:center;
+      background:#fff;
       font-weight:700;
+      cursor:pointer;
     }
 
     .total{
       display:flex;
       justify-content:space-between;
-      align-items:center;
-      margin-top:18px;
-      padding-top:14px;
+      margin-top:16px;
+      padding-top:12px;
       border-top:1px solid var(--border);
-    }
-
-    .total strong{
-      font-size:16px;
+      font-weight:800;
     }
 
     .cta{
@@ -161,32 +147,21 @@
       padding:16px;
       border-radius:var(--radius);
       border:0;
-      background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      color:#000;
+      background:linear-gradient(135deg,var(--accent),#38e8a7);
+      color:#003b26;
       font-weight:900;
       cursor:pointer;
       font-size:15px;
     }
 
-    .powered{
-      text-align:center;
-      margin-top:12px;
-      font-size:12px;
-      color:var(--muted);
-    }
-
     /* =====================================================
        PAYMENT WALL
     ===================================================== */
-    .field{
-      margin-bottom:14px;
-    }
-
     label{
-      font-size:13px;
-      font-weight:600;
       display:block;
       margin-bottom:6px;
+      font-size:13px;
+      font-weight:600;
       color:var(--muted);
     }
 
@@ -195,34 +170,33 @@
       padding:12px;
       border-radius:var(--radius);
       border:1px solid var(--border);
-      background:#0f1117;
-      color:var(--text);
+      margin-bottom:14px;
       font-size:14px;
     }
 
-    input::placeholder{ color:#555; }
-
-    .pay-note{
+    .note{
       font-size:13px;
       color:var(--muted);
-      margin:10px 0 18px;
+      margin-bottom:16px;
     }
 
     /* =====================================================
-       ONETRUST — VISUALLY INTEGRATED
+       ONETRUST — BLACK CONTAINER, MATCHING TYPOGRAPHY
     ===================================================== */
     #ot-container{
       margin-top:20px;
       padding:16px;
       border-radius:var(--radius);
-      background:rgba(255,255,255,.02);
-      border:1px solid var(--border);
+      background:#0b0c0f;
+      border:1px solid #1f2937;
     }
 
     #ot-container,
     #ot-container *{
       font-family:var(--font) !important;
-      color:var(--muted) !important;
+      color:#e5e7eb !important;
+      font-size:14px !important;
+      line-height:1.5 !important;
     }
 
     #ot-container .otwf-chkbox{
@@ -246,7 +220,7 @@
       width:18px;
       height:18px;
       border-radius:50%;
-      border:2px solid var(--border);
+      border:2px solid #4b5563;
       margin-top:2px;
     }
 
@@ -256,14 +230,26 @@
     }
 
     .ot-submit{
-      margin-top:16px !important;
       width:100% !important;
+      margin-top:16px !important;
       padding:14px !important;
       border-radius:var(--radius) !important;
-      border:1px solid var(--border) !important;
+      border:1px solid #374151 !important;
       background:transparent !important;
       color:var(--accent) !important;
       font-weight:800 !important;
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    .footer{
+      text-align:center;
+      margin-top:14px;
+    }
+
+    .footer img{
+      height:22px;
     }
   </style>
 </head>
@@ -272,71 +258,56 @@
   <div class="app">
 
     <header>
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/27/LIV_golf_logo.svg/960px-LIV_golf_logo.svg.png?20220723195156" alt="LIV Golf"/>
       <h1>Selecciona tipo de entrada</h1>
-      <div class="sub">LIV Golf · Madrid</div>
     </header>
 
     <!-- STEP 1 -->
     <section class="card step active" id="step1">
-
       <div class="ticket">
-        <div>
-          <h3>Pase de 4 días (4‑7 de junio)</h3>
-          <div class="info">Más info</div>
-          <div class="price">108,57 €</div>
-          <div class="qty">
-            <button>-</button><span>1</span><button>+</button>
-          </div>
-        </div>
+        <h3>Pase de 4 días (4‑7 de junio)</h3>
+        <div class="info">Más info</div>
+        <div class="price">108,57 €</div>
+        <div class="qty"><button>-</button><span>1</span><button>+</button></div>
       </div>
 
       <div class="ticket">
-        <div>
-          <h3>Jueves (4 de junio)</h3>
-          <div class="info">Más info</div>
-          <div class="price">22,86 €</div>
-          <div class="qty">
-            <button>-</button><span>0</span><button>+</button>
-          </div>
-        </div>
+        <h3>Viernes (5 de junio)</h3>
+        <div class="info">Más info</div>
+        <div class="price">29,52 €</div>
+        <div class="qty"><button>-</button><span>0</span><button>+</button></div>
       </div>
 
       <div class="total">
-        <strong>108,57 €</strong>
-        <span>—</span>
+        <span>Total</span>
+        <span>108,57 €</span>
       </div>
 
       <button class="cta" id="nextBtn">Comprar ahora</button>
-
-      <div class="powered">Powered by Fever</div>
     </section>
 
     <!-- STEP 2 -->
     <section class="card step" id="step2">
       <h1>Pago</h1>
 
-      <div class="field">
-        <label>Email</label>
-        <input id="email" type="email" placeholder="tu@email.com"/>
-      </div>
+      <label>Email</label>
+      <input id="email" placeholder="tu@email.com"/>
 
-      <div class="field">
-        <label>Número de tarjeta</label>
-        <input placeholder="1234 1234 1234 1234"/>
-      </div>
+      <label>Tarjeta</label>
+      <input placeholder="1234 1234 1234 1234"/>
 
-      <div class="field">
-        <label>Fecha / CVC</label>
-        <input placeholder="MM/AA · CVC"/>
-      </div>
+      <label>Fecha / CVC</label>
+      <input placeholder="MM/AA · CVC"/>
 
-      <div class="pay-note">
-        Pago seguro · Simulación visual
-      </div>
+      <div class="note">Pago seguro · Simulación visual</div>
 
       <!-- OneTrust -->
       <div id="ot-container"></div>
     </section>
+
+    <div class="footer">
+      <img src="https://d21buns5ku92am.cloudfront.net/70118/images/560270-Fever%20Logo%20Neg%20CMYK%208680b9%20%206322c5%20Original-8f26b7-original-1730291643.png" alt="Fever"/>
+    </div>
 
   </div>
 
@@ -350,7 +321,6 @@
     nextBtn.addEventListener("click", () => {
       step1.classList.remove("active");
       step2.classList.add("active");
-
       setTimeout(() => {
         OneTrust.webform.InstallCP(CP_ID, { target:"#ot-container" });
       }, 100);
@@ -364,4 +334,3 @@
   </script>
 </body>
 </html>
-``

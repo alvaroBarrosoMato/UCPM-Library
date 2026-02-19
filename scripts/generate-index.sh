@@ -98,6 +98,8 @@ cat > "$OUTPUT" <<HTML
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>UCPM Library</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
   <meta name="description" content="Auto-generated library of UCPM banner HTML files in this repository." />
   <style>
     :root{

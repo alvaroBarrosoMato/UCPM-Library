@@ -1,15 +1,27 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>OneTrust CSS Sandbox</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home – Zahidcat (Simplified)</title>
+  <meta name="description" content="Zahid Tractor – Construction Machinery Division. Products, Parts, Services, Training, Financing and more." />
 
-  <!-- OneTrust command queue -->
-  <script>
-    window.OtSdk = window.OtSdk || function(){ (OtSdk.q = OtSdk.q || []).push(arguments); };
+  <!-- =========================
+       OneTrust TEST Cookie Banner
+       ========================= -->
+  <!-- OptanonConsentNoticeStart -->
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
+          type="text/javascript" charset="UTF-8"
+          data-domain-script="019cb466-f797-7b02-ac8d-b5b4ea71888a-test"></script>
+  <script type="text/javascript">
+    function OptanonWrapper() { }
   </script>
+  <!-- OptanonConsentNoticeEnd -->
 
+  <!-- =========================
+       OneTrust Embedded Web Form Stub
+       (as provided)
+       ========================= -->
   <!-- OneTrust Embedded Web Form Stub -->
   <script
     src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
@@ -18,108 +30,423 @@
   </script>
 
   <style>
-    /* =========================
-       DESIGN TOKENS
-    ========================= */
-    :root {
-      --bg:#f4f6f8;
-      --card:#ffffff;
-      --text:#111;
-      --muted:#666;
-      --primary:#2563eb;
-      --border:#e5e7eb;
-      --danger:#d9534f;
-      --radius:12px;
-      --font: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    :root{
+      --brand-yellow:#ffcd11;
+      --brand-black:#111111;
+      --text:#1a1a1a;
+      --muted:#6a6a6a;
+      --bg:#ffffff;
+      --panel:#f6f6f6;
+      --border:#e7e7e7;
+      --shadow:0 10px 25px rgba(0,0,0,.08);
+      --radius:14px;
+      --max:1180px;
+
+      /* Added for OneTrust theming */
+      --primary: var(--brand-yellow);
+      --danger: #c80e13;
     }
 
-    * { box-sizing:border-box; }
+    *{box-sizing:border-box}
+    html,body{margin:0; padding:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--text); background:var(--bg)}
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
 
-    body {
-      margin:0;
-      padding:40px 16px;
-      background:var(--bg);
-      color:var(--text);
-      font-family:var(--font);
+    /* Top utility bar (subtle) */
+    .topbar{
+      background:var(--brand-black);
+      color:#fff;
+      font-size:13px;
+    }
+    .topbar .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:8px 16px;
       display:flex;
-      justify-content:center;
+      gap:12px;
+      align-items:center;
+      justify-content:flex-end;
     }
+    .topbar a{opacity:.9}
+    .topbar a:hover{opacity:1}
 
-    .card {
-      width:100%;
-      max-width:520px;
-      background:var(--card);
-      padding:24px;
-      border-radius:16px;
-      box-shadow:0 8px 24px rgba(0,0,0,.08);
+    /* Header */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:#fff;
+      border-bottom:1px solid var(--border);
     }
-
-    h1 {
-      margin:0 0 6px;
-      font-size:20px;
-      font-weight:800;
+    .header-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      justify-content:space-between;
     }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width:260px;
+    }
+    .brand-logo{
+      width:168px;
+      height:auto;
+      border-radius:10px;
+      box-shadow:inset 0 0 0 2px rgba(0,0,0,.06);
+      background:#fff;
+    }
+    .brand strong{display:block; font-size:16px; line-height:1.1}
+    .brand span{display:block; font-size:12px; color:var(--muted)}
 
-    /* ✅ REFERENCE TEXT STYLE */
-    p.sub {
-      margin:0 0 20px;
-      color:var(--muted);
+    /* Nav */
+    nav{display:flex; align-items:center; gap:14px}
+    .nav-links{display:flex; gap:14px; align-items:center}
+    .nav-item{
+      position:relative;
+      padding:10px 10px;
+      border-radius:10px;
+      font-weight:600;
       font-size:14px;
-      line-height:1.5;
-      font-weight:400;
+      color:#1f1f1f;
     }
+    .nav-item:hover{background:var(--panel)}
+    .nav-item[aria-expanded="true"]{background:var(--panel)}
 
-    label {
+    /* Dropdown (mega-ish) */
+    .dropdown{
+      position:absolute;
+      left:0;
+      top:100%;
+      width:min(720px, calc(100vw - 32px));
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      padding:14px;
+      display:none;
+      margin-top:10px;
+    }
+    .dropdown .grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:10px;
+    }
+    .dropdown h4{
+      margin:0 0 6px 0;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .dropdown a{
       display:block;
-      margin:14px 0 6px;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid transparent;
       font-weight:600;
       font-size:14px;
     }
+    .dropdown a:hover{
+      background:var(--panel);
+      border-color:var(--border);
+    }
 
-    input[type="email"] {
-      width:100%;
-      padding:12px;
-      border-radius:var(--radius);
+    /* CTA buttons */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:12px;
       border:1px solid var(--border);
-      font:inherit;
-    }
-
-    input:focus {
-      outline:none;
-      border-color:var(--primary);
-      box-shadow:0 0 0 2px rgba(37,99,235,.15);
-    }
-
-    button {
-      margin-top:16px;
-      width:100%;
-      padding:14px;
-      border-radius:var(--radius);
-      border:0;
-      background:var(--primary);
-      color:#fff;
+      background:#fff;
       font-weight:700;
+      font-size:14px;
+      cursor:pointer;
+      transition:.15s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      background:var(--brand-yellow);
+      border-color:#e9bf00;
+      color:#000;
+    }
+    .btn.ghost{
+      background:transparent;
+    }
+
+    /* Mobile */
+    .burger{
+      display:none;
+      width:42px; height:42px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#fff;
       cursor:pointer;
     }
+    .burger:active{transform:scale(.98)}
+    .mobile-drawer{
+      display:none;
+      border-top:1px solid var(--border);
+      padding:10px 16px 16px;
+    }
+    .mobile-drawer a{
+      display:block;
+      padding:12px 12px;
+      border-radius:12px;
+      font-weight:700;
+    }
+    .mobile-drawer a:hover{background:var(--panel)}
 
-    .hint {
-      margin-top:10px;
-      font-size:13px;
+    /* Hero */
+    .hero{
+      background:
+        radial-gradient(1200px 400px at 50% 0%, rgba(255,205,17,.35), rgba(255,255,255,0)),
+        linear-gradient(#fff, #fff);
+    }
+    .hero .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:34px 16px 18px;
+      display:grid;
+      grid-template-columns:1.4fr .9fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .hero-card{
+      border:1px solid var(--border);
+      border-radius:22px;
+      background:#fff;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-main{
+      padding:26px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height:290px;
+    }
+    .kicker{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      color:#000;
+      font-weight:900;
+    }
+    .kicker .dot{
+      width:10px; height:10px; border-radius:99px;
+      background:var(--brand-yellow);
+      box-shadow:0 0 0 4px rgba(255,205,17,.25);
+    }
+    .hero h1{
+      margin:0;
+      font-size:32px;
+      line-height:1.1;
+      letter-spacing:-0.02em;
+    }
+    .hero p{
+      margin:0;
       color:var(--muted);
+      font-size:15px;
+      line-height:1.6;
+      max-width:62ch;
+    }
+    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:auto}
+    .hero-aside{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .aside-title{font-weight:900; margin:0; font-size:16px}
+    .aside-list{display:grid; gap:10px}
+    .aside-item{
+      display:flex; gap:10px; padding:12px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:var(--panel);
+    }
+    .icon{
+      width:38px; height:38px;
+      border-radius:12px;
+      background:#fff;
+      border:1px solid var(--border);
+      display:grid; place-items:center;
+      font-weight:900;
+    }
+    .aside-item strong{display:block; font-size:14px}
+    .aside-item span{display:block; color:var(--muted); font-size:13px; line-height:1.4}
+
+    /* Sections */
+    section{padding:28px 0}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      margin-bottom:14px;
+    }
+    .section-title h2{
+      margin:0; font-size:20px; letter-spacing:-0.02em;
+    }
+    .section-title p{margin:0; color:var(--muted); font-size:14px}
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:14px;
+    }
+    .card{
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:#fff;
+      padding:16px;
+      box-shadow:0 6px 18px rgba(0,0,0,.05);
+      min-height:160px;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .card h3{margin:0; font-size:16px}
+    .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.55}
+    .card .meta{margin-top:auto; display:flex; gap:8px; flex-wrap:wrap}
+    .pill{
+      font-size:12px;
+      font-weight:800;
+      border-radius:999px;
+      padding:6px 10px;
+      background:var(--panel);
+      border:1px solid var(--border);
     }
 
-    /* =========================
-       ONETRUST BASE RESET
-    ========================= */
-    #ot-container {
-      margin-top:24px;
+    .solutions{
+      background:linear-gradient(180deg, #fff, #fafafa);
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+    }
+    .solutions-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      align-items:start;
+    }
+    .big-panel{
+      border:1px solid var(--border);
+      border-radius:22px;
+      background:#fff;
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    .tabs{
+      display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 0;
+    }
+    .tab{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      font-weight:900;
+      background:#fff;
+    }
+    .tab.active{
+      background:var(--brand-yellow);
+      border-color:#e9bf00;
+    }
+    .link-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:10px;
+      margin-top:12px;
+    }
+    .link-grid a{
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      font-weight:800;
+    }
+    .link-grid a:hover{background:#fff}
+
+    .tools{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
     }
 
-    .ot-consent-inline,
-    .otwf-content,
-    .ot-form,
-    .ot-form-content,
-    .ot-el {
+    .reach{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    .map{
+      border-radius:22px;
+      border:1px dashed #cfcfcf;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,205,17,.25), transparent 40%),
+        radial-gradient(circle at 75% 65%, rgba(0,0,0,.08), transparent 45%),
+        #fafafa;
+      min-height:260px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--muted);
+      font-weight:900;
+      text-align:center;
+      padding:16px;
+    }
+
+    footer{
+      background:var(--brand-black);
+      color:#fff;
+      padding:32px 0;
+      margin-top:10px;
+    }
+    .footer-grid{
+      display:grid;
+      grid-template-columns:1.2fr 1fr 1fr;
+      gap:18px;
+    }
+    footer h3{margin:0 0 10px 0}
+    footer a{opacity:.9}
+    footer a:hover{opacity:1}
+    .foot-links{display:grid; gap:8px; font-size:14px}
+    .newsletter{
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:18px;
+      padding:14px;
+      background:rgba(255,255,255,.06);
+    }
+    .field{
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(0,0,0,.2);
+      color:#fff;
+      margin-bottom:10px;
+      outline:none;
+    }
+    .fineprint{opacity:.75; font-size:12px; margin-top:10px; line-height:1.5}
+
+    /* ==========================================
+       OneTrust Embedded Web Form (Zahid Theming)
+       Inspired by your reset + checkbox approach
+       ========================================== */
+    #ot-container { margin-top:24px; }
+
+    /* Base reset */
+    #ot-container .ot-consent-inline,
+    #ot-container .otwf-content,
+    #ot-container .ot-form,
+    #ot-container .ot-form-content,
+    #ot-container .ot-el{
       background:transparent !important;
       border:none !important;
       box-shadow:none !important;
@@ -128,39 +455,58 @@
       color:inherit !important;
     }
 
-    /* ✅ MATCH TEXT STYLE EXACTLY */
+    /* Labels */
     #ot-container .ot-label,
     #ot-container label,
-    #ot-container span.ot-label {
+    #ot-container span.ot-label{
       font-size:14px !important;
       line-height:1.5 !important;
-      font-weight:400 !important;
+      font-weight:600 !important;
       color:var(--muted) !important;
     }
 
-    /* =========================
-       ✅ CIRCULAR CHECKBOXES
-       (safe, reliable method)
-    ========================= */
+    /* Inputs (text/email/etc) */
+    #ot-container input[type="text"],
+    #ot-container input[type="email"],
+    #ot-container input[type="tel"],
+    #ot-container select,
+    #ot-container textarea{
+      width:100% !important;
+      padding:12px 12px !important;
+      border-radius:14px !important;
+      border:1px solid var(--border) !important;
+      background:#fff !important;
+      color:var(--text) !important;
+      outline:none !important;
+      box-shadow:0 1px 0 rgba(0,0,0,.03) !important;
+    }
 
-    /* Hide native checkbox */
-    #ot-container input[type="checkbox"] {
+    #ot-container input[type="text"]:focus,
+    #ot-container input[type="email"]:focus,
+    #ot-container input[type="tel"]:focus,
+    #ot-container select:focus,
+    #ot-container textarea:focus{
+      border-color:#e9bf00 !important;
+      box-shadow:0 0 0 4px rgba(255,205,17,.25) !important;
+    }
+
+    /* ✅ Circular checkboxes (safe method) */
+    #ot-container input[type="checkbox"]{
       position:absolute !important;
       opacity:0 !important;
       pointer-events:none !important;
     }
 
-    /* Checkbox row */
-    #ot-container .otwf-chkbox label {
+    #ot-container .otwf-chkbox label{
       display:flex !important;
-      align-items:flex-start;
-      gap:10px;
-      cursor:pointer;
-      position:relative;
+      align-items:flex-start !important;
+      gap:10px !important;
+      cursor:pointer !important;
+      position:relative !important;
+      padding:2px 0 !important;
     }
 
-    /* Circle */
-    #ot-container .otwf-chkbox label::before {
+    #ot-container .otwf-chkbox label::before{
       content:"";
       width:18px;
       height:18px;
@@ -172,102 +518,483 @@
       background:#fff;
     }
 
-    /* Checked state */
-    #ot-container input[type="checkbox"]:checked + label::before {
-      border-color:var(--primary);
-      background:
-        radial-gradient(circle at center,
-          var(--primary) 45%,
-          transparent 47%);
+    #ot-container input[type="checkbox"]:checked + label::before{
+      border-color:#e9bf00;
+      background: radial-gradient(circle at center, #111 45%, transparent 47%);
+      /* black dot (Cat-like), with yellow ring border */
     }
 
-    /* Focus state (keyboard) */
-    #ot-container input[type="checkbox"]:focus + label::before {
-      box-shadow:0 0 0 3px rgba(37,99,235,.2);
+    #ot-container input[type="checkbox"]:focus + label::before{
+      box-shadow:0 0 0 4px rgba(255,205,17,.25);
     }
 
     /* Error text */
-    .ot-error {
+    #ot-container .ot-error{
       color:var(--danger) !important;
       font-size:13px !important;
-      margin-top:4px !important;
+      margin-top:6px !important;
+      font-weight:700 !important;
     }
 
-    /* Submit button */
-    .ot-submit {
+    /* Submit button: match site primary button */
+    #ot-container .ot-submit,
+    #ot-container button[type="submit"],
+    #ot-container .ot-sdk-btn-primary{
       width:100% !important;
       margin-top:16px !important;
-      padding:14px !important;
-      border-radius:var(--radius) !important;
-      border:1px solid var(--border) !important;
-      background:#fff !important;
-      color:var(--text) !important;
-      font-weight:700 !important;
+      padding:14px 14px !important;
+      border-radius:14px !important;
+      border:1px solid #e9bf00 !important;
+      background:var(--brand-yellow) !important;
+      color:#000 !important;
+      font-weight:900 !important;
       cursor:pointer !important;
+      transition:.15s ease !important;
     }
 
-    .ot-submit:hover {
-      background:#f9f9f9 !important;
+    #ot-container .ot-submit:hover,
+    #ot-container button[type="submit"]:hover,
+    #ot-container .ot-sdk-btn-primary:hover{
+      transform:translateY(-1px) !important;
+      filter:brightness(.98) !important;
+    }
+
+    /* Spacing helpers */
+    #ot-container .ot-form-row,
+    #ot-container .otwf-row{
+      margin-top:12px !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero .wrap{grid-template-columns:1fr}
+      .cards{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .solutions-grid{grid-template-columns:1fr}
+      .reach{grid-template-columns:1fr}
+      .dropdown{width:calc(100vw - 32px)}
+    }
+    @media (max-width: 760px){
+      nav{display:none}
+      .burger{display:inline-grid; place-items:center}
+      .cards{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr}
+      .brand{min-width:auto}
+      .brand-logo{width:150px}
     }
   </style>
 </head>
 
 <body>
-  <section class="card">
-    <h1>Consent preferences</h1>
-    <p class="sub">
-      Minimal sandbox to test CSS on the OneTrust embedded form.
-    </p>
+  <!-- Utility bar -->
+  <div class="topbar">
+    <div class="wrap">
+      <a href="mailto:inquiry@zahid.com">inquiry@zahid.com</a>
+      <span style="opacity:.5">|</span>
+      <a href="https://zahidcat.com/contact-us/">Contact Us</a>
+      <span style="opacity:.5">|</span>
+      <a href="https://zahidcat.com/request-quote/">Request a Quote</a>
+    </div>
+  </div>
 
-    <label for="email">Email *</label>
-    <input id="email" type="email" placeholder="you@example.com" required />
+  <!-- Header -->
+  <header>
+    <div class="header-wrap">
+      <a class="brand" href="https://zahidcat.com/" aria-label="Zahidcat Home">
+        <img
+          class="brand-logo"
+          src="https://cdn-ileepoe.nitrocdn.com/oeBjEPhcHgYYrRsyGhwtfKvdYyrcFPMt/assets/images/optimized/rev-6d68d85/zahidcat.com/wp-content/uploads/2021/01/zahid-tractor-logo.jpeg"
+          alt="Zahid Tractor Logo" />
+        <div style="display:none">
+          <strong>Zahidcat</strong>
+          <span>Zahid Tractor – CMD</span>
+        </div>
+      </a>
 
-    <button id="loadBtn" type="button">Load consent form</button>
+      <button class="burger" aria-label="Open menu" id="burger">☰</button>
 
-    <div class="hint">
-      The OneTrust form will appear below using <strong>Manual InstallCP</strong>.
+      <!-- Desktop nav -->
+      <nav aria-label="Primary">
+        <div class="nav-links">
+          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="products">
+            Products ▾
+            <div class="dropdown" data-dd-menu="products">
+              <div class="grid">
+                <div>
+                  <h4>Products</h4>
+                  <a href="https://zahidcat.com/products/">New</a>
+                  <a href="https://zahidcat.com/used/">Used</a>
+                  <a href="https://zahidcat.com/rental/">Rental</a>
+                </div>
+                <div>
+                  <h4>Parts</h4>
+                  <a href="https://zahidcat.com/parts/">Parts</a>
+                  <a href="https://zahidcat.com/parts-cat-com/">PARTS.CAT.COM</a>
+                </div>
+                <div>
+                  <h4>Offers</h4>
+                  <a href="https://zahidcat.com/special-offers/">Special Offers</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="services">
+            Services ▾
+            <div class="dropdown" data-dd-menu="services">
+              <div class="grid">
+                <div>
+                  <h4>Service</h4>
+                  <a href="https://zahidcat.com/service/">Service</a>
+                  <a href="https://zahidcat.com/customer-value-agreements/">Customer Value Agreements</a>
+                </div>
+                <div>
+                  <h4>Training</h4>
+                  <a href="https://zahidcat.com/training/">Customer Training</a>
+                </div>
+                <div>
+                  <h4>More</h4>
+                  <a href="https://zahidcat.com/financing/">Financing</a>
+                  <a href="https://zahidcat.com/sos/">SOS</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="corporate">
+            Corporate ▾
+            <div class="dropdown" data-dd-menu="corporate">
+              <div class="grid">
+                <div>
+                  <h4>About</h4>
+                  <a href="https://zahidcat.com/about-us/">About Us</a>
+                  <a href="https://zahidcat.com/about-us/#milestones">Milestones</a>
+                </div>
+                <div>
+                  <h4>Careers</h4>
+                  <a href="https://zahidcat.com/careers/">Careers</a>
+                </div>
+                <div>
+                  <h4>Contact</h4>
+                  <a href="https://zahidcat.com/contact-us/">Contact Us</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="media">
+            Media ▾
+            <div class="dropdown" data-dd-menu="media">
+              <div class="grid">
+                <div>
+                  <h4>News</h4>
+                  <a href="https://zahidcat.com/news-articles/">News & Articles</a>
+                </div>
+                <div>
+                  <h4>Magazine</h4>
+                  <a href="https://zahidcat.com/cat-magazine/">CAT Magazine</a>
+                </div>
+                <div>
+                  <h4>Technology</h4>
+                  <a href="https://zahidcat.com/technology/">Cat Technology</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="links">
+            External Links ▾
+            <div class="dropdown" data-dd-menu="links">
+              <div class="grid">
+                <div>
+                  <h4>Tools</h4>
+                  <a href="https://vl.cat.com/visionlink?ui_locales=en-US">VisionLink</a>
+                  <a href="https://interact.cat.com/">CAT Interact</a>
+                  <a href="https://www.catrentalstore.com/">CRS Portal</a>
+                </div>
+                <div>
+                  <h4>Sites</h4>
+                  <a href="https://zahidtractor.com/">zahidtractor.com</a>
+                  <a href="https://zahid.com/">Zahid Group</a>
+                  <a href="https://www.cat.com/">cat.com</a>
+                </div>
+                <div>
+                  <h4>Language</h4>
+                  <a href="https://zahidcat.com/">English</a>
+                  <a href="https://zahidcat.com/ar/%d8%a7%d9%84%d8%b2%d8%a7%d9%87%d8%af-%d9%84%d9%84%d8%aa%d8%b1%d8%a7%d9%83%d8%aa%d9%88%d8%b1%d8%a7%d8%aa/">العربية</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a class="btn primary" href="https://zahidcat.com/request-quote/">Request a Quote</a>
+      </nav>
     </div>
 
-    <!-- OneTrust mounts here -->
-    <div id="ot-container"></div>
-  </section>
+    <!-- Mobile drawer -->
+    <div class="mobile-drawer" id="drawer">
+      <a href="https://zahidcat.com/products/">Products (New / Used / Rental)</a>
+      <a href="https://zahidcat.com/parts/">Parts</a>
+      <a href="https://zahidcat.com/service/">Service</a>
+      <a href="https://zahidcat.com/customer-value-agreements/">Customer Value Agreements</a>
+      <a href="https://zahidcat.com/training/">Training</a>
+      <a href="https://zahidcat.com/financing/">Financing</a>
+      <a href="https://zahidcat.com/special-offers/">Special Offers</a>
+      <a href="https://zahidcat.com/news-articles/">News & Articles</a>
+      <a href="https://zahidcat.com/contact-us/">Contact Us</a>
+      <a class="btn primary" style="margin-top:8px; width:100%; justify-content:center" href="https://zahidcat.com/request-quote/">Request a Quote</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <article class="hero-card">
+          <div class="hero-main">
+            <div class="kicker"><span class="dot"></span> Featured news</div>
+            <h1>Zahid Tractor celebrates 75 years of partnership with Caterpillar</h1>
+            <p>
+              A landmark milestone for a better tomorrow. Explore highlights, initiatives and updates
+              from Zahid Tractor’s Construction Machinery Division.
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="https://zahidcat.com/news-articles/">Read More</a>
+              <a class="btn ghost" href="https://zahidcat.com/about-us/#milestones">Our Milestones</a>
+            </div>
+          </div>
+        </article>
+
+        <aside class="hero-card">
+          <div class="hero-aside">
+            <p class="aside-title">Quick highlights</p>
+            <div class="aside-list">
+              <div class="aside-item">
+                <div class="icon">✓</div>
+                <div>
+                  <strong>Inspections</strong>
+                  <span>Check equipment condition, spot leaks and detect issues early.</span>
+                </div>
+              </div>
+              <div class="aside-item">
+                <div class="icon">⚙</div>
+                <div>
+                  <strong>Custom Track Service (CTS)</strong>
+                  <span>Predict wear rates and improve maintenance decisions.</span>
+                </div>
+              </div>
+              <div class="aside-item">
+                <div class="icon">⛏</div>
+                <div>
+                  <strong>Advansys tools</strong>
+                  <span>Designed to reduce downtime and boost productivity.</span>
+                </div>
+              </div>
+              <div class="aside-item">
+                <div class="icon">🛠</div>
+                <div>
+                  <strong>Field maintenance</strong>
+                  <span>Repair & inspection services across branches.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Service cards -->
+    <section>
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2>Service highlights</h2>
+            <p>Practical programs to maximize uptime and performance.</p>
+          </div>
+          <a class="btn" href="https://zahidcat.com/service/">Explore Service</a>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <h3>Inspection</h3>
+            <p>Identify condition and productivity issues on-site, including leaks and malfunctions.</p>
+            <div class="meta">
+              <span class="pill">Condition</span><span class="pill">Diagnostics</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Technical analysis</h3>
+            <p>Detailed examinations that support repair decisions and proactive maintenance.</p>
+            <div class="meta">
+              <span class="pill">Analysis I/II</span><span class="pill">Preventive</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Custom Track Service (CTS)</h3>
+            <p>Advanced undercarriage program to detect and predict wear rates.</p>
+            <div class="meta">
+              <span class="pill">Undercarriage</span><span class="pill">Prediction</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Field maintenance</h3>
+            <p>Mobile teams ready to inspect and repair equipment across branches.</p>
+            <div class="meta">
+              <span class="pill">On-site</span><span class="pill">24/7 Support</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUR SOLUTIONS -->
+    <section class="solutions">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2>OUR SOLUTIONS</h2>
+            <p>New, Used, Rental — plus parts, service, training and financing.</p>
+          </div>
+          <a class="btn primary" href="https://zahidcat.com/products/">Browse Products</a>
+        </div>
+
+        <div class="solutions-grid">
+          <div class="big-panel">
+            <h3 style="margin:0 0 8px 0">Product offering</h3>
+            <p style="margin:0; color:var(--muted); line-height:1.6">
+              A wide range of programs are available to help customers grow their businesses
+              with support 24 hours a day, seven days a week.
+            </p>
+
+            <div class="tabs" role="tablist" aria-label="Solutions">
+              <a class="tab active" href="https://zahidcat.com/products/">New</a>
+              <a class="tab" href="https://zahidcat.com/used/">Used</a>
+              <a class="tab" href="https://zahidcat.com/rental/">Rental</a>
+            </div>
+
+            <div class="link-grid" aria-label="Programs">
+              <a href="https://zahidcat.com/parts/">Parts</a>
+              <a href="https://zahidcat.com/service/">Service</a>
+              <a href="https://zahidcat.com/customer-value-agreements/">Customer Value Agreements</a>
+              <a href="https://zahidcat.com/training/">Training</a>
+              <a href="https://zahidcat.com/financing/">Financing</a>
+              <a href="https://zahidcat.com/sos/">SOS Analysis</a>
+            </div>
+          </div>
+
+          <div class="big-panel">
+            <h3 style="margin:0 0 8px 0">ONLINE TOOLS</h3>
+            <p style="margin:0; color:var(--muted); line-height:1.6">
+              Helpful tools available at the click of a button. For usernames and passwords,
+              contact your Account Manager.
+            </p>
+
+            <div class="tools">
+              <a class="btn" href="https://zahidcat.com/parts-cat-com/">Parts Online</a>
+              <a class="btn" href="https://vl.cat.com/visionlink?ui_locales=en-US">VisionLink</a>
+              <a class="btn" href="https://interact.cat.com/">SIS / Interact</a>
+            </div>
+
+            <!-- Special Offers box + Embedded UCPM CP -->
+            <div style="margin-top:16px; padding:14px; border-radius:18px; border:1px solid var(--border); background:var(--panel)">
+              <strong>Special Offers</strong>
+              <p style="margin:6px 0 0; color:var(--muted); line-height:1.55; font-size:13px">
+                Explore genuine parts offers and equipment protection plans.
+              </p>
+
+              <!-- OneTrust mounts here -->
+              <div id="ot-container"></div>
+
+              <div style="margin-top:12px">
+                <a class="btn primary" href="https://zahidcat.com/special-offers/">View Offers</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
-    const emailInput = document.getElementById("email");
-    const loadBtn = document.getElementById("loadBtn");
+    // Mobile drawer toggle
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('drawer');
+    burger?.addEventListener('click', () => {
+      const shown = drawer.style.display === 'block';
+      drawer.style.display = shown ? 'none' : 'block';
+    });
 
-    let installed = false;
+    // Dropdowns (desktop)
+    const triggers = document.querySelectorAll('[data-dd]');
+    const menus = document.querySelectorAll('[data-dd-menu]');
 
-    function whenOTReady(cb) {
-      const t = setInterval(() => {
-        if (window.OneTrust?.webform?.InstallCP) {
-          clearInterval(t);
-          cb();
-        }
-      }, 80);
+    function closeAll(){
+      triggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
+      menus.forEach(m => m.style.display = 'none');
     }
 
-    loadBtn.addEventListener("click", () => {
-      const email = emailInput.value.trim();
-      if (!email) {
-        alert("Please enter an email first.");
-        return;
-      }
-
-      if (installed) return;
-      installed = true;
-
-      whenOTReady(() => {
-        OneTrust.webform.InstallCP(CP_ID, { target: "#ot-container" });
-        window.__EMAIL__ = email;
+    triggers.forEach(t => {
+      const name = t.getAttribute('data-dd');
+      const menu = document.querySelector(`[data-dd-menu="${name}"]`);
+      t.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const expanded = t.getAttribute('aria-expanded') === 'true';
+        closeAll();
+        if(!expanded){
+          t.setAttribute('aria-expanded', 'true');
+          if(menu) menu.style.display = 'block';
+        }
+      });
+      t.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){ t.click(); }
       });
     });
 
-    window.addEventListener("OnetrustFormLoaded", () => {
-      OneTrust.webform.preFill({ "Email": window.__EMAIL__ }, CP_ID);
-    });
+    document.addEventListener('click', closeAll);
+    window.addEventListener('resize', closeAll);
+
+    /* ==========================================================
+       OneTrust Embedded CP install (Manual load via InstallCP)
+       - Uses the method described in OneTrust docs
+       - Uses a safe "wait until OneTrust.webform exists" helper
+       ========================================================== */
+    (function installOneTrustCP(){
+      // Using your provided GUID as CP_ID by default.
+      // If your actual Collection Point ID differs, replace it here.
+      const CP_ID = "0ceb7c0c-d27e-43c6-9c9c-877694285648";
+
+      const targetSelector = "#ot-container";
+
+      function whenOTReady(cb){
+        const start = Date.now();
+        const timeoutMs = 12000;
+
+        (function tick(){
+          const ready = (window.OneTrust && OneTrust.webform && typeof OneTrust.webform.InstallCP === "function");
+          if (ready) return cb();
+          if (Date.now() - start > timeoutMs) return; // silent fail (keeps page clean)
+          requestAnimationFrame(tick);
+        })();
+      }
+
+      whenOTReady(() => {
+        try {
+          // Per OneTrust embedded web forms docs: manual load uses InstallCP. [3](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
+          // Preferred signature with target container (as you requested). [4](https://m365.cloud.microsoft/chat/pages/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS94OEZOTy14dHNrdUNSWDJfZk1USExiYjVST3VHRlBGQm5GSjNmN2pqWVBFP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5Um5nNFJrNVBKVEpFZUhSemEzVkRVbGd5SlRWR1prMVVTRXhpWWpWU1QzVkhSbEJHUW01R1NqTm1OMnBxV1ZCRkptUTlZaVV5TVNVMVJqTnRPR2w1TkZGVlZWTmhOVE5JSlRWR1JHNVZhbHB2YjJwSWFXeFpVMDUwUjNOaGEwaE9KVEpFWjAxaVJYTWxNa1J0UzNac1RVMUNOVkUwU1VNd1dHOHdNMUpyYlNabVBUQXhSVTFXU3pSVk5GZzNWRlkwVFVkRVZVRmFRVXMyUlZOVlVVVlhSVTlDU1ZjbVl6MGxNa1kifQ?auth=2)[2](https://loop.cloud.microsoft/p/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS9DU1BfNjNiM2ZlMTUtZTQ0YS00NDMxLWFhOTMtYjY1ZDZmZjBiZTdjP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5UmtOVFVDVTFSall6WWpObVpURTFKVEpFWlRRMFlTVXlSRFEwTXpFbE1rUmhZVGt6SlRKRVlqWTFaRFptWmpCaVpUZGpKbVE5WWlVeU1VWm1ObnBaTUhKclRWVlRjV3MzV21SaUpUVkdReVV5UkdaS05qWk5WMnhuUkcxb1QzQkRVRE5aYjFwamVWZE9UVVU1YTNGRFoxUnRVWEY2T0dSVFMweFdTVWhVSm1ZOU1ERlFVbFpTTTFCUVIxVllSRTQyTkU1SFFVNUZXVEpIV0VGT1JsUkRSVkZNVWlaalBTVXlSZyJ9)
+          if (OneTrust?.webform?.InstallCP?.length >= 2) {
+            OneTrust.webform.InstallCP(CP_ID, { target: targetSelector });
+          } else {
+            // Fallback signature seen in our internal patterns. [2](https://loop.cloud.microsoft/p/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS9DU1BfNjNiM2ZlMTUtZTQ0YS00NDMxLWFhOTMtYjY1ZDZmZjBiZTdjP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5UmtOVFVDVTFSall6WWpObVpURTFKVEpFWlRRMFlTVXlSRFEwTXpFbE1rUmhZVGt6SlRKRVlqWTFaRFptWmpCaVpUZGpKbVE5WWlVeU1VWm1ObnBaTUhKclRWVlRjV3MzV21SaUpUVkdReVV5UkdaS05qWk5WMnhuUkcxb1QzQkRVRE5aYjFwamVWZE9UVVU1YTNGRFoxUnRVWEY2T0dSVFMweFdTVWhVSm1ZOU1ERlFVbFpTTTFCUVIxVllSRTQyTkU1SFFVNUZXVEpIV0VGT1JsUkRSVkZNVWlaalBTVXlSZyJ9)
+            OneTrust.webform.InstallCP(CP_ID, function(){});
+          }
+        } catch (e) {
+          // no-op
+        }
+      });
+    })();
   </script>
 </body>
 </html>
-``

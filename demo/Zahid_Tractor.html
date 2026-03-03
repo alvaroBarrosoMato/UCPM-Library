@@ -7,11 +7,12 @@
   <meta name="description" content="Zahid Tractor – Construction Machinery Division. Products, Parts, Services, Training, Financing and more." />
 
   <!-- =========================
-       OneTrust TEST Cookie Banner
+       OneTrust TEST Cookie Banner (as provided)
        ========================= -->
   <!-- OptanonConsentNoticeStart -->
   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
-          type="text/javascript" charset="UTF-8"
+          type="text/javascript"
+          charset="UTF-8"
           data-domain-script="019cb466-f797-7b02-ac8d-b5b4ea71888a-test"></script>
   <script type="text/javascript">
     function OptanonWrapper() { }
@@ -19,8 +20,7 @@
   <!-- OptanonConsentNoticeEnd -->
 
   <!-- =========================
-       OneTrust Embedded Web Form Stub
-       (as provided)
+       OneTrust Embedded Web Form Stub (as provided)
        ========================= -->
   <!-- OneTrust Embedded Web Form Stub -->
   <script
@@ -42,7 +42,7 @@
       --radius:14px;
       --max:1180px;
 
-      /* Added for OneTrust theming */
+      /* extra tokens for embedded form theming */
       --primary: var(--brand-yellow);
       --danger: #c80e13;
     }
@@ -52,7 +52,7 @@
     a{color:inherit; text-decoration:none}
     img{max-width:100%; display:block}
 
-    /* Top utility bar (subtle) */
+    /* Top utility bar */
     .topbar{
       background:var(--brand-black);
       color:#fff;
@@ -92,14 +92,11 @@
       min-width:260px;
     }
     .brand-logo{
-      width:168px;
+      width:180px;
       height:auto;
       border-radius:10px;
-      box-shadow:inset 0 0 0 2px rgba(0,0,0,.06);
       background:#fff;
     }
-    .brand strong{display:block; font-size:16px; line-height:1.1}
-    .brand span{display:block; font-size:12px; color:var(--muted)}
 
     /* Nav */
     nav{display:flex; align-items:center; gap:14px}
@@ -115,7 +112,7 @@
     .nav-item:hover{background:var(--panel)}
     .nav-item[aria-expanded="true"]{background:var(--panel)}
 
-    /* Dropdown (mega-ish) */
+    /* Dropdown */
     .dropdown{
       position:absolute;
       left:0;
@@ -154,7 +151,7 @@
       border-color:var(--border);
     }
 
-    /* CTA buttons */
+    /* Buttons */
     .btn{
       display:inline-flex;
       align-items:center;
@@ -299,32 +296,6 @@
     }
     .section-title p{margin:0; color:var(--muted); font-size:14px}
 
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(4, minmax(0,1fr));
-      gap:14px;
-    }
-    .card{
-      border:1px solid var(--border);
-      border-radius:18px;
-      background:#fff;
-      padding:16px;
-      box-shadow:0 6px 18px rgba(0,0,0,.05);
-      min-height:160px;
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .card h3{margin:0; font-size:16px}
-    .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.55}
-    .card .meta{margin-top:auto; display:flex; gap:8px; flex-wrap:wrap}
-    .pill{
-      font-size:12px;
-      font-weight:800;
-      border-radius:999px;
-      padding:6px 10px;
-      background:var(--panel);
-      border:1px solid var(--border);
-    }
-
     .solutions{
       background:linear-gradient(180deg, #fff, #fafafa);
       border-top:1px solid var(--border);
@@ -379,29 +350,6 @@
       margin-top:12px;
     }
 
-    .reach{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:16px;
-      align-items:stretch;
-    }
-    .map{
-      border-radius:22px;
-      border:1px dashed #cfcfcf;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,205,17,.25), transparent 40%),
-        radial-gradient(circle at 75% 65%, rgba(0,0,0,.08), transparent 45%),
-        #fafafa;
-      min-height:260px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:var(--muted);
-      font-weight:900;
-      text-align:center;
-      padding:16px;
-    }
-
     footer{
       background:var(--brand-black);
       color:#fff;
@@ -436,12 +384,10 @@
     .fineprint{opacity:.75; font-size:12px; margin-top:10px; line-height:1.5}
 
     /* ==========================================
-       OneTrust Embedded Web Form (Zahid Theming)
-       Inspired by your reset + checkbox approach
+       OneTrust Embedded Web Form (Zahid styling)
        ========================================== */
-    #ot-container { margin-top:24px; }
+    #ot-container { margin-top:18px; }
 
-    /* Base reset */
     #ot-container .ot-consent-inline,
     #ot-container .otwf-content,
     #ot-container .ot-form,
@@ -455,7 +401,6 @@
       color:inherit !important;
     }
 
-    /* Labels */
     #ot-container .ot-label,
     #ot-container label,
     #ot-container span.ot-label{
@@ -465,7 +410,6 @@
       color:var(--muted) !important;
     }
 
-    /* Inputs (text/email/etc) */
     #ot-container input[type="text"],
     #ot-container input[type="email"],
     #ot-container input[type="tel"],
@@ -480,7 +424,6 @@
       outline:none !important;
       box-shadow:0 1px 0 rgba(0,0,0,.03) !important;
     }
-
     #ot-container input[type="text"]:focus,
     #ot-container input[type="email"]:focus,
     #ot-container input[type="tel"]:focus,
@@ -490,13 +433,12 @@
       box-shadow:0 0 0 4px rgba(255,205,17,.25) !important;
     }
 
-    /* ✅ Circular checkboxes (safe method) */
+    /* circular checkboxes */
     #ot-container input[type="checkbox"]{
       position:absolute !important;
       opacity:0 !important;
       pointer-events:none !important;
     }
-
     #ot-container .otwf-chkbox label{
       display:flex !important;
       align-items:flex-start !important;
@@ -505,7 +447,6 @@
       position:relative !important;
       padding:2px 0 !important;
     }
-
     #ot-container .otwf-chkbox label::before{
       content:"";
       width:18px;
@@ -517,18 +458,14 @@
       transition:all .15s ease;
       background:#fff;
     }
-
     #ot-container input[type="checkbox"]:checked + label::before{
       border-color:#e9bf00;
       background: radial-gradient(circle at center, #111 45%, transparent 47%);
-      /* black dot (Cat-like), with yellow ring border */
     }
-
     #ot-container input[type="checkbox"]:focus + label::before{
       box-shadow:0 0 0 4px rgba(255,205,17,.25);
     }
 
-    /* Error text */
     #ot-container .ot-error{
       color:var(--danger) !important;
       font-size:13px !important;
@@ -536,7 +473,6 @@
       font-weight:700 !important;
     }
 
-    /* Submit button: match site primary button */
     #ot-container .ot-submit,
     #ot-container button[type="submit"],
     #ot-container .ot-sdk-btn-primary{
@@ -551,7 +487,6 @@
       cursor:pointer !important;
       transition:.15s ease !important;
     }
-
     #ot-container .ot-submit:hover,
     #ot-container button[type="submit"]:hover,
     #ot-container .ot-sdk-btn-primary:hover{
@@ -559,27 +494,16 @@
       filter:brightness(.98) !important;
     }
 
-    /* Spacing helpers */
-    #ot-container .ot-form-row,
-    #ot-container .otwf-row{
-      margin-top:12px !important;
-    }
-
-    /* Responsive */
     @media (max-width: 980px){
       .hero .wrap{grid-template-columns:1fr}
-      .cards{grid-template-columns:repeat(2, minmax(0,1fr))}
       .solutions-grid{grid-template-columns:1fr}
-      .reach{grid-template-columns:1fr}
       .dropdown{width:calc(100vw - 32px)}
     }
     @media (max-width: 760px){
       nav{display:none}
       .burger{display:inline-grid; place-items:center}
-      .cards{grid-template-columns:1fr}
       .footer-grid{grid-template-columns:1fr}
-      .brand{min-width:auto}
-      .brand-logo{width:150px}
+      .brand-logo{width:160px}
     }
   </style>
 </head>
@@ -603,11 +527,7 @@
         <img
           class="brand-logo"
           src="https://cdn-ileepoe.nitrocdn.com/oeBjEPhcHgYYrRsyGhwtfKvdYyrcFPMt/assets/images/optimized/rev-6d68d85/zahidcat.com/wp-content/uploads/2021/01/zahid-tractor-logo.jpeg"
-          alt="Zahid Tractor Logo" />
-        <div style="display:none">
-          <strong>Zahidcat</strong>
-          <span>Zahid Tractor – CMD</span>
-        </div>
+          alt="Zahid Tractor logo" />
       </a>
 
       <button class="burger" aria-label="Open menu" id="burger">☰</button>
@@ -746,7 +666,6 @@
     </div>
   </header>
 
-  <!-- Hero -->
   <main>
     <section class="hero">
       <div class="wrap">
@@ -803,54 +722,6 @@
       </div>
     </section>
 
-    <!-- Service cards -->
-    <section>
-      <div class="wrap">
-        <div class="section-title">
-          <div>
-            <h2>Service highlights</h2>
-            <p>Practical programs to maximize uptime and performance.</p>
-          </div>
-          <a class="btn" href="https://zahidcat.com/service/">Explore Service</a>
-        </div>
-
-        <div class="cards">
-          <div class="card">
-            <h3>Inspection</h3>
-            <p>Identify condition and productivity issues on-site, including leaks and malfunctions.</p>
-            <div class="meta">
-              <span class="pill">Condition</span><span class="pill">Diagnostics</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Technical analysis</h3>
-            <p>Detailed examinations that support repair decisions and proactive maintenance.</p>
-            <div class="meta">
-              <span class="pill">Analysis I/II</span><span class="pill">Preventive</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Custom Track Service (CTS)</h3>
-            <p>Advanced undercarriage program to detect and predict wear rates.</p>
-            <div class="meta">
-              <span class="pill">Undercarriage</span><span class="pill">Prediction</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Field maintenance</h3>
-            <p>Mobile teams ready to inspect and repair equipment across branches.</p>
-            <div class="meta">
-              <span class="pill">On-site</span><span class="pill">24/7 Support</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- OUR SOLUTIONS -->
     <section class="solutions">
       <div class="wrap">
         <div class="section-title">
@@ -916,7 +787,67 @@
         </div>
       </div>
     </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2>ALWAYS WITHIN REACH</h2>
+            <p>Branches across the Kingdom of Saudi Arabia to stay close to customers.</p>
+          </div>
+          <a class="btn primary" href="https://zahidcat.com/contact-us/">Find a Branch</a>
+        </div>
+
+        <div style="border-radius:22px;border:1px dashed #cfcfcf;background:#fafafa;min-height:220px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:900;text-align:center;padding:16px;">
+          Map/Branches Placeholder (replace with embed or branch cards)
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="newsletter">
+          <h3>Join our mailing list</h3>
+          <form>
+            <input class="field" type="text" name="name" placeholder="Name" />
+            <input class="field" type="email" name="email" placeholder="Email" />
+            <input class="field" type="tel" name="phone" placeholder="Phone" />
+            <button class="btn primary" type="button">Subscribe</button>
+          </form>
+          <div class="fineprint">
+            This is a simplified static template. Wire the form to your backend/CRM as needed.
+          </div>
+        </div>
+
+        <div>
+          <h3>Company</h3>
+          <div class="foot-links">
+            <a href="https://zahidtractor.com/">zahidtractor.com</a>
+            <a href="https://zahid.com/">Zahid Group</a>
+            <a href="https://www.cat.com/">cat.com</a>
+            <a href="https://zahidcat.com/careers/">Careers</a>
+          </div>
+        </div>
+
+        <div>
+          <h3>Policies</h3>
+          <div class="foot-links">
+            <a href="https://zahidcat.com/privacy-policy/">PCC – Privacy Policy</a>
+            <a href="https://zahidcat.com/terms-and-conditions/">PCC – Terms and Conditions</a>
+            <a href="https://zahidcat.com/return-policy/">PCC – Return Policy</a>
+            <a href="https://www.zahid.com/privacy-notice/">Privacy Notice</a>
+            <a href="https://www.zahid.com/cookie-policy/">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fineprint" style="margin-top:18px">
+        © Zahidcat – Simplified HTML mock. Replace placeholders (map/video) with real assets.
+      </div>
+    </div>
+  </footer>
 
   <script>
     // Mobile drawer toggle
@@ -956,44 +887,49 @@
     document.addEventListener('click', closeAll);
     window.addEventListener('resize', closeAll);
 
-    /* ==========================================================
-       OneTrust Embedded CP install (Manual load via InstallCP)
-       - Uses the method described in OneTrust docs
-       - Uses a safe "wait until OneTrust.webform exists" helper
-       ========================================================== */
-    (function installOneTrustCP(){
-      // Using your provided GUID as CP_ID by default.
-      // If your actual Collection Point ID differs, replace it here.
-      const CP_ID = "0ceb7c0c-d27e-43c6-9c9c-877694285648";
+    // ==========================================
+    // Auto-mount OneTrust Embedded Web Form CP
+    // ==========================================
+    (function () {
+      const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05"; // [2](https://www.w3schools.com/w3css/w3css_color_schemes.asp)
+      const TARGET = "#ot-container";
+      let installed = false;
 
-      const targetSelector = "#ot-container";
-
-      function whenOTReady(cb){
-        const start = Date.now();
-        const timeoutMs = 12000;
-
-        (function tick(){
-          const ready = (window.OneTrust && OneTrust.webform && typeof OneTrust.webform.InstallCP === "function");
-          if (ready) return cb();
-          if (Date.now() - start > timeoutMs) return; // silent fail (keeps page clean)
-          requestAnimationFrame(tick);
-        })();
+      function whenOTReady(cb) {
+        const t = setInterval(() => {
+          if (window.OneTrust?.webform?.InstallCP) {
+            clearInterval(t);
+            cb();
+          }
+        }, 80);
       }
 
-      whenOTReady(() => {
-        try {
-          // Per OneTrust embedded web forms docs: manual load uses InstallCP. [3](https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events)
-          // Preferred signature with target container (as you requested). [4](https://m365.cloud.microsoft/chat/pages/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS94OEZOTy14dHNrdUNSWDJfZk1USExiYjVST3VHRlBGQm5GSjNmN2pqWVBFP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5Um5nNFJrNVBKVEpFZUhSemEzVkRVbGd5SlRWR1prMVVTRXhpWWpWU1QzVkhSbEJHUW01R1NqTm1OMnBxV1ZCRkptUTlZaVV5TVNVMVJqTnRPR2w1TkZGVlZWTmhOVE5JSlRWR1JHNVZhbHB2YjJwSWFXeFpVMDUwUjNOaGEwaE9KVEpFWjAxaVJYTWxNa1J0UzNac1RVMUNOVkUwU1VNd1dHOHdNMUpyYlNabVBUQXhSVTFXU3pSVk5GZzNWRlkwVFVkRVZVRmFRVXMyUlZOVlVVVlhSVTlDU1ZjbVl6MGxNa1kifQ?auth=2)[2](https://loop.cloud.microsoft/p/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS9DU1BfNjNiM2ZlMTUtZTQ0YS00NDMxLWFhOTMtYjY1ZDZmZjBiZTdjP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5UmtOVFVDVTFSall6WWpObVpURTFKVEpFWlRRMFlTVXlSRFEwTXpFbE1rUmhZVGt6SlRKRVlqWTFaRFptWmpCaVpUZGpKbVE5WWlVeU1VWm1ObnBaTUhKclRWVlRjV3MzV21SaUpUVkdReVV5UkdaS05qWk5WMnhuUkcxb1QzQkRVRE5aYjFwamVWZE9UVVU1YTNGRFoxUnRVWEY2T0dSVFMweFdTVWhVSm1ZOU1ERlFVbFpTTTFCUVIxVllSRTQyTkU1SFFVNUZXVEpIV0VGT1JsUkRSVkZNVWlaalBTVXlSZyJ9)
-          if (OneTrust?.webform?.InstallCP?.length >= 2) {
-            OneTrust.webform.InstallCP(CP_ID, { target: targetSelector });
-          } else {
-            // Fallback signature seen in our internal patterns. [2](https://loop.cloud.microsoft/p/eyJ1IjoiaHR0cHM6Ly9vbmV0cnVzdC5zaGFyZXBvaW50LmNvbS9jb250ZW50c3RvcmFnZS9DU1BfNjNiM2ZlMTUtZTQ0YS00NDMxLWFhOTMtYjY1ZDZmZjBiZTdjP25hdj1jejBsTWtaamIyNTBaVzUwYzNSdmNtRm5aU1V5UmtOVFVDVTFSall6WWpObVpURTFKVEpFWlRRMFlTVXlSRFEwTXpFbE1rUmhZVGt6SlRKRVlqWTFaRFptWmpCaVpUZGpKbVE5WWlVeU1VWm1ObnBaTUhKclRWVlRjV3MzV21SaUpUVkdReVV5UkdaS05qWk5WMnhuUkcxb1QzQkRVRE5aYjFwamVWZE9UVVU1YTNGRFoxUnRVWEY2T0dSVFMweFdTVWhVSm1ZOU1ERlFVbFpTTTFCUVIxVllSRTQyTkU1SFFVNUZXVEpIV0VGT1JsUkRSVkZNVWlaalBTVXlSZyJ9)
-            OneTrust.webform.InstallCP(CP_ID, function(){});
+      function boot() {
+        if (installed) return;
+        const container = document.querySelector(TARGET);
+        if (!container) return;
+
+        whenOTReady(() => {
+          try {
+            installed = true;
+
+            // Preferred signature with target; fallback signature if needed. [2](https://www.w3schools.com/w3css/w3css_color_schemes.asp)
+            if (OneTrust.webform.InstallCP.length >= 2) {
+              OneTrust.webform.InstallCP(CP_ID, { target: TARGET });
+            } else {
+              OneTrust.webform.InstallCP(CP_ID, function () {});
+            }
+          } catch (e) {
+            installed = false;
           }
-        } catch (e) {
-          // no-op
-        }
-      });
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot);
+      } else {
+        boot();
+      }
     })();
   </script>
 </body>

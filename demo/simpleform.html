@@ -1,0 +1,272 @@
+!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>OneTrust CSS Sandbox</title>
+
+  <!-- OneTrust command queue -->
+  <script>
+    window.OtSdk = window.OtSdk || function(){ (OtSdk.q = OtSdk.q || []).push(arguments); };
+  </script>
+
+  <!-- OneTrust Embedded Web Form Stub -->
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
+    worker="https://consent-api.onetrust.com">
+  </script>
+
+  <style>
+    /* =========================
+       DESIGN TOKENS
+    ========================= */
+    :root {
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --primary:#2563eb;
+      --border:#e5e7eb;
+      --danger:#d9534f;
+      --radius:12px;
+      --font: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    }
+
+    * { box-sizing:border-box; }
+
+    body {
+      margin:0;
+      padding:40px 16px;
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--font);
+      display:flex;
+      justify-content:center;
+    }
+
+    .card {
+      width:100%;
+      max-width:520px;
+      background:var(--card);
+      padding:24px;
+      border-radius:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.08);
+    }
+
+    h1 {
+      margin:0 0 6px;
+      font-size:20px;
+      font-weight:800;
+    }
+
+    /* ✅ REFERENCE TEXT STYLE */
+    p.sub {
+      margin:0 0 20px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+      font-weight:400;
+    }
+
+    label {
+      display:block;
+      margin:14px 0 6px;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    input[type="email"] {
+      width:100%;
+      padding:12px;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      font:inherit;
+    }
+
+    input:focus {
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 0 0 2px rgba(37,99,235,.15);
+    }
+
+    button {
+      margin-top:16px;
+      width:100%;
+      padding:14px;
+      border-radius:var(--radius);
+      border:0;
+      background:var(--primary);
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .hint {
+      margin-top:10px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* =========================
+       ONETRUST BASE RESET
+    ========================= */
+    #ot-container {
+      margin-top:24px;
+    }
+
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background:transparent !important;
+      border:none !important;
+      box-shadow:none !important;
+      padding:0 !important;
+      font-family:inherit !important;
+      color:inherit !important;
+    }
+
+    /* ✅ MATCH TEXT STYLE EXACTLY */
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size:14px !important;
+      line-height:1.5 !important;
+      font-weight:400 !important;
+      color:var(--muted) !important;
+    }
+
+    /* =========================
+       ✅ CIRCULAR CHECKBOXES
+       (safe, reliable method)
+    ========================= */
+
+    /* Hide native checkbox */
+    #ot-container input[type="checkbox"] {
+      position:absolute !important;
+      opacity:0 !important;
+      pointer-events:none !important;
+    }
+
+    /* Checkbox row */
+    #ot-container .otwf-chkbox label {
+      display:flex !important;
+      align-items:flex-start;
+      gap:10px;
+      cursor:pointer;
+      position:relative;
+    }
+
+    /* Circle */
+    #ot-container .otwf-chkbox label::before {
+      content:"";
+      width:18px;
+      height:18px;
+      min-width:18px;
+      border-radius:50%;
+      border:2px solid var(--border);
+      margin-top:2px;
+      transition:all .15s ease;
+      background:#fff;
+    }
+
+    /* Checked state */
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color:var(--primary);
+      background:
+        radial-gradient(circle at center,
+          var(--primary) 45%,
+          transparent 47%);
+    }
+
+    /* Focus state (keyboard) */
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow:0 0 0 3px rgba(37,99,235,.2);
+    }
+
+    /* Error text */
+    .ot-error {
+      color:var(--danger) !important;
+      font-size:13px !important;
+      margin-top:4px !important;
+    }
+
+    /* Submit button */
+    .ot-submit {
+      width:100% !important;
+      margin-top:16px !important;
+      padding:14px !important;
+      border-radius:var(--radius) !important;
+      border:1px solid var(--border) !important;
+      background:#fff !important;
+      color:var(--text) !important;
+      font-weight:700 !important;
+      cursor:pointer !important;
+    }
+
+    .ot-submit:hover {
+      background:#f9f9f9 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="card">
+    <h1>Consent preferences</h1>
+    <p class="sub">
+      Minimal sandbox to test CSS on the OneTrust embedded form.
+    </p>
+
+    <label for="email">Email *</label>
+    <input id="email" type="email" placeholder="you@example.com" required />
+
+    <button id="loadBtn" type="button">Load consent form</button>
+
+    <div class="hint">
+      The OneTrust form will appear below using <strong>Manual InstallCP</strong>.
+    </div>
+
+    <!-- OneTrust mounts here -->
+    <div id="ot-container"></div>
+  </section>
+
+  <script>
+    const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+    const emailInput = document.getElementById("email");
+    const loadBtn = document.getElementById("loadBtn");
+
+    let installed = false;
+
+    function whenOTReady(cb) {
+      const t = setInterval(() => {
+        if (window.OneTrust?.webform?.InstallCP) {
+          clearInterval(t);
+          cb();
+        }
+      }, 80);
+    }
+
+    loadBtn.addEventListener("click", () => {
+      const email = emailInput.value.trim();
+      if (!email) {
+        alert("Please enter an email first.");
+        return;
+      }
+
+      if (installed) return;
+      installed = true;
+
+      whenOTReady(() => {
+        OneTrust.webform.InstallCP(CP_ID, { target: "#ot-container" });
+        window.__EMAIL__ = email;
+      });
+    });
+
+    window.addEventListener("OnetrustFormLoaded", () => {
+      OneTrust.webform.preFill({ "Email": window.__EMAIL__ }, CP_ID);
+    });
+  </script>
+</body>
+</html>

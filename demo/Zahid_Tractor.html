@@ -508,6 +508,47 @@
       .brand-logo{width:160px}
     }
   </style>
+  /* ==========================================
+   FIX: Prevent text overlapping checkboxes
+   ========================================== */
+
+/* Checkbox row container */
+#ot-container .otwf-chkbox label{
+  display:flex !important;
+  align-items:flex-start !important;
+  gap:12px !important;
+  cursor:pointer !important;
+  position:relative !important;
+
+  /* ✅ Critical fixes */
+  line-height:1.5 !important;
+  min-height:22px !important;
+}
+
+/* Custom circle */
+#ot-container .otwf-chkbox label::before{
+  content:"";
+  width:18px;
+  height:18px;
+  min-width:18px;
+  border-radius:50%;
+  border:2px solid var(--border);
+  margin-top:2px; /* aligns circle with first text line */
+  background:#fff;
+  flex-shrink:0;
+}
+
+/* ✅ Ensure wrapped text aligns correctly */
+#ot-container .otwf-chkbox label span,
+#ot-container .otwf-chkbox label{
+  white-space:normal !important;
+}
+
+/* Optional: give groups breathing room */
+#ot-container .otwf-chkbox{
+  margin-bottom:10px !important;
+}
+
 </head>
 
 <body>

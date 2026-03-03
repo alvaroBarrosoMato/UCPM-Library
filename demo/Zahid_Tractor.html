@@ -507,22 +507,24 @@
       .footer-grid{grid-template-columns:1fr}
       .brand-logo{width:160px}
     }
-  </style>
-  /* ==========================================
-   FIX: Prevent text overlapping checkboxes
+    /* ==========================================
+   OneTrust checkbox spacing – MORE GAP
    ========================================== */
 
-/* Checkbox row container */
+/* Each checkbox row */
+#ot-container .otwf-chkbox{
+  margin-bottom:14px !important; /* ✅ more vertical space */
+}
+
+/* Label row */
 #ot-container .otwf-chkbox label{
   display:flex !important;
   align-items:flex-start !important;
-  gap:12px !important;
+
+  gap:16px !important;          /* ✅ MORE horizontal space */
+  line-height:1.6 !important;   /* ✅ better text breathing */
   cursor:pointer !important;
   position:relative !important;
-
-  /* ✅ Critical fixes */
-  line-height:1.5 !important;
-  min-height:22px !important;
 }
 
 /* Custom circle */
@@ -531,24 +533,26 @@
   width:18px;
   height:18px;
   min-width:18px;
+
+  margin-top:4px;               /* ✅ aligns with first text line */
   border-radius:50%;
   border:2px solid var(--border);
-  margin-top:2px; /* aligns circle with first text line */
   background:#fff;
   flex-shrink:0;
 }
 
-/* ✅ Ensure wrapped text aligns correctly */
-#ot-container .otwf-chkbox label span,
+/* Wrapped text alignment */
 #ot-container .otwf-chkbox label{
   white-space:normal !important;
 }
 
-/* Optional: give groups breathing room */
-#ot-container .otwf-chkbox{
-  margin-bottom:10px !important;
+/* Optional: section spacing (Interest / Channel etc.) */
+#ot-container .otwf-group{
+  margin-top:20px !important;
 }
 
+  </style>
+  
 </head>
 
 <body>

@@ -42,9 +42,7 @@
       --radius:14px;
       --max:1180px;
 
-      /* extra tokens for embedded form theming */
-      --primary: var(--brand-yellow);
-      --danger: #c80e13;
+      --danger:#c80e13;
     }
 
     *{box-sizing:border-box}
@@ -173,9 +171,7 @@
       border-color:#e9bf00;
       color:#000;
     }
-    .btn.ghost{
-      background:transparent;
-    }
+    .btn.ghost{ background:transparent; }
 
     /* Mobile */
     .burger{
@@ -206,9 +202,10 @@
         radial-gradient(1200px 400px at 50% 0%, rgba(255,205,17,.35), rgba(255,255,255,0)),
         linear-gradient(#fff, #fff);
     }
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
+    section{padding:28px 0}
+
     .hero .wrap{
-      max-width:var(--max);
-      margin:0 auto;
       padding:34px 16px 18px;
       display:grid;
       grid-template-columns:1.4fr .9fr;
@@ -259,6 +256,7 @@
       max-width:62ch;
     }
     .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:auto}
+
     .hero-aside{
       padding:18px;
       display:flex;
@@ -284,9 +282,7 @@
     .aside-item strong{display:block; font-size:14px}
     .aside-item span{display:block; color:var(--muted); font-size:13px; line-height:1.4}
 
-    /* Sections */
-    section{padding:28px 0}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
+    /* Section title */
     .section-title{
       display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
       margin-bottom:14px;
@@ -294,19 +290,13 @@
     .section-title h2{
       margin:0; font-size:20px; letter-spacing:-0.02em;
     }
-    .section-title p{margin:0; color:var(--muted); font-size:14px}
+    .section-title p{margin:0; color:var(--muted); font-size:14px; line-height:1.6}
 
+    /* Special Offers section */
     .solutions{
       background:linear-gradient(180deg, #fff, #fafafa);
       border-top:1px solid var(--border);
       border-bottom:1px solid var(--border);
-    }
-    
-    .solutions-grid{
-      display:grid;
-      grid-template-columns: 0.85fr 1.15fr; /* product narrower, tools ~30% wider */
-      gap:16px;
-      align-items:start;
     }
 
     .big-panel{
@@ -316,42 +306,23 @@
       box-shadow:var(--shadow);
       padding:18px;
     }
-    .tabs{
-      display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 0;
-    }
-    .tab{
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      font-weight:900;
-      background:#fff;
-    }
-    .tab.active{
-      background:var(--brand-yellow);
-      border-color:#e9bf00;
-    }
-    .link-grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:10px;
-      margin-top:12px;
-    }
-    .link-grid a{
+
+    /* Pill tags (you used .pill but it wasn't defined before) */
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
       padding:12px 12px;
       border-radius:16px;
       border:1px solid var(--border);
       background:var(--panel);
       font-weight:800;
-    }
-    .link-grid a:hover{background:#fff}
-
-    .tools{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
+      font-size:14px;
+      line-height:1;
+      min-height:44px;
     }
 
+    /* Footer */
     footer{
       background:var(--brand-black);
       color:#fff;
@@ -407,7 +378,7 @@
     #ot-container label,
     #ot-container span.ot-label{
       font-size:14px !important;
-      line-height:1.5 !important;
+      line-height:1.6 !important;
       font-weight:600 !important;
       color:var(--muted) !important;
     }
@@ -435,39 +406,6 @@
       box-shadow:0 0 0 4px rgba(255,205,17,.25) !important;
     }
 
-    /* circular checkboxes */
-    #ot-container input[type="checkbox"]{
-      position:absolute !important;
-      opacity:0 !important;
-      pointer-events:none !important;
-    }
-    #ot-container .otwf-chkbox label{
-      display:flex !important;
-      align-items:flex-start !important;
-      gap:10px !important;
-      cursor:pointer !important;
-      position:relative !important;
-      padding:2px 0 !important;
-    }
-    #ot-container .otwf-chkbox label::before{
-      content:"";
-      width:18px;
-      height:18px;
-      min-width:18px;
-      border-radius:50%;
-      border:2px solid var(--border);
-      margin-top:2px;
-      transition:all .15s ease;
-      background:#fff;
-    }
-    #ot-container input[type="checkbox"]:checked + label::before{
-      border-color:#e9bf00;
-      background: radial-gradient(circle at center, #111 45%, transparent 47%);
-    }
-    #ot-container input[type="checkbox"]:focus + label::before{
-      box-shadow:0 0 0 4px rgba(255,205,17,.25);
-    }
-
     #ot-container .ot-error{
       color:var(--danger) !important;
       font-size:13px !important;
@@ -475,6 +413,7 @@
       font-weight:700 !important;
     }
 
+    /* Submit buttons */
     #ot-container .ot-submit,
     #ot-container button[type="submit"],
     #ot-container .ot-sdk-btn-primary{
@@ -496,9 +435,59 @@
       filter:brightness(.98) !important;
     }
 
+    /* ==========================================
+       FINAL FIX: Checkbox text never under circle
+       (replaces the earlier flex-gap approach)
+       ========================================== */
+    #ot-container .otwf-chkbox{
+      position:relative !important;
+      margin:0 0 16px 0 !important; /* more vertical gap */
+    }
+
+    /* Hide native checkbox */
+    #ot-container .otwf-chkbox input[type="checkbox"]{
+      position:absolute !important;
+      opacity:0 !important;
+      pointer-events:none !important;
+    }
+
+    /* Label reserves space for custom circle */
+    #ot-container .otwf-chkbox label{
+      display:block !important;
+      position:relative !important;
+      padding-left:44px !important;   /* MORE GAP + guaranteed wrap alignment */
+      line-height:1.6 !important;
+      white-space:normal !important;
+      cursor:pointer !important;
+    }
+
+    /* Custom circle */
+    #ot-container .otwf-chkbox label::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:4px;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      border:2px solid var(--border);
+      background:#fff;
+    }
+
+    /* Checked state */
+    #ot-container .otwf-chkbox input[type="checkbox"]:checked + label::before{
+      border-color:#e9bf00;
+      background: radial-gradient(circle at center, #111 45%, transparent 47%);
+    }
+
+    /* Focus */
+    #ot-container .otwf-chkbox input[type="checkbox"]:focus + label::before{
+      box-shadow:0 0 0 4px rgba(255,205,17,.25);
+    }
+
+    /* Responsive */
     @media (max-width: 980px){
       .hero .wrap{grid-template-columns:1fr}
-      .solutions-grid{grid-template-columns:1fr}
       .dropdown{width:calc(100vw - 32px)}
     }
     @media (max-width: 760px){
@@ -507,52 +496,7 @@
       .footer-grid{grid-template-columns:1fr}
       .brand-logo{width:160px}
     }
-    /* ==========================================
-   OneTrust checkbox spacing – MORE GAP
-   ========================================== */
-
-/* Each checkbox row */
-#ot-container .otwf-chkbox{
-  margin-bottom:14px !important; /* ✅ more vertical space */
-}
-
-/* Label row */
-#ot-container .otwf-chkbox label{
-  display:flex !important;
-  align-items:flex-start !important;
-
-  gap:16px !important;          /* ✅ MORE horizontal space */
-  line-height:1.6 !important;   /* ✅ better text breathing */
-  cursor:pointer !important;
-  position:relative !important;
-}
-
-/* Custom circle */
-#ot-container .otwf-chkbox label::before{
-  content:"";
-  width:18px;
-  height:18px;
-  min-width:18px;
-
-  margin-top:4px;               /* ✅ aligns with first text line */
-  border-radius:50%;
-  border:2px solid var(--border);
-  background:#fff;
-  flex-shrink:0;
-}
-
-/* Wrapped text alignment */
-#ot-container .otwf-chkbox label{
-  white-space:normal !important;
-}
-
-/* Optional: section spacing (Interest / Channel etc.) */
-#ot-container .otwf-group{
-  margin-top:20px !important;
-}
-
   </style>
-  
 </head>
 
 <body>
@@ -714,6 +658,7 @@
   </header>
 
   <main>
+    <!-- Hero -->
     <section class="hero">
       <div class="wrap">
         <article class="hero-card">
@@ -760,7 +705,7 @@
                 <div class="icon">🛠</div>
                 <div>
                   <strong>Field maintenance</strong>
-                  <span>Repair & inspection services across branches.</span>
+                  <span>Repair &amp; inspection services across branches.</span>
                 </div>
               </div>
             </div>
@@ -769,61 +714,44 @@
       </div>
     </section>
 
+    <!-- Special Offers (full-width) -->
     <section class="solutions">
       <div class="wrap">
         <div class="section-title">
           <div>
-            <h2>OUR SOLUTIONS</h2>
-            <p>New, Used, Rental — plus parts, service, training and financing.</p>
+            <h2>Special Offers</h2>
+            <p>
+              A wide range of programs are available to help customers grow their businesses
+              with support 24 hours a day, seven days a week.
+            </p>
           </div>
-          <a class="btn primary" href="https://zahidcat.com/products/">Browse Products</a>
         </div>
 
-        <section class="solutions">
-  <div class="wrap">
+        <div class="big-panel" style="width:100%">
+          <div style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+            gap:14px;
+            margin-bottom:28px;
+          ">
+            <div class="pill">New</div>
+            <div class="pill">Used</div>
+            <div class="pill">Rental</div>
+            <div class="pill">Parts</div>
+            <div class="pill">Service</div>
+            <div class="pill">Customer Value Agreements</div>
+            <div class="pill">Training</div>
+            <div class="pill">Financing</div>
+            <div class="pill">SOS Analysis</div>
+          </div>
 
-    <div class="section-title">
-      <div>
-        <h2>Special Offers</h2>
-        <p>
-          A wide range of programs are available to help customers grow their businesses
-          with support 24 hours a day, seven days a week.
-        </p>
-      </div>
-    </div>
-
-    <!-- Full-width Special Offers container -->
-    <div class="big-panel" style="width:100%">
-
-      <!-- Product / Program list -->
-      <div
-        style="
-          display:grid;
-          grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-          gap:14px;
-          margin-bottom:28px;
-        "
-      >
-        <div class="pill">New</div>
-        <div class="pill">Used</div>
-        <div class="pill">Rental</div>
-        <div class="pill">Parts</div>
-        <div class="pill">Service</div>
-        <div class="pill">Customer Value Agreements</div>
-        <div class="pill">Training</div>
-        <div class="pill">Financing</div>
-        <div class="pill">SOS Analysis</div>
-      </div>
-
-      <!-- Embedded OneTrust CP -->
-      <div id="ot-container"></div>
-
-      </div>
-    </div>
-  </section>
+          <!-- Embedded OneTrust CP -->
+          <div id="ot-container"></div>
+        </div>
       </div>
     </section>
 
+    <!-- Always within reach -->
     <section>
       <div class="wrap">
         <div class="section-title">
@@ -911,45 +839,9 @@
         const expanded = t.getAttribute('aria-expanded') === 'true';
         closeAll();
         if(!expanded){
-          t.setAttribute('aria-expanded', 'true');
-          if(menu) menu.style.display = 'block';
-        }
-      });
-      t.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter' || e.key === ' '){ t.click(); }
-      });
-    });
-
-    document.addEventListener('click', closeAll);
-    window.addEventListener('resize', closeAll);
-
-    // ==========================================
-    // Auto-mount OneTrust Embedded Web Form CP
-    // ==========================================
-    (function () {
-      const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05"; // [2](https://www.w3schools.com/w3css/w3css_color_schemes.asp)
-      const TARGET = "#ot-container";
-      let installed = false;
-
-      function whenOTReady(cb) {
-        const t = setInterval(() => {
-          if (window.OneTrust?.webform?.InstallCP) {
-            clearInterval(t);
-            cb();
-          }
-        }, 80);
-      }
-
-      function boot() {
-        if (installed) return;
-        const container = document.querySelector(TARGET);
-        if (!container) return;
-
-        whenOTReady(() => {
+          t.setAttribute('aria-expanded', 'true       whenOTReady(() => {
           try {
             installed = true;
-
-            // Preferred signature with target; fallback signature if needed. [2](https://www.w3schools.com/w3css/w3css_color_schemes.asp)
             if (OneTrust.webform.InstallCP.length >= 2) {
               OneTrust.webform.InstallCP(CP_ID, { target: TARGET });
             } else {

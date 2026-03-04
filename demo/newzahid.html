@@ -4,861 +4,214 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Home – Zahidcat (Simplified)</title>
-  <meta name="description" content="Zahid Tractor – Construction Machinery Division. Products, Parts, Services, Training, Financing and more." />
 
   <!-- =========================
-       OneTrust TEST Cookie Banner (as provided)
+       OneTrust TEST Cookie Banner
        ========================= -->
   <!-- OptanonConsentNoticeStart -->
-  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
-          type="text/javascript"
-          charset="UTF-8"
-          data-domain-script="019cb466-f797-7b02-ac8d-b5b4ea71888a-test"></script>
-  <script type="text/javascript">
-    function OptanonWrapper() { }
+  https://cdn.cookielaw.org/scripttemplates/otSDKStub.jsscript>
+  <script>
+    function OptanonWrapper() {}
   </script>
   <!-- OptanonConsentNoticeEnd -->
 
   <!-- =========================
-       OneTrust Embedded Web Form Stub (as provided)
+       OneTrust Embedded Web Form Stub
        ========================= -->
-  <!-- OneTrust Embedded Web Form Stub -->
-  <script
-    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
-    data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
-    worker="https://consent-api.onetrust.com">
-  </script>
+  https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js  </script>
 
   <style>
     :root{
       --brand-yellow:#ffcd11;
-      --brand-black:#111111;
+      --brand-black:#111;
       --text:#1a1a1a;
       --muted:#6a6a6a;
-      --bg:#ffffff;
       --panel:#f6f6f6;
       --border:#e7e7e7;
-      --shadow:0 10px 25px rgba(0,0,0,.08);
       --radius:14px;
+      --shadow:0 10px 25px rgba(0,0,0,.08);
       --max:1180px;
-
       --danger:#c80e13;
     }
 
     *{box-sizing:border-box}
-    html,body{margin:0; padding:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--text); background:var(--bg)}
-    a{color:inherit; text-decoration:none}
-    img{max-width:100%; display:block}
-
-    /* Top utility bar */
-    .topbar{
-      background:var(--brand-black);
-      color:#fff;
-      font-size:13px;
-    }
-    .topbar .wrap{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:8px 16px;
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .topbar a{opacity:.9}
-    .topbar a:hover{opacity:1}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text)}
 
     /* Header */
-    header{
-      position:sticky;
-      top:0;
-      z-index:50;
-      background:#fff;
-      border-bottom:1px solid var(--border);
-    }
+    header{border-bottom:1px solid var(--border);background:#fff}
     .header-wrap{
       max-width:var(--max);
-      margin:0 auto;
+      margin:auto;
       padding:14px 16px;
       display:flex;
       align-items:center;
-      gap:18px;
       justify-content:space-between;
     }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width:260px;
-    }
-    .brand-logo{
-      width:180px;
-      height:auto;
-      border-radius:10px;
-      background:#fff;
-    }
-
-    /* Nav */
-    nav{display:flex; align-items:center; gap:14px}
-    .nav-links{display:flex; gap:14px; align-items:center}
-    .nav-item{
-      position:relative;
-      padding:10px 10px;
-      border-radius:10px;
-      font-weight:600;
-      font-size:14px;
-      color:#1f1f1f;
-    }
-    .nav-item:hover{background:var(--panel)}
-    .nav-item[aria-expanded="true"]{background:var(--panel)}
-
-    /* Dropdown */
-    .dropdown{
-      position:absolute;
-      left:0;
-      top:100%;
-      width:min(720px, calc(100vw - 32px));
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:16px;
-      box-shadow:var(--shadow);
-      padding:14px;
-      display:none;
-      margin-top:10px;
-    }
-    .dropdown .grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0, 1fr));
-      gap:10px;
-    }
-    .dropdown h4{
-      margin:0 0 6px 0;
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color:var(--muted);
-    }
-    .dropdown a{
-      display:block;
-      padding:10px 10px;
-      border-radius:12px;
-      border:1px solid transparent;
-      font-weight:600;
-      font-size:14px;
-    }
-    .dropdown a:hover{
-      background:var(--panel);
-      border-color:var(--border);
-    }
-
-    /* Buttons */
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:10px 14px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#fff;
-      font-weight:700;
-      font-size:14px;
-      cursor:pointer;
-      transition:.15s ease;
-      white-space:nowrap;
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btn.primary{
-      background:var(--brand-yellow);
-      border-color:#e9bf00;
-      color:#000;
-    }
-    .btn.ghost{ background:transparent; }
-
-    /* Mobile */
-    .burger{
-      display:none;
-      width:42px; height:42px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#fff;
-      cursor:pointer;
-    }
-    .burger:active{transform:scale(.98)}
-    .mobile-drawer{
-      display:none;
-      border-top:1px solid var(--border);
-      padding:10px 16px 16px;
-    }
-    .mobile-drawer a{
-      display:block;
-      padding:12px 12px;
-      border-radius:12px;
-      font-weight:700;
-    }
-    .mobile-drawer a:hover{background:var(--panel)}
+    .brand img{width:180px}
 
     /* Hero */
-    .hero{
-      background:
-        radial-gradient(1200px 400px at 50% 0%, rgba(255,205,17,.35), rgba(255,255,255,0)),
-        linear-gradient(#fff, #fff);
-    }
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
-    section{padding:28px 0}
+    .hero{padding:40px 16px;background:#fff}
+    .wrap{max-width:var(--max);margin:auto}
 
-    .hero .wrap{
-      padding:34px 16px 18px;
-      display:grid;
-      grid-template-columns:1.4fr .9fr;
-      gap:18px;
-      align-items:stretch;
-    }
-    .hero-card{
-      border:1px solid var(--border);
-      border-radius:22px;
-      background:#fff;
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .hero-main{
-      padding:26px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      min-height:290px;
-    }
-    .kicker{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:.1em;
-      color:#000;
-      font-weight:900;
-    }
-    .kicker .dot{
-      width:10px; height:10px; border-radius:99px;
-      background:var(--brand-yellow);
-      box-shadow:0 0 0 4px rgba(255,205,17,.25);
-    }
-    .hero h1{
-      margin:0;
-      font-size:32px;
-      line-height:1.1;
-      letter-spacing:-0.02em;
-    }
-    .hero p{
-      margin:0;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.6;
-      max-width:62ch;
-    }
-    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:auto}
-
-    .hero-aside{
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .aside-title{font-weight:900; margin:0; font-size:16px}
-    .aside-list{display:grid; gap:10px}
-    .aside-item{
-      display:flex; gap:10px; padding:12px;
-      border:1px solid var(--border);
-      border-radius:16px;
-      background:var(--panel);
-    }
-    .icon{
-      width:38px; height:38px;
-      border-radius:12px;
-      background:#fff;
-      border:1px solid var(--border);
-      display:grid; place-items:center;
-      font-weight:900;
-    }
-    .aside-item strong{display:block; font-size:14px}
-    .aside-item span{display:block; color:var(--muted); font-size:13px; line-height:1.4}
-
-    /* Section title */
-    .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-      margin-bottom:14px;
-    }
-    .section-title h2{
-      margin:0; font-size:20px; letter-spacing:-0.02em;
-    }
-    .section-title p{margin:0; color:var(--muted); font-size:14px; line-height:1.6}
-
-    /* Special Offers section */
+    /* =========================
+       SOLUTIONS LAYOUT (UPDATED)
+       ========================= */
     .solutions{
-      background:linear-gradient(180deg, #fff, #fafafa);
+      background:#fafafa;
       border-top:1px solid var(--border);
       border-bottom:1px solid var(--border);
+      padding:32px 0;
+    }
+    .solutions-grid{
+      display:grid;
+      grid-template-columns:0.85fr 1.15fr; /* ✅ requested change */
+      gap:16px;
     }
 
     .big-panel{
+      background:#fff;
       border:1px solid var(--border);
       border-radius:22px;
-      background:#fff;
+      padding:20px;
       box-shadow:var(--shadow);
-      padding:18px;
     }
 
-    /* Pill tags (you used .pill but it wasn't defined before) */
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px 12px;
-      border-radius:16px;
-      border:1px solid var(--border);
-      background:var(--panel);
-      font-weight:800;
-      font-size:14px;
-      line-height:1;
-      min-height:44px;
-    }
+    /* Embedded OT form styling */
+    #ot-container{margin-top:18px}
 
-    /* Footer */
-    footer{
-      background:var(--brand-black);
-      color:#fff;
-      padding:32px 0;
-      margin-top:10px;
-    }
-    .footer-grid{
-      display:grid;
-      grid-template-columns:1.2fr 1fr 1fr;
-      gap:18px;
-    }
-    footer h3{margin:0 0 10px 0}
-    footer a{opacity:.9}
-    footer a:hover{opacity:1}
-    .foot-links{display:grid; gap:8px; font-size:14px}
-    .newsletter{
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:18px;
-      padding:14px;
-      background:rgba(255,255,255,.06);
-    }
-    .field{
-      width:100%;
-      padding:11px 12px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(0,0,0,.2);
-      color:#fff;
-      margin-bottom:10px;
-      outline:none;
-    }
-    .fineprint{opacity:.75; font-size:12px; margin-top:10px; line-height:1.5}
-
-    /* ==========================================
-       OneTrust Embedded Web Form (Zahid styling)
-       ========================================== */
-    #ot-container { margin-top:18px; }
-
-    #ot-container .ot-consent-inline,
-    #ot-container .otwf-content,
     #ot-container .ot-form,
     #ot-container .ot-form-content,
     #ot-container .ot-el{
-      background:transparent !important;
-      border:none !important;
-      box-shadow:none !important;
-      padding:0 !important;
-      font-family:inherit !important;
-      color:inherit !important;
+      background:transparent!important;
+      border:none!important;
+      box-shadow:none!important;
+      font-family:inherit!important;
     }
 
-    #ot-container .ot-label,
-    #ot-container label,
-    #ot-container span.ot-label{
-      font-size:14px !important;
-      line-height:1.6 !important;
-      font-weight:600 !important;
-      color:var(--muted) !important;
+    #ot-container label{
+      font-size:14px!important;
+      color:var(--muted)!important;
+      font-weight:600!important;
     }
 
-    #ot-container input[type="text"],
-    #ot-container input[type="email"],
-    #ot-container input[type="tel"],
-    #ot-container select,
-    #ot-container textarea{
-      width:100% !important;
-      padding:12px 12px !important;
-      border-radius:14px !important;
-      border:1px solid var(--border) !important;
-      background:#fff !important;
-      color:var(--text) !important;
-      outline:none !important;
-      box-shadow:0 1px 0 rgba(0,0,0,.03) !important;
-    }
-    #ot-container input[type="text"]:focus,
-    #ot-container input[type="email"]:focus,
-    #ot-container input[type="tel"]:focus,
-    #ot-container select:focus,
-    #ot-container textarea:focus{
-      border-color:#e9bf00 !important;
-      box-shadow:0 0 0 4px rgba(255,205,17,.25) !important;
+    #ot-container input[type="checkbox"]{
+      position:absolute!important;
+      opacity:0!important;
     }
 
-    #ot-container .ot-error{
-      color:var(--danger) !important;
-      font-size:13px !important;
-      margin-top:6px !important;
-      font-weight:700 !important;
-    }
-
-    /* Submit buttons */
-    #ot-container .ot-submit,
-    #ot-container button[type="submit"],
-    #ot-container .ot-sdk-btn-primary{
-      width:100% !important;
-      margin-top:16px !important;
-      padding:14px 14px !important;
-      border-radius:14px !important;
-      border:1px solid #e9bf00 !important;
-      background:var(--brand-yellow) !important;
-      color:#000 !important;
-      font-weight:900 !important;
-      cursor:pointer !important;
-      transition:.15s ease !important;
-    }
-    #ot-container .ot-submit:hover,
-    #ot-container button[type="submit"]:hover,
-    #ot-container .ot-sdk-btn-primary:hover{
-      transform:translateY(-1px) !important;
-      filter:brightness(.98) !important;
-    }
-
-    /* ==========================================
-       FINAL FIX: Checkbox text never under circle
-       (replaces the earlier flex-gap approach)
-       ========================================== */
-    #ot-container .otwf-chkbox{
-      position:relative !important;
-      margin:0 0 16px 0 !important; /* more vertical gap */
-    }
-
-    /* Hide native checkbox */
-    #ot-container .otwf-chkbox input[type="checkbox"]{
-      position:absolute !important;
-      opacity:0 !important;
-      pointer-events:none !important;
-    }
-
-    /* Label reserves space for custom circle */
     #ot-container .otwf-chkbox label{
-      display:block !important;
-      position:relative !important;
-      padding-left:44px !important;   /* MORE GAP + guaranteed wrap alignment */
-      line-height:1.6 !important;
-      white-space:normal !important;
-      cursor:pointer !important;
+      display:flex!important;
+      gap:10px;
+      cursor:pointer;
     }
 
-    /* Custom circle */
     #ot-container .otwf-chkbox label::before{
       content:"";
-      position:absolute;
-      left:0;
-      top:4px;
       width:18px;
       height:18px;
       border-radius:50%;
       border:2px solid var(--border);
-      background:#fff;
+      margin-top:2px;
     }
 
-    /* Checked state */
-    #ot-container .otwf-chkbox input[type="checkbox"]:checked + label::before{
+    #ot-container input[type="checkbox"]:checked + label::before{
       border-color:#e9bf00;
-      background: radial-gradient(circle at center, #111 45%, transparent 47%);
+      background:radial-gradient(circle,#111 45%,transparent 47%);
     }
 
-    /* Focus */
-    #ot-container .otwf-chkbox input[type="checkbox"]:focus + label::before{
-      box-shadow:0 0 0 4px rgba(255,205,17,.25);
+    #ot-container button[type="submit"]{
+      width:100%;
+      margin-top:16px;
+      padding:14px;
+      border-radius:14px;
+      background:var(--brand-yellow);
+      border:1px solid #e9bf00;
+      font-weight:900;
+      cursor:pointer;
     }
 
     /* Responsive */
-    @media (max-width: 980px){
-      .hero .wrap{grid-template-columns:1fr}
-      .dropdown{width:calc(100vw - 32px)}
-    }
-    @media (max-width: 760px){
-      nav{display:none}
-      .burger{display:inline-grid; place-items:center}
-      .footer-grid{grid-template-columns:1fr}
-      .brand-logo{width:160px}
+    @media (max-width:980px){
+      .solutions-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 
 <body>
-  <!-- Utility bar -->
-  <div class="topbar">
-    <div class="wrap">
-      <a href="mailto:inquiry@zahid.com">inquiry@zahid.com</a>
-      <span style="opacity:.5">|</span>
-      <a href="https://zahidcat.com/contact-us/">Contact Us</a>
-      <span style="opacity:.5">|</span>
-      <a href="https://zahidcat.com/request-quote/">Request a Quote</a>
-    </div>
+
+<header>
+  <div class="header-wrap">
+    #
+      https://cdn-ileepoe.nitrocdn.com/oeBjEPhcHgYYrRsyGhwtfKvdYyrcFPMt/assets/images/optimized/rev-6d68d85/zahidcat.com/wp-content/uploads/2021/01/zahid-tractor-logo.jpeg
+    </a>
   </div>
+</header>
 
-  <!-- Header -->
-  <header>
-    <div class="header-wrap">
-      <a class="brand" href="https://zahidcat.com/" aria-label="Zahidcat Home">
-        <img
-          class="brand-logo"
-          src="https://cdn-ileepoe.nitrocdn.com/oeBjEPhcHgYYrRsyGhwtfKvdYyrcFPMt/assets/images/optimized/rev-6d68d85/zahidcat.com/wp-content/uploads/2021/01/zahid-tractor-logo.jpeg"
-          alt="Zahid Tractor logo" />
-      </a>
+<section class="solutions">
+  <div class="wrap">
+    <div class="solutions-grid">
 
-      <button class="burger" aria-label="Open menu" id="burger">☰</button>
-
-      <!-- Desktop nav -->
-      <nav aria-label="Primary">
-        <div class="nav-links">
-          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="products">
-            Products ▾
-            <div class="dropdown" data-dd-menu="products">
-              <div class="grid">
-                <div>
-                  <h4>Products</h4>
-                  <a href="https://zahidcat.com/products/">New</a>
-                  <a href="https://zahidcat.com/used/">Used</a>
-                  <a href="https://zahidcat.com/rental/">Rental</a>
-                </div>
-                <div>
-                  <h4>Parts</h4>
-                  <a href="https://zahidcat.com/parts/">Parts</a>
-                  <a href="https://zahidcat.com/parts-cat-com/">PARTS.CAT.COM</a>
-                </div>
-                <div>
-                  <h4>Offers</h4>
-                  <a href="https://zahidcat.com/special-offers/">Special Offers</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="services">
-            Services ▾
-            <div class="dropdown" data-dd-menu="services">
-              <div class="grid">
-                <div>
-                  <h4>Service</h4>
-                  <a href="https://zahidcat.com/service/">Service</a>
-                  <a href="https://zahidcat.com/customer-value-agreements/">Customer Value Agreements</a>
-                </div>
-                <div>
-                  <h4>Training</h4>
-                  <a href="https://zahidcat.com/training/">Customer Training</a>
-                </div>
-                <div>
-                  <h4>More</h4>
-                  <a href="https://zahidcat.com/financing/">Financing</a>
-                  <a href="https://zahidcat.com/sos/">SOS</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="corporate">
-            Corporate ▾
-            <div class="dropdown" data-dd-menu="corporate">
-              <div class="grid">
-                <div>
-                  <h4>About</h4>
-                  <a href="https://zahidcat.com/about-us/">About Us</a>
-                  <a href="https://zahidcat.com/about-us/#milestones">Milestones</a>
-                </div>
-                <div>
-                  <h4>Careers</h4>
-                  <a href="https://zahidcat.com/careers/">Careers</a>
-                </div>
-                <div>
-                  <h4>Contact</h4>
-                  <a href="https://zahidcat.com/contact-us/">Contact Us</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="media">
-            Media ▾
-            <div class="dropdown" data-dd-menu="media">
-              <div class="grid">
-                <div>
-                  <h4>News</h4>
-                  <a href="https://zahidcat.com/news-articles/">News & Articles</a>
-                </div>
-                <div>
-                  <h4>Magazine</h4>
-                  <a href="https://zahidcat.com/cat-magazine/">CAT Magazine</a>
-                </div>
-                <div>
-                  <h4>Technology</h4>
-                  <a href="https://zahidcat.com/technology/">Cat Technology</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="nav-item" role="button" tabindex="0" aria-expanded="false" data-dd="links">
-            External Links ▾
-            <div class="dropdown" data-dd-menu="links">
-              <div class="grid">
-                <div>
-                  <h4>Tools</h4>
-                  <a href="https://vl.cat.com/visionlink?ui_locales=en-US">VisionLink</a>
-                  <a href="https://interact.cat.com/">CAT Interact</a>
-                  <a href="https://www.catrentalstore.com/">CRS Portal</a>
-                </div>
-                <div>
-                  <h4>Sites</h4>
-                  <a href="https://zahidtractor.com/">zahidtractor.com</a>
-                  <a href="https://zahid.com/">Zahid Group</a>
-                  <a href="https://www.cat.com/">cat.com</a>
-                </div>
-                <div>
-                  <h4>Language</h4>
-                  <a href="https://zahidcat.com/">English</a>
-                  <a href="https://zahidcat.com/ar/%d8%a7%d9%84%d8%b2%d8%a7%d9%87%d8%af-%d9%84%d9%84%d8%aa%d8%b1%d8%a7%d9%83%d8%aa%d9%88%d8%b1%d8%a7%d8%aa/">العربية</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a class="btn primary" href="https://zahidcat.com/request-quote/">Request a Quote</a>
-      </nav>
-    </div>
-
-    <!-- Mobile drawer -->
-    <div class="mobile-drawer" id="drawer">
-      <a href="https://zahidcat.com/products/">Products (New / Used / Rental)</a>
-      <a href="https://zahidcat.com/parts/">Parts</a>
-      <a href="https://zahidcat.com/service/">Service</a>
-      <a href="https://zahidcat.com/customer-value-agreements/">Customer Value Agreements</a>
-      <a href="https://zahidcat.com/training/">Training</a>
-      <a href="https://zahidcat.com/financing/">Financing</a>
-      <a href="https://zahidcat.com/special-offers/">Special Offers</a>
-      <a href="https://zahidcat.com/news-articles/">News & Articles</a>
-      <a href="https://zahidcat.com/contact-us/">Contact Us</a>
-      <a class="btn primary" style="margin-top:8px; width:100%; justify-content:center" href="https://zahidcat.com/request-quote/">Request a Quote</a>
-    </div>
-  </header>
-
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="wrap">
-        <article class="hero-card">
-          <div class="hero-main">
-            <div class="kicker"><span class="dot"></span> Featured news</div>
-            <h1>Zahid Tractor celebrates 75 years of partnership with Caterpillar</h1>
-            <p>
-              A landmark milestone for a better tomorrow. Explore highlights, initiatives and updates
-              from Zahid Tractor’s Construction Machinery Division.
-            </p>
-            <div class="hero-actions">
-              <a class="btn primary" href="https://zahidcat.com/news-articles/">Read More</a>
-              <a class="btn ghost" href="https://zahidcat.com/about-us/#milestones">Our Milestones</a>
-            </div>
-          </div>
-        </article>
-
-        <aside class="hero-card">
-          <div class="hero-aside">
-            <p class="aside-title">Quick highlights</p>
-            <div class="aside-list">
-              <div class="aside-item">
-                <div class="icon">✓</div>
-                <div>
-                  <strong>Inspections</strong>
-                  <span>Check equipment condition, spot leaks and detect issues early.</span>
-                </div>
-              </div>
-              <div class="aside-item">
-                <div class="icon">⚙</div>
-                <div>
-                  <strong>Custom Track Service (CTS)</strong>
-                  <span>Predict wear rates and improve maintenance decisions.</span>
-                </div>
-              </div>
-              <div class="aside-item">
-                <div class="icon">⛏</div>
-                <div>
-                  <strong>Advansys tools</strong>
-                  <span>Designed to reduce downtime and boost productivity.</span>
-                </div>
-              </div>
-              <div class="aside-item">
-                <div class="icon">🛠</div>
-                <div>
-                  <strong>Field maintenance</strong>
-                  <span>Repair &amp; inspection services across branches.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
+      <!-- Product Offering -->
+      <div class="big-panel">
+        <h3>Product offering</h3>
+        <p class="muted">
+          New, Used, Rental — supported by parts, service, training and financing.
+        </p>
       </div>
-    </section>
 
-    <!-- Special Offers (full-width) -->
-    <section class="solutions">
-      <div class="wrap">
-        <div class="section-title">
-          <div>
-            <h2>Special Offers</h2>
-            <p>
-              A wide range of programs are available to help customers grow their businesses
-              with support 24 hours a day, seven days a week.
-            </p>
-          </div>
-        </div>
+      <!-- Online Tools (WIDER) -->
+      <div class="big-panel">
+        <h3>Online Tools</h3>
+        <p class="muted">
+          Helpful tools available to Zahid Tractor customers.
+        </p>
 
-        <div class="big-panel" style="width:100%">
-          <div style="
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-            gap:14px;
-            margin-bottom:28px;
-          ">
-            <div class="pill">New</div>
-            <div class="pill">Used</div>
-            <div class="pill">Rental</div>
-            <div class="pill">Parts</div>
-            <div class="pill">Service</div>
-            <div class="pill">Customer Value Agreements</div>
-            <div class="pill">Training</div>
-            <div class="pill">Financing</div>
-            <div class="pill">SOS Analysis</div>
-          </div>
+        <div style="margin-top:16px;padding:16px;border-radius:18px;border:1px solid var(--border);background:var(--panel)">
+          <strong>Special Offers</strong>
+          <p style="font-size:13px;color:var(--muted)">
+            Explore genuine parts offers and protection plans.
+          </p>
 
-          <!-- Embedded OneTrust CP -->
+          <!-- OneTrust mounts here -->
           <div id="ot-container"></div>
         </div>
       </div>
-    </section>
 
-    <!-- Always within reach -->
-    <section>
-      <div class="wrap">
-        <div class="section-title">
-          <div>
-            <h2>ALWAYS WITHIN REACH</h2>
-            <p>Branches across the Kingdom of Saudi Arabia to stay close to customers.</p>
-          </div>
-          <a class="btn primary" href="https://zahidcat.com/contact-us/">Find a Branch</a>
-        </div>
-
-        <div style="border-radius:22px;border:1px dashed #cfcfcf;background:#fafafa;min-height:220px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:900;text-align:center;padding:16px;">
-          Map/Branches Placeholder (replace with embed or branch cards)
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <div class="footer-grid">
-        <div class="newsletter">
-          <h3>Join our mailing list</h3>
-          <form>
-            <input class="field" type="text" name="name" placeholder="Name" />
-            <input class="field" type="email" name="email" placeholder="Email" />
-            <input class="field" type="tel" name="phone" placeholder="Phone" />
-            <button class="btn primary" type="button">Subscribe</button>
-          </form>
-          <div class="fineprint">
-            This is a simplified static template. Wire the form to your backend/CRM as needed.
-          </div>
-        </div>
-
-        <div>
-          <h3>Company</h3>
-          <div class="foot-links">
-            <a href="https://zahidtractor.com/">zahidtractor.com</a>
-            <a href="https://zahid.com/">Zahid Group</a>
-            <a href="https://www.cat.com/">cat.com</a>
-            <a href="https://zahidcat.com/careers/">Careers</a>
-          </div>
-        </div>
-
-        <div>
-          <h3>Policies</h3>
-          <div class="foot-links">
-            <a href="https://zahidcat.com/privacy-policy/">PCC – Privacy Policy</a>
-            <a href="https://zahidcat.com/terms-and-conditions/">PCC – Terms and Conditions</a>
-            <a href="https://zahidcat.com/return-policy/">PCC – Return Policy</a>
-            <a href="https://www.zahid.com/privacy-notice/">Privacy Notice</a>
-            <a href="https://www.zahid.com/cookie-policy/">Cookie Policy</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="fineprint" style="margin-top:18px">
-        © Zahidcat – Simplified HTML mock. Replace placeholders (map/video) with real assets.
-      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    // Mobile drawer toggle
-    const burger = document.getElementById('burger');
-    const drawer = document.getElementById('drawer');
-    burger?.addEventListener('click', () => {
-      const shown = drawer.style.display === 'block';
-      drawer.style.display = shown ? 'none' : 'block';
-    });
+<script>
+  // Auto-install OneTrust Embedded Web Form on page load
+  (function(){
+    const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+    const TARGET = "#ot-container";
+    let installed = false;
 
-    // Dropdowns (desktop)
-    const triggers = document.querySelectorAll('[data-dd]');
-    const menus = document.querySelectorAll('[data-dd-menu]');
-
-    function closeAll(){
-      triggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
-      menus.forEach(m => m.style.display = 'none');
+    function whenOTReady(cb){
+      const t = setInterval(()=>{
+        if(window.OneTrust?.webform?.InstallCP){
+          clearInterval(t);
+          cb();
+        }
+      },80);
     }
 
-    triggers.forEach(t => {
-      const name = t.getAttribute('data-dd');
-      const menu = document.querySelector(`[data-dd-menu="${name}"]`);
-      t.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const expanded = t.getAttribute('aria-expanded') === 'true';
-        closeAll();
-        if(!expanded){
-          t.setAttribute('aria-expanded', 'true       whenOTReady(() => {
-          try {
-            installed = true;
-            if (OneTrust.webform.InstallCP.length >= 2) {
-              OneTrust.webform.InstallCP(CP_ID, { target: TARGET });
-            } else {
-              OneTrust.webform.InstallCP(CP_ID, function () {});
-            }
-          } catch (e) {
-            installed = false;
-          }
-        });
-      }
+    function boot(){
+      if(installed) return;
+      if(!document.querySelector(TARGET)) return;
 
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", boot);
-      } else {
-        boot();
-      }
-    })();
-  </script>
+      whenOTReady(()=>{
+        installed = true;
+        OneTrust.webform.InstallCP(CP_ID,{target:TARGET});
+      });
+    }
+
+    document.readyState === "loading"
+      ? document.addEventListener("DOMContentLoaded",boot)
+      : boot();
+  })();
+</script>
+
 </body>
 </html>
